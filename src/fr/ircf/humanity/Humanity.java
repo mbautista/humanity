@@ -12,6 +12,7 @@ public class Humanity {
 	private Log log;
 	private Actions actions;
 	private Audio audio;
+	private Loader loader;
 	
 	public Humanity() {
 		// TODO Auto-generated constructor stub

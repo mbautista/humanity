@@ -1,14 +1,9 @@
 package fr.ircf.humanity;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.*;
 
-public class Humanity extends BasicGame {
+public class Humanity {
 
 	private Title title;
 	private Menu menu;
@@ -23,38 +18,44 @@ public class Humanity extends BasicGame {
 	private Loader loader;
 	static final String NAME = "Humanity";
 	static final double VERSION = 0.1;
-	
-	public Humanity() {
-		super(NAME);
+
+	public void init(){
+		try{
+			Display.setDisplayMode(new DisplayMode(640, 480));
+			Display.setVSyncEnabled(true);
+			Display.setTitle(NAME);
+			Display.create();
+			GL11.glViewport(0, 0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight());
+			GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		}catch( LWJGLException e ){
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	public void init(GameContainer gc) throws SlickException {}
-
-	@Override
-	public void update(GameContainer gc, int i) throws SlickException {}
-
-	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException
-	{
-		g.drawString(NAME + " " + VERSION, 10, 20);
+	
+	public void run(){
+		while(!Display.isCloseRequested()){
+			view();
+			controller();
+			Display.update();
+			Display.sync(60);
+		}
+		Display.destroy();
+	}
+	
+	public void view(){
+		// TODO
+	}
+	
+	public void controller(){
+		// TODO
 	}
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		try
-		{
-			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Humanity());
-			appgc.setDisplayMode(640, 480, false);
-			appgc.start();
-		}
-		catch (SlickException ex)
-		{
-			Logger.getLogger(NAME).log(Level.SEVERE, null, ex);
-		}
+		Humanity h = new Humanity();
+		h.init();
+		h.run();
 	}
-
 }

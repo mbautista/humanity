@@ -27,7 +27,7 @@ public class Humanity implements Game{
 	}
 	
 	private void initDisplay() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(640, 480));
+		Display.setDisplayMode(new DisplayMode(800, 600));
 		//Display.setFullscreen(true);
 		Display.setVSyncEnabled(true);
 		Display.setTitle(TITLE);
@@ -45,10 +45,12 @@ public class Humanity implements Game{
 	
 	private void initGameElements() throws Exception{
 		lastFrame = getTime();
+		options = new Options();
+		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
 		gameElements = new GameElement[] {
 			new Title(),
 			new Menu(),
-			options = new Options(),
+			options,
 			//new Galaxy(),
 			//new Zoom(),
 			//new Map(),
@@ -58,7 +60,7 @@ public class Humanity implements Game{
 			//new Audio(),
 			//new Loader(),
 		};
-		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
+		//
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}

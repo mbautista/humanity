@@ -2,6 +2,7 @@ package fr.ircf.humanity;
 
 import java.util.Locale;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class Options implements GameElement {
@@ -10,8 +11,29 @@ public class Options implements GameElement {
 	private boolean fullScreen = false;
 	private Locale locale = Locale.US;
 	private float soundVolume = 100, musicVolume = 100, galaxySize = 200, speed = 1, difficulty = 1;
-	private Frame frame;
 	private Game game;
+	private static int Y = 100;
+	private static int DY = 40;
+	
+	@Override
+	public void init(Game game) throws Exception {
+		this.game = game;
+	}
+
+	@Override
+	public boolean visible() {
+		return game.getState() == State.OPTIONS;
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void update(double delta) {
+		// TODO Auto-generated method stub
+	}
 	
 	public DisplayMode getDisplayMode() {
 		return displayMode;
@@ -60,24 +82,5 @@ public class Options implements GameElement {
 	}
 	public void setDifficulty(float difficulty) {
 		this.difficulty = difficulty;
-	}
-	@Override
-	public void init(Game game) throws Exception {
-		this.game = game;
-		
-	}
-	@Override
-	public boolean visible() {
-		return game.getState() == State.OPTIONS;
-	}
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void update(double delta) {
-		// TODO Auto-generated method stub
-		
 	}
 }

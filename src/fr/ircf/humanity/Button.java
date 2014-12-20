@@ -1,10 +1,27 @@
 package fr.ircf.humanity;
 
-import javax.swing.JButton;
+public class Button {
 
-public class Button extends JButton {
+	private Text text;
+	
+	public Button(String label) throws Exception {
+		this.text = new Text(label);
+	}
 
-	public Button(String label){
-		super(label);
+	public void render() {
+		// TODO render button
+		text.render();
+	}
+
+	public void update(double delta) {
+		// TODO update button
+	}
+	
+	public int getWidth(){
+		return text.getWidth();
+	}
+	
+	public void setPosition(int x, int y){
+		text.setPosition(x,  y);
 	}
 }

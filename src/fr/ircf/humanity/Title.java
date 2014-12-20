@@ -17,16 +17,21 @@ public class Title implements GameElement {
 	private static Color COLOR = Color.white;
 	private static int TITLE_Y = 0;
 	private TrueTypeFont titleFont, versionFont;
+	private Game game;
 
-	public void init() throws Exception {
+	@Override
+	public void init(Game game) throws Exception {
+		this.game = game;
 		titleFont = loadFont(TITLE_FONT, TITLE_SIZE);
 		versionFont = loadFont(VERSION_FONT, VERSION_SIZE);
 	}
 	
-	public boolean visible(State state){
-		return state != State.GAME;
+	@Override
+	public boolean visible(){
+		return game.getState() != State.GAME;
 	}
 	
+	@Override
 	public void render(){
 		float titleX = (float)(Display.getDisplayMode().getWidth() - titleFont.getWidth(Humanity.TITLE))/2;
 		String versionText = "v" + Humanity.VERSION;
@@ -36,6 +41,7 @@ public class Title implements GameElement {
 		versionFont.drawString(versionX, versionY, versionText, COLOR);
 	}
 
+	@Override
 	public void update(double delta){
 		
 	}

@@ -1,5 +1,5 @@
 package fr.ircf.humanity;
 
-public class Action extends Button {
-
+public class Action {
+	private Button button;
 }

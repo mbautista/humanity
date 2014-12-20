@@ -1,16 +1,20 @@
 package fr.ircf.humanity;
 
+import java.util.ResourceBundle;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 
-public class Humanity{
+public class Humanity implements Game{
 
 	static final String TITLE = "Humanity";
 	static final double VERSION = 0.1;
 	private GameElement[] gameElements;	
 	private State state = State.MENU;
 	private long lastFrame;
-	
+	private Options options;
+    private ResourceBundle messages;
+
+    @Override
 	public void init(){
 		try{
 			initDisplay();
@@ -24,7 +28,7 @@ public class Humanity{
 	
 	private void initDisplay() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(640, 480));
-		Display.setFullscreen(true);
+		//Display.setFullscreen(true);
 		Display.setVSyncEnabled(true);
 		Display.setTitle(TITLE);
 		Display.create();
@@ -43,8 +47,8 @@ public class Humanity{
 		lastFrame = getTime();
 		gameElements = new GameElement[] {
 			new Title(),
-			//new Menu(),
-			//new Options(),
+			new Menu(),
+			options = new Options(),
 			//new Galaxy(),
 			//new Zoom(),
 			//new Map(),
@@ -54,11 +58,12 @@ public class Humanity{
 			//new Audio(),
 			//new Loader(),
 		};
+		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
 		for(GameElement gameElement : gameElements){
-			gameElement.init();
+			gameElement.init(this);
 		}
 	}
-	
+
 	private long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
@@ -70,12 +75,13 @@ public class Humanity{
 		return delta;
 	}
 	
+    @Override
 	public void run(){
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			double delta = getDelta();
 			for(GameElement gameElement : gameElements){
-				if (gameElement.visible(state)){
+				if (gameElement.visible()){
 					gameElement.render();
 					gameElement.update(delta);
 				}
@@ -85,7 +91,22 @@ public class Humanity{
 		}
 		Display.destroy();
 	}
+
+	@Override
+	public String i18n(String message){
+		return messages.getString(message);
+	}
 	
+	@Override
+	public State getState() {
+		return state;
+	}
+
+	@Override
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	/**
 	 * @param args
 	 */
@@ -93,13 +114,5 @@ public class Humanity{
 		Humanity h = new Humanity();
 		h.init();
 		h.run();
-	}
-
-	public State getState() {
-		return state;
-	}
-
-	public void setState(State _state) {
-		state = _state;
 	}
 }

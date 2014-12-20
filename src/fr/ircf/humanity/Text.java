@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;

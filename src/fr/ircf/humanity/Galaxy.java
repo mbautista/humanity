@@ -10,7 +10,8 @@ public class Galaxy extends Aster implements Scene, GameElement {
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
-		sceneStars = new  ArrayList<Star>();
+		stars = new ArrayList<Star>();
+		sceneStars = new ArrayList<Star>();
 		create(1);
 	}
 

@@ -1,11 +1,13 @@
 package fr.ircf.humanity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public abstract class Aster {
+public abstract class Aster implements SceneObject{
 
-	private int energy;
-	private ArrayList<Bar> bars;
+	protected static Random random = new Random();
+	protected int x, y, size, energy;
+	protected ArrayList<Bar> bars;
 	
 	public void create(){
 	}
@@ -21,4 +23,13 @@ public abstract class Aster {
 	
 	public void unserialize(){
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 }

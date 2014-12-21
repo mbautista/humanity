@@ -4,7 +4,8 @@ import org.lwjgl.opengl.*;
 
 public class Button {
 
-	private float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
+	private float r = 0.2f, g = 0.2f, b = 0.2f, a = 0.5f;
+	private float hr = 0.4f, hg = 0.4f, hb = 0.4f, ha = 0.5f;
 	private int x = 0, y = 0, padding = 10;
 	private Text text;
 	

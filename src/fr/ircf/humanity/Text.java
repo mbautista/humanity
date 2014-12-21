@@ -12,9 +12,9 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Text {
 
 	private static Color COLOR = Color.white;
-	private static float SIZE = 12f;
+	private static float SIZE = 14f;
 	private static String FONT = "assets/fonts/visitor/visitor1.ttf";
-	private static boolean ALIASING = false;
+	private static boolean ALIASING = true;
 	private String text;
 	private Color color;
 	private float size;
@@ -42,7 +42,10 @@ public class Text {
 	}
 	
 	public void render(){
-		font.drawString(x, y, text, color);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        font.drawString(x, y, text, color);
+        GL11.glDisable(GL11.GL_BLEND);
 	}
 	
 	private void initFont(String file, float size) throws Exception {

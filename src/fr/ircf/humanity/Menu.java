@@ -4,7 +4,7 @@ import org.lwjgl.opengl.Display;
 
 public class Menu implements GameElement {
 
-	private static int Y = 100;
+	private static int Y = 200;
 	private static int DY = 40;
 	private Game game;
 	private Button newButton, optionsButton, quitButton;

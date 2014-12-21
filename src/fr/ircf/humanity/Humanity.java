@@ -12,8 +12,18 @@ public class Humanity implements Game{
 	private State state = State.MENU;
 	private long lastFrame;
 	private Options options;
-    private ResourceBundle messages;
+	private Camera camera;
+	private ResourceBundle messages;
 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Humanity h = new Humanity();
+		h.init();
+		h.run();
+	}
+	
     @Override
 	public void init(){
 		try{
@@ -34,11 +44,7 @@ public class Humanity implements Game{
 		Display.create();
 	}
 	
-	private void initGl(){
-		// FIXME Required for font rendering, but disables other graphics ?!
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        
+	private void initGl(){       
         GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, 1, -1);
@@ -49,23 +55,30 @@ public class Humanity implements Game{
 		lastFrame = getTime();
 		options = new Options();
 		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
+		Galaxy galaxy = new Galaxy();
 		gameElements = new GameElement[] {
+			galaxy,
 			new Title(),
 			new Menu(),
 			options,
-			//new Galaxy(),
 			//new Zoom(),
 			//new Map(),
-			//new PlayerInfo(),
+			//new Player(),
 			//new Log(),
 			//new Actions(),
 			//new Audio(),
 			//new Loader(),
 		};
-		//
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}
+		camera = new Camera(galaxy);
+		camera.show(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
+	}
+
+	@Override
+	public Options getOptions() {
+		return options;
 	}
 
 	private long getTime() {
@@ -111,12 +124,8 @@ public class Humanity implements Game{
 		this.state = state;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Humanity h = new Humanity();
-		h.init();
-		h.run();
+	@Override
+	public Camera getCamera() {
+		return camera;
 	}
 }

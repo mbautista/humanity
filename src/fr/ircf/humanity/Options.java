@@ -10,7 +10,8 @@ public class Options implements GameElement {
 	private DisplayMode displayMode;
 	private boolean fullScreen = false;
 	private Locale locale = Locale.US;
-	private float soundVolume = 100, musicVolume = 100, galaxySize = 200, speed = 1, difficulty = 1;
+	private int soundVolume = 100, musicVolume = 100, galaxySize = 200, starSize = 10, speed = 1, difficulty = 1;
+	private float habitability = 0.1f; // 0 = None, 0.5 = Everywhere
 	private Game game;
 	private static int Y = 100;
 	private static int DY = 40;
@@ -53,34 +54,46 @@ public class Options implements GameElement {
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-	public float getSoundVolume() {
+	public int getSoundVolume() {
 		return soundVolume;
 	}
-	public void setSoundVolume(float soundVolume) {
+	public void setSoundVolume(int soundVolume) {
 		this.soundVolume = soundVolume;
 	}
-	public float getMusicVolume() {
+	public int getMusicVolume() {
 		return musicVolume;
 	}
-	public void setMusicVolume(float musicVolume) {
+	public void setMusicVolume(int musicVolume) {
 		this.musicVolume = musicVolume;
 	}
-	public float getGalaxySize() {
+	public int getGalaxySize() {
 		return galaxySize;
 	}
-	public void setGalaxySize(float galaxySize) {
+	public void setGalaxySize(int galaxySize) {
 		this.galaxySize = galaxySize;
 	}
-	public float getSpeed() {
+	public int getSpeed() {
 		return speed;
 	}
-	public void setSpeed(float speed) {
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	public float getDifficulty() {
+	public int getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulty(float difficulty) {
+	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+	public int getStarSize() {
+		return starSize;
+	}
+	public void setStarSize(int starSize) {
+		this.starSize = starSize;
+	}
+	public float getHabitability() {
+		return habitability;
+	}
+	public void setHabitability(float habitability) {
+		this.habitability = habitability;
 	}
 }

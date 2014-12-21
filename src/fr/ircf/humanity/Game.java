@@ -7,4 +7,6 @@ public interface Game {
 	public State getState();
 	public void setState(State state);
 	public String i18n(String message);
+	public Options getOptions();
+	public Camera getCamera();
 }

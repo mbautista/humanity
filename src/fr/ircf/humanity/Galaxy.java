@@ -1,9 +1,11 @@
 package fr.ircf.humanity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class Galaxy extends Aster implements Scene, GameElement {
+public class Galaxy implements Scene, GameElement {
 	
+	public static int SIZE = 2048;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
 	
@@ -34,7 +36,6 @@ public class Galaxy extends Aster implements Scene, GameElement {
 		}
 	}
 
-	@Override
 	public void create(){
 		create(game.getOptions().getGalaxySize());
 	}
@@ -50,17 +51,23 @@ public class Galaxy extends Aster implements Scene, GameElement {
 	public void updateSceneObjects() {
 		sceneStars.clear();
 		for(Star star: stars){
-			if (game.getCamera().shows(star)){ // FIXME shows(star system) instead of star
+			if (game.getCamera().showsViewport(star)){
 				sceneStars.add(star);
+				star.updateSceneObjects();
 			}
 		}
 	}
 	
 	public Star getRandomStar(){
-		return stars.get(random.nextInt(stars.size()));
+		return stars.get(new Random().nextInt(stars.size()));
 	}
 	
 	public Game getGame(){
 		return game;
+	}
+	
+	@Override
+	public int getSize(){
+		return SIZE;
 	}
 }

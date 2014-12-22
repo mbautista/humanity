@@ -72,6 +72,7 @@ public class Humanity implements Game{
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}
+		// FIXME Show nothing ?!
 		camera = new Camera(galaxy);
 		camera.show(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
 	}

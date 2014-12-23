@@ -1,4 +1,4 @@
-package fr.ircf.humanity.ui;
+package fr.ircf.humanity.tests;
 
 import java.awt.Font;
 
@@ -8,6 +8,15 @@ import org.newdawn.slick.TrueTypeFont;
 public class SlickTest{
 	
 	private TrueTypeFont font;
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SlickTest a = new SlickTest();
+		a.init();
+		a.run();
+	}
 	
 	public void init(){
 		try{
@@ -51,14 +60,5 @@ public class SlickTest{
 			Display.sync(60);
 		}
 		Display.destroy();
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SlickTest a = new SlickTest();
-		a.init();
-		a.run();
 	}
 }

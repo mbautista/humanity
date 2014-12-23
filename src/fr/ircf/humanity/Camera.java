@@ -7,7 +7,7 @@ import org.lwjgl.opengl.Display;
 public class Camera {
 
 	private float x, y, z, scale;
-	public static int Z_MIN = 1, Z_MAX = 7;
+	public static int Z_MIN = 1, Z_MAX = 9;
 	private Rectangle viewport;
 	private Scene scene;
 	
@@ -16,6 +16,10 @@ public class Camera {
 		viewport = new Rectangle();
 	}
 	
+	/**
+	 * Points camera to a specific scene object
+	 * @param o
+	 */
 	public void show(SceneObject o){
 		this.x = o.getX();
 		this.y = o.getY();
@@ -23,9 +27,13 @@ public class Camera {
 		updateViewport();
 	}
 	
+	/**
+	 * Updates camera viewport and scene objects
+	 */
 	public void updateViewport(){
-		int r = (int)(scene.getSize()/Math.pow(2, z));
-		viewport.setBounds((int)x-r, (int)y-r, 2*r, 2*r);
+		int rx = (int)(scene.getSize()/Math.pow(2, z));
+		int ry = (int)(rx * Display.getHeight()/Display.getWidth());
+		viewport.setBounds((int)x-rx, (int)y-ry, 2*rx, 2*ry);
 		scale = (float)(Display.getWidth() / viewport.getWidth());
 		scene.updateSceneObjects();
 	}
@@ -59,6 +67,10 @@ public class Camera {
 
 	public float getObjectZ(SceneObject o){
 		return scale;
+	}
+	
+	public int getPolygons(SceneObject o){
+		return 32; // TODO Math.max(4, (int)(2*scale));
 	}
 	
 	// DEPRECATED : use getObjectZ instead

@@ -3,6 +3,7 @@ package fr.ircf.humanity;
 import java.util.ResourceBundle;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
+import org.lwjgl.util.glu.GLU;
 
 public class Humanity implements Game{
 
@@ -44,10 +45,13 @@ public class Humanity implements Game{
 		Display.create();
 	}
 	
-	private void initGl(){       
+	private void initGl(){
+		GL11.glClearDepth(1);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, 1, -1);
+		//GL11.glLoadIdentity();
+		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -100, 100);
+		//float aspect = Display.getDisplayMode().getWidth() / (float) Display.getDisplayMode().getHeight();
+	    //GLU.gluPerspective(45f, aspect, 0.1f, 100.0f);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	}
 	
@@ -72,31 +76,14 @@ public class Humanity implements Game{
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}
-		// FIXME Show nothing ?!
 		camera = new Camera(galaxy);
 		camera.show(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
-	}
-
-	@Override
-	public Options getOptions() {
-		return options;
-	}
-
-	private long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-	}
-	
-	private double getDelta() {
-		long currentTime = getTime();
-		double delta = (double) currentTime - (double) lastFrame;
-		lastFrame = getTime();
-		return delta;
 	}
 	
     @Override
 	public void run(){
 		while(!Display.isCloseRequested()){
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			double delta = getDelta();
 			for(GameElement gameElement : gameElements){
 				if (gameElement.visible()){
@@ -104,12 +91,31 @@ public class Humanity implements Game{
 					gameElement.update(delta);
 				}
 			}
-			Display.update();
 			Display.sync(60);
+			Display.update();
 		}
 		Display.destroy();
 	}
 
+    /**
+     * Time helpers
+     */
+	private long getTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	
+	private double getDelta() {
+		long currentTime = getTime();
+		double delta = ((double) currentTime - (double) lastFrame) * options.getSpeed()/10;
+		lastFrame = getTime();
+		return delta;
+	}
+    
+	@Override
+	public Options getOptions() {
+		return options;
+	}
+	
 	@Override
 	public String i18n(String message){
 		return messages.getString(message);

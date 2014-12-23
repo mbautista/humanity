@@ -1,4 +1,4 @@
-package fr.ircf.humanity.ui;
+package fr.ircf.humanity.tests;
 
 import java.awt.Button;
 import java.awt.Canvas;
@@ -14,6 +14,15 @@ public class AwtTest extends Frame{
 
 	private static boolean closeRequested = false;
 	private Dialog dialog;
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		AwtTest a = new AwtTest();
+		a.init();
+		a.run();
+	}
 	
 	public void init(){
 		try{
@@ -72,14 +81,5 @@ public class AwtTest extends Frame{
 		}
 		Display.destroy();
 		dispose();
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		AwtTest a = new AwtTest();
-		a.init();
-		a.run();
 	}
 }

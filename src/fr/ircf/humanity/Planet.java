@@ -1,10 +1,8 @@
 package fr.ircf.humanity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -12,19 +10,23 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Planet extends Aster {
 
-	public static int MAX_LOCALX = 16,
+	public static int MAX_LOCALX = 32,
 			MIN_WATER = 64, MAX_WATER = 128,
 			MIN_ATMOSPHERE = 64, MAX_ATMOSPHERE = 128,
 			MIN_ENERGY = 64, MAX_ENERGY = 128,
 			MIN_SIZE = 1, MAX_SIZE = 4,
+			MIN_HOURS = 10, MAX_HOURS = 30,
 			MAX_SATELLITES = 20;
+	public static float MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
-	private int localX, localY, water = 0, atmosphere = 0, satellites = 0;
+	private int localX, localY, water = 0, atmosphere = 0, satellites = 0, hours;
+	private float hour = 0;
 	private ArrayList<Population> populations;
-	private enum Type { ROCKY, HABITABLE, GAZEOUS };
-	private Type type = Type.ROCKY;
+	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
 	private Rings rings = Rings.NONE;
+	private static HashMap<String, Texture> textures;
+	private Texture texture;
 	
 	public Planet(Star star){
 		this.star = star;
@@ -39,30 +41,36 @@ public class Planet extends Aster {
 	 * GAZEOUS may have rings
 	 * TODO water should depend on atmosphere (or inversely)
 	 * TODO HABITABLE may have AI populations
-	 * TODO random color (ground material)
+	 * color intensity depends on type
 	 */
 	@Override
 	public void create(){
+		// FIXME avoid creating too close planets
 		double r = randomBetween(star.getSize() + 1, MAX_LOCALX);
 		// FIXME double r = star.getSize() + 1 + randomGaussian(MAX_LOCALX - star.getSize() - 1);
-		double a = random.nextDouble() * Math.PI;
-		localX = (int)(MAX_LOCALX + r * Math.cos(a));
-		localY = (int)(MAX_LOCALX + r * Math.sin(a));
+		double a = 2 * random.nextDouble() * Math.PI;
+		localX = (int)(r * Math.cos(a));
+		localY = (int)(r * Math.sin(a));
 		double t = r/MAX_LOCALX - 0.5;
-		type =  t<0 ? Type.ROCKY : Type.GAZEOUS;
-		if (Math.abs(t)<star.getHabitability()) type = Type.HABITABLE;
-		if (type == Type.HABITABLE){
+		type =  t<0 ? PlanetType.ROCKY : PlanetType.GAZEOUS;
+		if (Math.abs(t)<star.getHabitability()) type = PlanetType.HABITABLE;
+		if (type == PlanetType.HABITABLE){
 			atmosphere = randomBetween(MIN_ATMOSPHERE, MAX_ATMOSPHERE);
 			water = randomBetween(MIN_WATER, MAX_WATER);
 		}
 		int dust = random.nextInt(3);
-		if (type == Type.GAZEOUS && dust>0){
+		if (type == PlanetType.GAZEOUS && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
 		size = randomBetweenWithFactor(MIN_SIZE, MAX_SIZE, (int)r); // TODO unrealistic
 		energy = randomBetweenWithFactor(MIN_ENERGY, MAX_ENERGY, size);
 		satellites = randomBetweenWithFactor(0, MAX_SATELLITES, size);
-		color = randomColor();
+		color = randomColorBetweenIntensity(
+				MIN_INTENSITY + type.getValue(),
+				MIN_INTENSITY + (type.getValue()+1) * (MAX_INTENSITY - MIN_INTENSITY) / 3
+		);
+		texture = getTexture();
+		hours = randomBetween(MIN_HOURS, MAX_HOURS);
 		updateXY();
 	}
 	
@@ -71,36 +79,70 @@ public class Planet extends Aster {
 		y = star.y + localY;
 	}
 	
+	/**
+	 * Render all planet elements (planet, orbit, atmosphere...)
+	 */
 	@Override
 	public void render(){
-		GL11.glTranslatef(getScreenX(), getScreenY(), getScreenZ());
-		// TODO GL11.glColor3f(color[0], color[1], color[2]);
+		GL11.glColor3f(color[0], color[1], color[2]);
+		renderOrbit();
+		renderPlanet();
+	}
+	
+	/**
+	 * Render orbit
+	 */
+	private void renderOrbit(){
+		// TODO
+	}
+	
+	/**
+	 * Render planet only
+	 */
+	// FIXME sometimes texture does not render ?!
+	private void renderPlanet(){
+		GL11.glPushMatrix();
+		GL11.glTranslatef(getScreenX(), getScreenY(), size*getScreenZ());
+		GL11.glRotatef(90, 1, 0, 0); // FIXME change texture orientation to avoid this
+		GL11.glPushMatrix();
+		GL11.glRotatef(hour, 0, 0, 1);
 		Sphere sphere = new Sphere();
-		//sphere.setDrawStyle(GLU.GLU_FILL);
-		//sphere.setTextureFlag(true);
-		//sphere.setNormals(GLU.GLU_SMOOTH);
-		//try { getTexture().bind(); }catch(Exception e){}
-		sphere.draw(size, 16, 16);
+		sphere.setTextureFlag(true);
+		texture.bind();
+		sphere.draw(size*getScreenZ(), getPolygons(), getPolygons());
+		GL11.glPopMatrix();
+		GL11.glPopMatrix();
 	}
 	
 	@Override
 	public void update(double delta){
 		// TODO energy, water, atmosphere, type
+		hour+= delta / hours;
 	}
 	
+	/**
+	 * Texture helper
+	 * @return
+	 */
+	private Texture getTexture(){
+		String file = "assets/images/" + type.getName() + ".jpg";
+		if (textures == null) textures = new HashMap<String, Texture>();
+		if (textures.containsKey(file)){
+			texture = textures.get(file);
+		}else{
+			try{
+				texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(file));
+			}catch(Exception e){
+				e.printStackTrace();
+				System.exit(0);
+			}
+			textures.put(file, texture);
+		}
+		return texture;
+	}
+
 	@Override
 	public Camera getCamera(){
 		return star.getCamera();
-	}
-	
-	private Texture getTexture() throws IOException{
-		// TODO cache
-		String file = null;
-		switch(type){
-			case ROCKY : 		file = "assets/images/rocky.jpg"; break;
-			case HABITABLE : 	file = "assets/images/habitable.jpg"; break;
-			case GAZEOUS : 		file = "assets/images/gazeous.jpg"; break;
-		}
-		return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(file));
 	}
 }

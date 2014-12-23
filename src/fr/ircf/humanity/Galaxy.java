@@ -22,7 +22,27 @@ public class Galaxy implements Scene, GameElement {
 		return true;
 	}
 
+	/**
+	 * Create a galaxy with with Options.galaxySize stars
+	 */
+	public void create(){
+		create(game.getOptions().getGalaxySize());
+	}
+	
+	/**
+	 * Create a galaxy with arbitrary number of stars
+	 * @param stars
+	 */
+	public void create(int stars){
+		for (int i=0; i<stars; i++){
+			Star star = new Star(this);
+			star.create();
+			this.stars.add(star);
+		}
+	}
+	
 	@Override
+	// TODO render camera first (e.g. global glTanslate)
 	public void render(){
 		for (Star star: sceneStars){
 			star.render();
@@ -36,18 +56,9 @@ public class Galaxy implements Scene, GameElement {
 		}
 	}
 
-	public void create(){
-		create(game.getOptions().getGalaxySize());
-	}
-	
-	public void create(int stars){
-		for (int i=0; i<stars; i++){
-			Star star = new Star(this);
-			star.create();
-			this.stars.add(star);
-		}
-	}
-
+	/**
+	 * Update visible stars, from the camera viewport
+	 */
 	public void updateSceneObjects() {
 		sceneStars.clear();
 		for(Star star: stars){

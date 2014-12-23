@@ -4,7 +4,6 @@ import org.lwjgl.opengl.Display;
 
 public class Menu implements GameElement {
 
-	private static int Y = 200;
 	private static int DY = 40;
 	private Game game;
 	private Button newButton, optionsButton, quitButton;
@@ -20,7 +19,10 @@ public class Menu implements GameElement {
 		};
 		int i = 0;
 		for (Button button: buttons){
-			button.setPosition((Display.getWidth() - button.getWidth())/2, Y + DY * i);
+			button.setPosition(
+					(Display.getWidth() - button.getWidth())/2,
+					(Display.getHeight() - getHeight())/2 + i * DY
+			);
 			i++;
 		}
 	}
@@ -40,5 +42,9 @@ public class Menu implements GameElement {
 	@Override
 	public void update(double delta) {
 		// TODO Auto-generated method stub
+	}
+	
+	public int getHeight(){
+		return buttons.length * (buttons[0].getHeight() + DY) - DY;
 	}
 }

@@ -10,7 +10,7 @@ public class Options implements GameElement {
 	private DisplayMode displayMode;
 	private boolean fullScreen = false;
 	private Locale locale = Locale.US;
-	private int soundVolume = 100, musicVolume = 100, galaxySize = 200, starSize = 10, speed = 1, difficulty = 1;
+	private int soundVolume = 100, musicVolume = 100, galaxySize = 200, starSize = 10, speed = 2, difficulty = 1;
 	private float habitability = 0.1f; // 0 = None, 0.5 = Everywhere
 	private Game game;
 	private static int Y = 100;

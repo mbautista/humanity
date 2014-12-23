@@ -67,6 +67,10 @@ public abstract class Aster implements SceneObject{
 		return getCamera().getObjectZ(this);
 	}
 	
+	public int getPolygons(){
+		return getCamera().getPolygons(this);
+	}
+	
 	/**
 	 * Random helpers
 	 */
@@ -82,11 +86,15 @@ public abstract class Aster implements SceneObject{
 		return min + (int)(random.nextInt(factor * (max - min)) / factor);
 	}
 	
-	protected float[] randomColor(){
-		return new float[] {
-			(float) random.nextDouble(),
-			(float) random.nextDouble(),
-			(float) random.nextDouble()
-		};
+	protected float[] randomColorBetweenIntensity(float min, float max){
+		float[] c = new float[3];
+		c[0] = random.nextFloat();
+		c[1] = random.nextFloat();
+		c[2] = random.nextFloat();
+		float i = 3 * (min + random.nextFloat() * (max-min)) / (c[0] + c[1] + c[2]);
+		c[0]*= i;
+		c[1]*= i;
+		c[2]*= i;
+		return c;
 	}
 }

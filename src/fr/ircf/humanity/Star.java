@@ -8,9 +8,9 @@ import org.lwjgl.util.glu.Sphere;
 
 public class Star extends Aster {
 
-	public static int MIN_SIZE = 2, MAX_SIZE = 8,
+	public static int MIN_SIZE = 5, MAX_SIZE = 8,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 512, MAX_ENERGY = 1024,
-			MIN_Z_FOR_PLANETS = 6;
+			MIN_Z_FOR_PLANETS = 5;
 	public static int VIEWPORT_SIZE = Galaxy.SIZE / 2^MIN_Z_FOR_PLANETS;
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
@@ -65,12 +65,15 @@ public class Star extends Aster {
 	/**
 	 * Render star only
 	 */
+	// FIXME hole in star ?!
 	private void renderStar(){
 		// TODO enlighten sphere
+		GL11.glPushMatrix();
 		GL11.glTranslatef(getScreenX(), getScreenY(), getScreenZ());
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
-		s.draw(size, 16, 16);
+		s.draw(size*getScreenZ(), getPolygons(), getPolygons());
+		GL11.glPopMatrix();
 	}
 	
 	/**
@@ -99,15 +102,16 @@ public class Star extends Aster {
 	 * Update star color from energy
 	 * @see http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 	 */
+	// FIXME always grey/blue ?!
 	private void updateColor(){
 		float t = energy * 400 / MAX_ENERGY;
 		if (t <= 66){
 			color[0] = 1;
-			color[1] = (float) Math.min(0, Math.max(1, 0.388557823 * Math.log(t) - 0.629373313));
-			color[2] = (float) Math.min(0, Math.max(1, 0.541084888 * Math.log(t - 10) - 1.191581222));
+			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
+			color[2] = (float) Math.min(1, Math.max(0, 0.541084888 * Math.log(t - 10) - 1.191581222));
 		}else{
-			color[0] = (float) Math.min(0, Math.max(1, 1.287885654 * Math.pow(t - 60, -0.1332047592)));
-			color[1] = (float) Math.min(0, Math.max(1, 1.125477225 * Math.pow(t - 60, -0.0755148492)));
+			color[0] = (float) Math.min(1, Math.max(0, 1.287885654 * Math.pow(t - 60, -0.1332047592)));
+			color[1] = (float) Math.min(1, Math.max(0, 1.125477225 * Math.pow(t - 60, -0.0755148492)));
 			color[2] = 1;
 		}
 	}
@@ -128,20 +132,15 @@ public class Star extends Aster {
 		}else{
 			size = (int) (SIZE_PEAK_B * energy + SIZE_PEAK_C);
 		}
-		size = Math.min(0, size);
+		size = Math.max(0, size);
 	}
 	
-	public Planet getRandomPlanet(){
-		return planets.get(random.nextInt(planets.size()));
-	}
-	
-	public float getHabitability(){
-		return galaxy.getGame().getOptions().getHabitability();
-	}
-	
+	/**
+	 * Update visible planets in this star system, from camera viewport
+	 */
 	public void updateSceneObjects() {
 		scenePlanets.clear();
-		if (getCamera().getZ()>MIN_Z_FOR_PLANETS){
+		if (getCamera().getZ()>=MIN_Z_FOR_PLANETS){
 			for(Planet planet: planets){
 				if (getCamera().shows(planet)){
 					scenePlanets.add(planet);
@@ -153,5 +152,13 @@ public class Star extends Aster {
 	@Override
 	public Camera getCamera(){
 		return galaxy.getGame().getCamera();
+	}
+
+	public Planet getRandomPlanet(){
+		return planets.get(random.nextInt(planets.size()));
+	}
+	
+	public float getHabitability(){
+		return galaxy.getGame().getOptions().getHabitability();
 	}
 }

@@ -50,7 +50,6 @@ public class Humanity implements Game{
 	private void initGl(){
 		GL11.glClearDepth(1);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
-		//GL11.glLoadIdentity();
 		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -100, 100);
 		//float aspect = Display.getDisplayMode().getWidth() / (float) Display.getDisplayMode().getHeight();
 	    //GLU.gluPerspective(45f, aspect, 0.1f, 100.0f);
@@ -63,15 +62,15 @@ public class Humanity implements Game{
 		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
 		galaxy = new Galaxy();
 		loader = new Loader();
-		// TODO use HashMap<String, GameElement> instead so we can get any game element by its name
+		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
 			galaxy,
 			new Title(),
 			new Menu(),
 			options,
-			//new Zoom(),
+			new Zoom(),
 			//new Map(),
-			//new Player(),
+			//new Human(),
 			//new Log(),
 			//new Actions(),
 			//new Audio(),
@@ -105,13 +104,20 @@ public class Humanity implements Game{
     }
     
     private void update(double delta){
-    	if (state == State.NEW){
-    		state = State.LOAD;
-    		loader.setMax(options.getGalaxySize());
-    		galaxy.create(options.getGalaxySize());
-    	}
-    	if (state == State.LOAD){
-    		loader.setValue(galaxy.getStarSize());
+    	switch(state){
+	    	case NEW :
+	    		//System.out.println("new game");
+	    		state = State.LOAD;
+	    		loader.setMax(options.getGalaxySize());
+	    		galaxy.create(options.getGalaxySize());
+	    		break;
+	    	case LOAD :
+	    		//System.out.println("loading...");
+	    		loader.setValue(galaxy.getStarSize());
+	    		break;
+	    	case GAME :
+	    		//System.out.println("game started");
+	    		break;
     	}
 		for(GameElement gameElement : gameElements){
 			if (gameElement.visible()){

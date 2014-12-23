@@ -32,6 +32,7 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		// TODO spiral repartition
+		// FIXME avoid creating too close stars
 		x = randomGaussian(Galaxy.SIZE);
 		y = randomGaussian(Galaxy.SIZE);
 		viewport = new Rectangle((int)x-VIEWPORT_SIZE, (int)y-VIEWPORT_SIZE, 2*VIEWPORT_SIZE, 2*VIEWPORT_SIZE);

@@ -9,7 +9,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Text {
+public class Text extends Component {
 
 	private static Color COLOR = Color.white;
 	private static float SIZE = 14f;
@@ -20,7 +20,6 @@ public class Text {
 	private float size;
 	private TrueTypeFont font;
 	private static HashMap<String, TrueTypeFont> fonts;
-	private int x = 0, y = 0;
 
 	public Text(String text) throws Exception {
 		this(text, COLOR, SIZE, FONT);
@@ -58,11 +57,6 @@ public class Text {
 			font = new TrueTypeFont(awtFont.deriveFont(size), ALIASING);
 			fonts.put(file + size, font);
 		}
-	}
-
-	public void setPosition(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 	
 	public int getWidth(){

@@ -4,13 +4,13 @@ import java.awt.Rectangle;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 
-public class Button {
+public class Button extends Component {
 
 	private static float[] COLOR_OUT = {0.2f, 0.2f, 0.2f, 0.5f};
 	private static float[] COLOR_OVER = {0.4f, 0.4f, 0.4f, 0.5f};
 	private static float[] COLOR_CLICK = {1f, 1f, 1f, 0.5f};
 	private float[] color;
-	private int x = 0, y = 0, padding = 10;
+	private int padding = 10;
 	private Text text;
 	private Rectangle viewport;
 	

@@ -7,7 +7,7 @@ import org.lwjgl.opengl.Display;
 public class Camera {
 
 	private float x, y, z, scale;
-	public static int Z_MIN = 1, Z_MAX = 9;
+	public static int Z_MIN = 1, Z_MAX = 9, DZ = 1;
 	private Rectangle viewport;
 	private Scene scene;
 	
@@ -55,6 +55,19 @@ public class Camera {
 	}
 	
 	/**
+	 * Zoom helpers
+	 */
+	public void zoomIn(){
+		z = Math.min(Z_MAX, z + DZ);
+		updateViewport();
+	}
+	
+	public void zoomOut(){
+		z = Math.max(Z_MIN, z - DZ);
+		updateViewport();
+	}
+	
+	/**
 	 * Get object attributes for render on screen
 	 */
 	public float getObjectX(SceneObject o){
@@ -88,6 +101,7 @@ public class Camera {
 
 	public void setZ(float z) {
 		this.z = z;
+		updateViewport();
 	}
 	
 	public float getX() {

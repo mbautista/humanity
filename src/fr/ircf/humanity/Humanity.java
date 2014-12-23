@@ -80,7 +80,7 @@ public class Humanity implements Game{
 			gameElement.init(this);
 		}
 		camera = new Camera(galaxy);
-		camera.show(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
+		camera.show(galaxy.getRandomStar().getRandomPlanet(), Camera.Z_MAX); // TODO set & show player planet
 	}
 	
     @Override

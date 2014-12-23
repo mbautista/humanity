@@ -7,7 +7,7 @@ import org.lwjgl.opengl.Display;
 public class Camera {
 
 	private float x, y, z, scale;
-	public static int Z_MIN = 1, Z_MAX = 9, DZ = 1;
+	public static float Z_MIN = 0, Z_MAX = 10, DZ = 0.1f;
 	private Rectangle viewport;
 	private Scene scene;
 	
@@ -21,9 +21,13 @@ public class Camera {
 	 * @param o
 	 */
 	public void show(SceneObject o){
+		show(o, z);
+	}
+	
+	public void show(SceneObject o, float z){
 		this.x = o.getX();
 		this.y = o.getY();
-		this.z = Z_MAX; // Z_MAX should depend on aster size
+		this.z = z;
 		updateViewport();
 	}
 	
@@ -31,7 +35,7 @@ public class Camera {
 	 * Updates camera viewport and scene objects
 	 */
 	public void updateViewport(){
-		int rx = (int)(scene.getSize()/Math.pow(2, z));
+		int rx = (int)(scene.getSize()/Math.pow(2, z-1));
 		int ry = (int)(rx * Display.getHeight()/Display.getWidth());
 		viewport.setBounds((int)x-rx, (int)y-ry, 2*rx, 2*ry);
 		scale = (float)(Display.getWidth() / viewport.getWidth());
@@ -83,7 +87,7 @@ public class Camera {
 	}
 	
 	public int getPolygons(SceneObject o){
-		return 32; // TODO Math.max(4, (int)(2*scale));
+		return Math.max(4, (int)(4*z));
 	}
 	
 	// DEPRECATED : use getObjectZ instead

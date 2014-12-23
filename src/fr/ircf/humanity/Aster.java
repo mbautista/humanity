@@ -8,7 +8,7 @@ import java.util.Random;
 public abstract class Aster implements SceneObject{
 
 	protected static Random random = new Random();
-	protected int x, y, size, energy;
+	protected float x, y, size, energy;
 	protected float[] color = new float[3];
 	protected ArrayList<Bar> bars;
 	protected Rectangle viewport;
@@ -34,16 +34,16 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	@Override
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 	
 	@Override
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public int getSize() {
+	public float getSize() {
 		return size;
 	}
 
@@ -74,16 +74,17 @@ public abstract class Aster implements SceneObject{
 	/**
 	 * Random helpers
 	 */
-	protected int randomBetween(int min, int max){
-		return min + random.nextInt(max - min);
+	protected float randomBetween(float min, float max){
+		return min + random.nextFloat() * (max - min);
 	}
 	
-	protected int randomGaussian(int max){
-		return (int)(max/2 * (1 + random.nextGaussian()));
+	protected float randomGaussian(float max){
+		return (float) (max/2 * (1 + random.nextGaussian()));
 	}
 	
-	protected int randomBetweenWithFactor(int min, int max, int factor){
-		return min + (int)(random.nextInt(factor * (max - min)) / factor);
+	protected float randomBetweenWithFactor(float min, float max, float factor){
+		float f = random.nextFloat();
+		return min + f + random.nextInt((int)(factor * (max - min - f))) / factor;
 	}
 	
 	protected float[] randomColorBetweenIntensity(float min, float max){

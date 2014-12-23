@@ -9,7 +9,7 @@ import org.lwjgl.util.glu.Sphere;
 public class Star extends Aster {
 
 	public static int MIN_SIZE = 5, MAX_SIZE = 8,
-			RED_GIANT_ENERGY = 128, MIN_ENERGY = 512, MAX_ENERGY = 1024,
+			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
 			MIN_Z_FOR_PLANETS = 5;
 	public static int VIEWPORT_SIZE = Galaxy.SIZE / 2^MIN_Z_FOR_PLANETS;
 	private Galaxy galaxy;
@@ -66,7 +66,6 @@ public class Star extends Aster {
 	/**
 	 * Render star only
 	 */
-	// FIXME hole in star ?!
 	private void renderStar(){
 		// TODO enlighten sphere
 		GL11.glPushMatrix();
@@ -105,7 +104,7 @@ public class Star extends Aster {
 	 */
 	// FIXME always grey/blue ?!
 	private void updateColor(){
-		float t = energy * 400 / MAX_ENERGY;
+		float t = energy * 100 / MAX_ENERGY;
 		if (t <= 66){
 			color[0] = 1;
 			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
@@ -129,9 +128,9 @@ public class Star extends Aster {
 	private static float SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
 	private void updateSize() {
 		if (energy < RED_GIANT_ENERGY){
-			size = (int) (energy * SIZE_PEAK_A);
+			size = (energy * SIZE_PEAK_A);
 		}else{
-			size = (int) (SIZE_PEAK_B * energy + SIZE_PEAK_C);
+			size = (SIZE_PEAK_B * energy + SIZE_PEAK_C);
 		}
 		size = Math.max(0, size);
 	}

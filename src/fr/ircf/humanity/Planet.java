@@ -10,7 +10,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Planet extends Aster {
 
-	public static int MAX_LOCALX = 32,
+	public static float MAX_LOCALX = 32,
 			MIN_WATER = 64, MAX_WATER = 128,
 			MIN_ATMOSPHERE = 64, MAX_ATMOSPHERE = 128,
 			MIN_ENERGY = 64, MAX_ENERGY = 128,
@@ -19,8 +19,8 @@ public class Planet extends Aster {
 			MAX_SATELLITES = 20;
 	public static float MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
-	private int localX, localY, water = 0, atmosphere = 0, satellites = 0, hours;
-	private float hour = 0;
+	private int satellites = 0;
+	private float localX, localY, water = 0, atmosphere = 0, hours, hour = 0;
 	private ArrayList<Population> populations;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
@@ -44,12 +44,12 @@ public class Planet extends Aster {
 	 * color intensity depends on type
 	 * @param planet's rank around the star, needed for our modified BODE law
 	 */
-	private double BODE_A = 0.4, BODE_B = 0.15, BODE_C = 1.5; 
+	private double BODE_A = 0.4, BODE_B = 0.15, BODE_C = 2;
 	public void create(int rank){
 		double r = star.getSize() + BODE_A + BODE_B * Math.pow(BODE_C, rank);
 		double a = 2 * random.nextDouble() * Math.PI;
-		localX = (int)(r * Math.cos(a));
-		localY = (int)(r * Math.sin(a));
+		localX = (float)(r * Math.cos(a));
+		localY = (float)(r * Math.sin(a));
 		double t = r/MAX_LOCALX - 0.5;
 		type =  t<0 ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (Math.abs(t)<star.getHabitability()) type = PlanetType.HABITABLE;
@@ -61,9 +61,9 @@ public class Planet extends Aster {
 		if (type == PlanetType.GAZEOUS && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
-		size = randomBetweenWithFactor(MIN_SIZE, MAX_SIZE, (int)r); // TODO unrealistic
+		size = randomBetweenWithFactor(MIN_SIZE, MAX_SIZE, (float)r); // TODO unrealistic
 		energy = randomBetweenWithFactor(MIN_ENERGY, MAX_ENERGY, size);
-		satellites = randomBetweenWithFactor(0, MAX_SATELLITES, size);
+		satellites = (int) randomBetweenWithFactor(0, MAX_SATELLITES, size);
 		color = randomColorBetweenIntensity(
 				MIN_INTENSITY + type.getValue(),
 				MIN_INTENSITY + (type.getValue()+1) * (MAX_INTENSITY - MIN_INTENSITY) / 3

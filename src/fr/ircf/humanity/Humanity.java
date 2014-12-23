@@ -15,6 +15,8 @@ public class Humanity implements Game{
 	private Options options;
 	private Camera camera;
 	private ResourceBundle messages;
+	private Galaxy galaxy;
+	private Loader loader;
 
 	/**
 	 * @param args
@@ -59,7 +61,9 @@ public class Humanity implements Game{
 		lastFrame = getTime();
 		options = new Options();
 		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
-		Galaxy galaxy = new Galaxy();
+		galaxy = new Galaxy();
+		loader = new Loader();
+		// TODO use HashMap<String, GameElement> instead so we can get any game element by its name
 		gameElements = new GameElement[] {
 			galaxy,
 			new Title(),
@@ -71,7 +75,7 @@ public class Humanity implements Game{
 			//new Log(),
 			//new Actions(),
 			//new Audio(),
-			//new Loader(),
+			loader,
 		};
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
@@ -82,21 +86,40 @@ public class Humanity implements Game{
 	
     @Override
 	public void run(){
-		while(!Display.isCloseRequested()){
+		while(!Display.isCloseRequested() && state!=State.QUIT){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-			double delta = getDelta();
-			for(GameElement gameElement : gameElements){
-				if (gameElement.visible()){
-					gameElement.render();
-					gameElement.update(delta);
-				}
-			}
+			render();
+			update(getDelta());
 			Display.sync(60);
 			Display.update();
 		}
 		Display.destroy();
 	}
-
+    
+    private void render(){
+		for(GameElement gameElement : gameElements){
+			if (gameElement.visible()){
+				gameElement.render();
+			}
+		}
+    }
+    
+    private void update(double delta){
+    	if (state == State.NEW){
+    		state = State.LOAD;
+    		loader.setMax(options.getGalaxySize());
+    		galaxy.create(options.getGalaxySize());
+    	}
+    	if (state == State.LOAD){
+    		loader.setValue(galaxy.getStarSize());
+    	}
+		for(GameElement gameElement : gameElements){
+			if (gameElement.visible()){
+				gameElement.update(delta);
+			}
+		}
+    }
+    
     /**
      * Time helpers
      */

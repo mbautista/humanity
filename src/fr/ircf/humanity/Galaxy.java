@@ -21,13 +21,6 @@ public class Galaxy implements Scene, GameElement {
 	public boolean visible() {
 		return true;
 	}
-
-	/**
-	 * Create a galaxy with with Options.galaxySize stars
-	 */
-	public void create(){
-		create(game.getOptions().getGalaxySize());
-	}
 	
 	/**
 	 * Create a galaxy with arbitrary number of stars
@@ -80,5 +73,9 @@ public class Galaxy implements Scene, GameElement {
 	@Override
 	public int getSize(){
 		return SIZE;
+	}
+
+	public int getStarSize(){
+		return stars.size();
 	}
 }

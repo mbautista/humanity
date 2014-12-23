@@ -1,5 +1,5 @@
 package fr.ircf.humanity;
 
 public enum State {
-	MENU, OPTIONS, GAME
+	MENU, OPTIONS, NEW, LOAD, GAME, QUIT
 }

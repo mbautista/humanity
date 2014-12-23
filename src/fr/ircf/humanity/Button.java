@@ -20,7 +20,16 @@ public class Button {
 	}
 
 	public void update(double delta) {
-		// TODO update button
+		// TODO mouse over
+		// TODO mouse click
+	}
+	
+	public void over(){
+		// TODO change cursor
+		// TODO enlight button
+	}
+	
+	public void click(){
 	}
 	
 	public int getWidth() {

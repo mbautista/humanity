@@ -1,17 +1,27 @@
 package fr.ircf.humanity;
 
-public class Loader extends Bar {
+import org.lwjgl.opengl.Display;
 
-	public Loader() {
-		// TODO Auto-generated constructor stub
+public class Loader extends Bar implements GameElement {
+
+	private Game game;
+
+	@Override
+	public void init(Game game) throws Exception {
+		this.game = game;
+		x = (Display.getWidth()-width)/2;
+		y = (Display.getHeight()-height)/2;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	@Override
+	public boolean visible() {
+		return game.getState() == State.LOAD;
 	}
 
+	@Override
+	public void update(double delta) {
+		if (game.getState() == State.LOAD && value>=max){
+			game.setState(State.GAME);
+		}
+	}
 }

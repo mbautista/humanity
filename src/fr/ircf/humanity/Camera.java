@@ -23,7 +23,7 @@ public class Camera {
 	public void show(SceneObject o){
 		this.x = o.getX();
 		this.y = o.getY();
-		this.z = Z_MAX;
+		this.z = Z_MAX; // Z_MAX should depend on aster size
 		updateViewport();
 	}
 	

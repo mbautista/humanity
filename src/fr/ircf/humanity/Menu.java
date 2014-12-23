@@ -1,27 +1,24 @@
 package fr.ircf.humanity;
 
-import java.awt.event.WindowEvent;
-
 import org.lwjgl.opengl.Display;
 
 public class Menu implements GameElement {
 
-	private static int DY = 40;
-	private Game game;
-	private Button newButton, optionsButton, quitButton;
-	private Button[] buttons;
+	protected static int DY = 5;
+	protected Game game;
+	protected Button[] buttons; // TODO use HashMap<String, Button> instead of []
 	
 	@Override
 	public void init(final Game game) throws Exception {
 		this.game = game;
 		buttons = new Button[] {
-			newButton = new Button(game.i18n("menu.new")) {
+			new Button(game.i18n("menu.new")) {
 				public void click() { game.setState(State.NEW);
 			}},
-			optionsButton = new Button(game.i18n("menu.options")) {
+			new Button(game.i18n("menu.options")) {
 				public void click() { game.setState(State.OPTIONS);
 			}},
-			quitButton = new Button(game.i18n("menu.quit")) {
+			new Button(game.i18n("menu.quit")) {
 				public void click() { game.setState(State.QUIT);
 			}},
 		};
@@ -29,7 +26,7 @@ public class Menu implements GameElement {
 		for (Button button: buttons){
 			button.setPosition(
 				(Display.getWidth() - button.getWidth())/2,
-				(Display.getHeight() - getHeight())/2 + i * DY
+				(Display.getHeight() - getHeight())/2 + i * (button.getHeight() + DY)
 			);
 			i++;
 		}

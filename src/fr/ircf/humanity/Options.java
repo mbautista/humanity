@@ -5,35 +5,66 @@ import java.util.Locale;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-public class Options implements GameElement {
+public class Options extends Menu {
 
 	private DisplayMode displayMode;
 	private boolean fullScreen = false;
 	private Locale locale = Locale.US;
 	private int soundVolume = 100, musicVolume = 100, galaxySize = 200, starSize = 10, speed = 2, difficulty = 1;
 	private float habitability = 0.1f; // 0 = None, 0.5 = Everywhere
-	private Game game;
-	private static int Y = 100;
-	private static int DY = 40;
 	
 	@Override
-	public void init(Game game) throws Exception {
+	public void init(final Game game) throws Exception {
 		this.game = game;
+		// TODO option dialog with input field
+		buttons = new Button[] {
+			new Button(game.i18n("options.display") + " : " + Display.getWidth() + " x " + Display.getHeight()) {
+				public void click() {}
+			},
+			new Button(game.i18n("options.fullScreen") + " : " + (Display.isFullscreen() ? game.i18n("yes") : game.i18n("no"))) {
+				public void click() {}
+			},
+			new Button(game.i18n("options.locale") + " : " + locale.getDisplayName()) {
+				public void click() {}
+			},
+			new Button(game.i18n("options.sound") + " : " + soundVolume + "%") {
+				public void click() {}
+			},
+			new Button(game.i18n("options.musicVolume") + " : " + musicVolume + "%") {
+				public void click() {}
+			},
+			new Button(game.i18n("options.galaxySize") + " : " + galaxySize ) {
+				public void click() {}
+			},
+			new Button(game.i18n("options.starSize") + " : " + starSize ) {
+				public void click() {}
+			},
+			new Button(game.i18n("options.habitability") + " : " + habitability + "/0.5") {
+				public void click() {}
+			},
+			new Button(game.i18n("options.speed") + " : " + speed + "/10") {
+				public void click() {}
+			},
+			new Button(game.i18n("options.difficulty") + " : " + difficulty + "/10") {
+				public void click() {}
+			},
+			new Button(game.i18n("options.back")) {
+				public void click() { game.setState(State.MENU); }
+			},
+		};
+		int i = 0;
+		for (Button button: buttons){
+			button.setPosition(
+				(Display.getWidth() - button.getWidth())/2,
+				(Display.getHeight() - getHeight())/2 + i * (button.getHeight() + DY)
+			);
+			i++;
+		}
 	}
 
 	@Override
 	public boolean visible() {
 		return game.getState() == State.OPTIONS;
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void update(double delta) {
-		// TODO Auto-generated method stub
 	}
 	
 	public DisplayMode getDisplayMode() {

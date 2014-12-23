@@ -34,7 +34,7 @@ public class Planet extends Aster {
 	
 	/**
 	 * Randomly create a planet :
-	 * generate a random planet around the star, with gaussian repartition at MAX_LOCALX
+	 * generate a random planet around the star, with BODE law repartition
 	 * type and size depends on star distance (r)
 	 * energy and satellites depends on size
 	 * HABITABLE are located in the habitable zone and have water and atmosphere
@@ -42,12 +42,11 @@ public class Planet extends Aster {
 	 * TODO water should depend on atmosphere (or inversely)
 	 * TODO HABITABLE may have AI populations
 	 * color intensity depends on type
+	 * @param planet's rank around the star, needed for our modified BODE law
 	 */
-	@Override
-	public void create(){
-		// FIXME avoid creating too close planets
-		double r = randomBetween(star.getSize() + 1, MAX_LOCALX);
-		// FIXME double r = star.getSize() + 1 + randomGaussian(MAX_LOCALX - star.getSize() - 1);
+	private double BODE_A = 0.4, BODE_B = 0.15, BODE_C = 1.5; 
+	public void create(int rank){
+		double r = star.getSize() + BODE_A + BODE_B * Math.pow(BODE_C, rank);
 		double a = 2 * random.nextDouble() * Math.PI;
 		localX = (int)(r * Math.cos(a));
 		localY = (int)(r * Math.sin(a));

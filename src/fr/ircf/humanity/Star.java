@@ -45,7 +45,7 @@ public class Star extends Aster {
 	private void createPlanets(int planets){
 		for (int i=0; i<planets; i++){
 			Planet planet = new Planet(this);
-			planet.create();
+			planet.create(i);
 			this.planets.add(planet);
 		}
 	}

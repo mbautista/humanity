@@ -21,7 +21,7 @@ public class Planet extends Aster {
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
 	private int satellites = 0;
-	private double distance, localX, localY, water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
+	private double distance, water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
 	private ArrayList<Population> populations;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
@@ -54,9 +54,8 @@ public class Planet extends Aster {
 		}else{
 			distance = randomBetween(star.getSize() + MIN_LOCALX, MAX_LOCALX/bode(max));
 		}
-		double a = 0; // TODO day = 2 * random.nextDouble() * Math.PI;
-		localX = (float)(distance * Math.cos(a));
-		localY = (float)(distance * Math.sin(a));
+		day = 2 * random.nextDouble() * Math.PI;
+		days = kepler3();
 		type =  (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (habitable()) type = PlanetType.HABITABLE;
 		if (type == PlanetType.HABITABLE){
@@ -76,12 +75,7 @@ public class Planet extends Aster {
 		);
 		texture = getTexture();
 		hours = randomBetween(MIN_HOURS, MAX_HOURS);
-		updateXY();
-	}
-
-	private void updateXY(){
-		x = star.x + localX;
-		y = star.y + localY;
+		updatePosition();
 	}
 	
 	/**
@@ -123,8 +117,15 @@ public class Planet extends Aster {
 	public void update(double delta){
 		// TODO energy, water, atmosphere, type
 		hour+= delta / hours;
-		super.update(delta);
+		day += delta / days;
+		updatePosition();
 		// TODO update viewport
+		super.update(delta);
+	}
+	
+	private void updatePosition(){
+		x = star.x + (float)(distance * Math.cos(day));
+		y = star.y + (float)(distance * Math.sin(day));
 	}
 	
 	/**
@@ -158,8 +159,12 @@ public class Planet extends Aster {
 	
 	/**
 	 * Kepler's 3rd law for planet orbit period
+	 * KEPLER_A is the time scale factor
 	 */
-	//private double KEPLER_A = 
+	private double KEPLER_A = 10, KEPLER_B = 1.5;
+	private double kepler3(){
+		return KEPLER_A * Math.pow(distance, KEPLER_B);
+	}
 	
 	/**
 	 * Habitable law

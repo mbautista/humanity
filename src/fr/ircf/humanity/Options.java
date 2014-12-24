@@ -10,8 +10,8 @@ public class Options extends Menu {
 	private DisplayMode displayMode;
 	private boolean fullScreen = false;
 	private Locale locale = Locale.US;
-	private int soundVolume = 100, musicVolume = 100, galaxySize = 2000, starSize = 10, speed = 2, difficulty = 1;
-	private float habitability = 0.1f; // 0 = None, 0.5 = Everywhere
+	private int soundVolume = 100, musicVolume = 100, galaxySize = 2000, starSize = 6, speed = 2, difficulty = 1;
+	private float life = 0.1f; // 0 = None, 1 = Everywhere
 	
 	@Override
 	public void init(final Game game) throws Exception {
@@ -39,7 +39,7 @@ public class Options extends Menu {
 			new Button(game.i18n("options.starSize") + " : " + starSize ) {
 				public void click() {}
 			},
-			new Button(game.i18n("options.habitability") + " : " + habitability + "/0.5") {
+			new Button(game.i18n("options.life") + " : " + life ) {
 				public void click() {}
 			},
 			new Button(game.i18n("options.speed") + " : " + speed + "/10") {
@@ -121,10 +121,10 @@ public class Options extends Menu {
 	public void setStarSize(int starSize) {
 		this.starSize = starSize;
 	}
-	public float getHabitability() {
-		return habitability;
+	public float getLife() {
+		return life;
 	}
-	public void setHabitability(float habitability) {
-		this.habitability = habitability;
+	public void setLife(float life) {
+		this.life = life;
 	}
 }

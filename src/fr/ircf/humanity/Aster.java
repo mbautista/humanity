@@ -11,7 +11,7 @@ import org.lwjgl.opengl.Display;
 public abstract class Aster implements SceneObject{
 
 	protected static Random random = new Random();
-	protected float x, y, size, energy;
+	protected double x, y, size, energy;
 	protected float[] color = new float[3];
 	protected ArrayList<Bar> bars;
 	protected Rectangle viewport;
@@ -53,16 +53,16 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	@Override
-	public float getX() {
+	public double getX() {
 		return x;
 	}
 	
 	@Override
-	public float getY() {
+	public double getY() {
 		return y;
 	}
 
-	public float getSize() {
+	public double getSize() {
 		return size;
 	}
 
@@ -72,17 +72,17 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	@Override
-	public float getScreenX(){
+	public double getScreenX(){
 		return getCamera().getObjectX(this);
 	}
 	
 	@Override
-	public float getScreenY(){
+	public double getScreenY(){
 		return getCamera().getObjectY(this);
 	}
 	
 	@Override
-	public float getScreenZ(){
+	public double getScreenZ(){
 		return getCamera().getObjectZ(this);
 	}
 	
@@ -93,24 +93,24 @@ public abstract class Aster implements SceneObject{
 	/**
 	 * Random helpers
 	 */
-	protected float randomBetween(float min, float max){
-		return min + random.nextFloat() * (max - min);
+	protected double randomBetween(double min, double max){
+		return min + random.nextDouble() * (max - min);
 	}
 	
-	protected float randomGaussian(float max){
+	protected double randomGaussian(double max){
 		return (float) (max/2 * (1 + random.nextGaussian()));
 	}
 	
-	protected float randomBetweenWithFactor(float min, float max, float factor){
-		return min + random.nextFloat() * (max-min) * factor;
+	protected double randomBetweenWithFactor(double min, double max, double factor){
+		return min + random.nextDouble() * (max-min) * factor;
 	}
 	
-	protected float[] randomColorBetweenIntensity(float min, float max){
+	protected float[] randomColorBetweenIntensity(double min, double max){
 		float[] c = new float[3];
 		c[0] = random.nextFloat();
 		c[1] = random.nextFloat();
 		c[2] = random.nextFloat();
-		float i = 3 * (min + random.nextFloat() * (max-min)) / (c[0] + c[1] + c[2]);
+		float i = (float) (3 * (min + random.nextDouble() * (max-min)) / (c[0] + c[1] + c[2]));
 		c[0]*= i;
 		c[1]*= i;
 		c[2]*= i;

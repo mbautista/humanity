@@ -4,11 +4,12 @@ import java.awt.Rectangle;
 
 public interface SceneObject {
 
-	public float getX();
-	public float getY();
-	public float getScreenX();
-	public float getScreenY();
-	public float getScreenZ();
+	public double getX();
+	public double getY();
+	public double getScreenX();
+	public double getScreenY();
+	public double getScreenZ();
+	public double getSize();
 	public Rectangle getViewport();
 	public Camera getCamera();
 	public void render();

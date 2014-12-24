@@ -10,10 +10,10 @@ import org.lwjgl.util.glu.Sphere;
 
 public class Star extends Aster {
 
-	public static int MIN_SIZE = 2, MAX_SIZE = 4,
+	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
-			MIN_Z_FOR_PLANETS = 5;
-	public static int VIEWPORT_SIZE = (int)Planet.MAX_LOCALX; //Galaxy.SIZE / 2^MIN_Z_FOR_PLANETS;
+			MIN_Z_FOR_PLANETS = 5,
+			VIEWPORT_SIZE = Galaxy.SIZE / Math.pow(2, MIN_Z_FOR_PLANETS);
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
@@ -38,7 +38,12 @@ public class Star extends Aster {
 		x = randomGaussian(Galaxy.SIZE);
 		y = randomGaussian(Galaxy.SIZE);
 		// FIXME viewport depends on Camera zoom
-		viewport = new Rectangle((int)x-VIEWPORT_SIZE, (int)y-VIEWPORT_SIZE, 2*VIEWPORT_SIZE, 2*VIEWPORT_SIZE);
+		viewport = new Rectangle(
+				(int)(x-VIEWPORT_SIZE),
+				(int)(y-VIEWPORT_SIZE),
+				(int)(2*VIEWPORT_SIZE),
+				(int)(2*VIEWPORT_SIZE)
+		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		updateSize();
 		updateColor();
@@ -48,7 +53,7 @@ public class Star extends Aster {
 	private void createPlanets(int planets){
 		for (int i=0; i<planets; i++){
 			Planet planet = new Planet(this);
-			planet.create(i);
+			planet.create(i, planets);
 			this.planets.add(planet);
 		}
 	}
@@ -72,10 +77,10 @@ public class Star extends Aster {
 	private void renderStar(){
 		// TODO enlighten sphere
 		GL11.glPushMatrix();
-		GL11.glTranslatef(getScreenX(), getScreenY(), getScreenZ());
+		GL11.glTranslated(getScreenX(), getScreenY(), getScreenZ());
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
-		s.draw(Math.max(1, size*getScreenZ()), getPolygons(), getPolygons());
+		s.draw(Math.max(1, (float)(size*getScreenZ())), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 	}
 	
@@ -106,9 +111,8 @@ public class Star extends Aster {
 	 * Update star color from energy
 	 * @see http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 	 */
-	// FIXME always grey/blue ?!
 	private void updateColor(){
-		float t = energy * 100 / MAX_ENERGY;
+		double t = energy * 100 / MAX_ENERGY;
 		if (t <= 66){
 			color[0] = 1;
 			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
@@ -127,9 +131,9 @@ public class Star extends Aster {
 	 * size(energy = RED_GIANT_ENERGY) = MAX_SIZE (e.g. red giant)
 	 * size(energy = MAX_ENERGY) = MIN_SIZE (e.g. blue dwarf)
 	 */
-	private static float SIZE_PEAK_A = MAX_SIZE / (float)RED_GIANT_ENERGY;
-	private static float SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (float)(MAX_ENERGY - RED_GIANT_ENERGY);
-	private static float SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
+	private static double SIZE_PEAK_A = MAX_SIZE / RED_GIANT_ENERGY;
+	private static double SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (MAX_ENERGY - RED_GIANT_ENERGY);
+	private static double SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
 	private void updateSize() {
 		if (energy < RED_GIANT_ENERGY){
 			size = (energy * SIZE_PEAK_A);
@@ -158,11 +162,11 @@ public class Star extends Aster {
 		return galaxy.getGame().getCamera();
 	}
 
-	public Planet getRandomPlanet(){
-		return planets.get(random.nextInt(planets.size()));
+	public Planet getPlanet(int rank){
+		return planets.get(rank);
 	}
 	
-	public float getHabitability(){
-		return galaxy.getGame().getOptions().getHabitability();
+	public Planet getRandomPlanet(){
+		return planets.get(random.nextInt(planets.size()));
 	}
 }

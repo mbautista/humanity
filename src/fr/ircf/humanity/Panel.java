@@ -1,7 +1,11 @@
 package fr.ircf.humanity;
 
-import javax.swing.JPanel;
+public class Panel extends Component {
 
-public class Panel extends JPanel {
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

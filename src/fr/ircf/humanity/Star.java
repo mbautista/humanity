@@ -3,15 +3,17 @@ package fr.ircf.humanity;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
 
 public class Star extends Aster {
 
-	public static int MIN_SIZE = 5, MAX_SIZE = 8,
+	public static int MIN_SIZE = 2, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
 			MIN_Z_FOR_PLANETS = 5;
-	public static int VIEWPORT_SIZE = Galaxy.SIZE / 2^MIN_Z_FOR_PLANETS;
+	public static int VIEWPORT_SIZE = (int)Planet.MAX_LOCALX; //Galaxy.SIZE / 2^MIN_Z_FOR_PLANETS;
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
@@ -32,9 +34,10 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		// TODO spiral repartition
-		// FIXME avoid creating too close stars
+		// TODO avoid creating too close stars
 		x = randomGaussian(Galaxy.SIZE);
 		y = randomGaussian(Galaxy.SIZE);
+		// FIXME viewport depends on Camera zoom
 		viewport = new Rectangle((int)x-VIEWPORT_SIZE, (int)y-VIEWPORT_SIZE, 2*VIEWPORT_SIZE, 2*VIEWPORT_SIZE);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		updateSize();
@@ -72,7 +75,7 @@ public class Star extends Aster {
 		GL11.glTranslatef(getScreenX(), getScreenY(), getScreenZ());
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
-		s.draw(size*getScreenZ(), getPolygons(), getPolygons());
+		s.draw(Math.max(1, size*getScreenZ()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 	}
 	
@@ -96,6 +99,7 @@ public class Star extends Aster {
 	 */
 	private void updateStar(double delta){
 		// TODO energy, size, color
+		super.update(delta);
 	}
 
 	/**
@@ -123,8 +127,8 @@ public class Star extends Aster {
 	 * size(energy = RED_GIANT_ENERGY) = MAX_SIZE (e.g. red giant)
 	 * size(energy = MAX_ENERGY) = MIN_SIZE (e.g. blue dwarf)
 	 */
-	private static float SIZE_PEAK_A = MAX_SIZE / RED_GIANT_ENERGY;
-	private static float SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (MAX_ENERGY - RED_GIANT_ENERGY);
+	private static float SIZE_PEAK_A = MAX_SIZE / (float)RED_GIANT_ENERGY;
+	private static float SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (float)(MAX_ENERGY - RED_GIANT_ENERGY);
 	private static float SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
 	private void updateSize() {
 		if (energy < RED_GIANT_ENERGY){
@@ -132,7 +136,7 @@ public class Star extends Aster {
 		}else{
 			size = (SIZE_PEAK_B * energy + SIZE_PEAK_C);
 		}
-		size = Math.max(0, size);
+		size = Math.max(0.2f, size); // FIXME min size should be 0, be not reachable on create
 	}
 	
 	/**

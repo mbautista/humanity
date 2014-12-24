@@ -5,6 +5,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+
 public abstract class Aster implements SceneObject{
 
 	protected static Random random = new Random();
@@ -12,6 +15,7 @@ public abstract class Aster implements SceneObject{
 	protected float[] color = new float[3];
 	protected ArrayList<Bar> bars;
 	protected Rectangle viewport;
+	protected boolean mousedown = false;
 	
 	public void create(){
 	}
@@ -25,6 +29,21 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void update(double delta){
+		if (viewport!=null && viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
+			over();
+			if (Mouse.isButtonDown(0)) click();
+		}
+	}
+	
+	protected void over(){
+		// TODO enlighten
+	}
+	
+	protected void click(){
+		// FIXME Concurrent Modification Exception
+		// TODO prevent this if camera movement is in progress
+		//System.out.println("click aster : " + this.getClass().getName());
+		//getCamera().show(this);
 	}
 	
 	public void serialize(){
@@ -83,8 +102,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	protected float randomBetweenWithFactor(float min, float max, float factor){
-		float f = random.nextFloat();
-		return min + f + random.nextInt((int)(factor * (max - min - f))) / factor;
+		return min + random.nextFloat() * (max-min) * factor;
 	}
 	
 	protected float[] randomColorBetweenIntensity(float min, float max){

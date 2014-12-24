@@ -10,6 +10,7 @@ public class Camera {
 	public static float Z_MIN = 0, Z_MAX = 10, DZ = 0.1f;
 	private Rectangle viewport;
 	private Scene scene;
+	private static boolean locked = false;
 	
 	public Camera(Scene scene){
 		this.scene = scene;
@@ -35,11 +36,14 @@ public class Camera {
 	 * Updates camera viewport and scene objects
 	 */
 	public void updateViewport(){
+		if (isLocked()) return;
+		setLocked(true);
 		int rx = (int)(scene.getSize()/Math.pow(2, z-1));
 		int ry = (int)(rx * Display.getHeight()/Display.getWidth());
 		viewport.setBounds((int)x-rx, (int)y-ry, 2*rx, 2*ry);
 		scale = (float)(Display.getWidth() / viewport.getWidth());
 		scene.updateSceneObjects();
+		setLocked(false);
 	}
 	
 	/**
@@ -87,7 +91,7 @@ public class Camera {
 	}
 	
 	public int getPolygons(SceneObject o){
-		return Math.max(4, (int)(4*z));
+		return Math.max(3, (int)(4*z));
 	}
 	
 	// DEPRECATED : use getObjectZ instead
@@ -118,5 +122,13 @@ public class Camera {
 	
 	public float getZ() {
 		return z;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 }

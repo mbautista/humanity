@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Galaxy implements Scene, GameElement {
 	
-	public static int SIZE = 2048;
+	public static int SIZE = 8192;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
 	
@@ -43,10 +43,13 @@ public class Galaxy implements Scene, GameElement {
 	}
 	
 	@Override
+	// FIXME Concurrent Modification Exception caused by zooming/clicking asters
 	public void update(double delta) {
-		for (Star star: sceneStars){
-			star.update(delta);
-		}
+		try{
+			for (Star star: sceneStars){
+				star.update(delta);
+			}
+		}catch(Exception e){}
 	}
 
 	/**

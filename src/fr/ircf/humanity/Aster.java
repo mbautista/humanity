@@ -17,6 +17,7 @@ public abstract class Aster implements SceneObject{
 	protected ArrayList<Bar> bars;
 	protected Rectangle2D viewport;
 	protected boolean mousedown = false;
+	protected String name;
 	
 	public void create(){
 	}

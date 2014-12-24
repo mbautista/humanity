@@ -10,9 +10,10 @@ import org.lwjgl.opengl.Display;
 
 public abstract class Aster implements SceneObject{
 
+	private static float[] COLOR_OVER = {1f, 1f, 1f};
 	protected static Random random = new Random();
 	protected double x = 0, y = 0, size, energy, distance;
-	protected float[] color = new float[3];
+	protected float[] color = new float[3], colorOut;
 	protected ArrayList<Bar> bars;
 	protected Rectangle2D viewport;
 	protected boolean mousedown = false;
@@ -27,23 +28,28 @@ public abstract class Aster implements SceneObject{
 	public void render(){
 	}
 	
+	// FIXME viewport bug
 	@Override
 	public void update(double delta){
-		if (viewport!=null && viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
+		/*if (viewport!=null && viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
 			over();
 			if (Mouse.isButtonDown(0)) click();
-		}
+		}else{
+			out();
+		}*/
 	}
 	
 	protected void over(){
-		// TODO enlighten
+		colorOut = color;
+		color = COLOR_OVER;
+	}
+	
+	protected void out(){
+		if (colorOut!=null) color = colorOut;
 	}
 	
 	protected void click(){
-		// FIXME Concurrent Modification Exception
-		// TODO prevent this if camera movement is in progress
-		//System.out.println("click aster : " + this.getClass().getName());
-		//getCamera().show(this);
+		getCamera().show(this);
 	}
 	
 	public void serialize(){

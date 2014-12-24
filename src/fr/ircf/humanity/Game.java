@@ -10,4 +10,5 @@ public interface Game {
 	public String i18n(String message);
 	public Options getOptions();
 	public Camera getCamera();
+	public Scene getScene();
 }

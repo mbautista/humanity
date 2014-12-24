@@ -61,10 +61,12 @@ public class Humanity implements Game{
 		options = new Options();
 		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
 		galaxy = new Galaxy();
+		camera = new Camera();
 		loader = new Loader();
 		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
 			galaxy,
+			camera,
 			new Title(),
 			new Menu(),
 			options,
@@ -79,7 +81,6 @@ public class Humanity implements Game{
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}
-		camera = new Camera(galaxy);
 		camera.showWithZMax(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
 	}
 	
@@ -163,5 +164,10 @@ public class Humanity implements Game{
 	@Override
 	public Camera getCamera() {
 		return camera;
+	}
+	
+	@Override
+	public Scene getScene(){
+		return galaxy;
 	}
 }

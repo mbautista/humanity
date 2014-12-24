@@ -4,18 +4,38 @@ import java.awt.geom.Rectangle2D;
 
 import org.lwjgl.opengl.Display;
 
-public class Camera {
+public class Camera implements GameElement {
 
 	public static double Z_MIN = 0, Z_MAX = 12, DZ = 0.1f;
 	private double x, y, z, scale;
 	private Rectangle2D viewport;
-	private Scene scene;
-	private static boolean locked = false;
 	private SceneObject object;
-	
-	public Camera(Scene scene){
-		this.scene = scene;
+	private Game game;
+
+	@Override
+	public void init(Game game) throws Exception {
+		this.game = game;
 		viewport = new Rectangle2D.Double();
+	}
+
+	@Override
+	public boolean visible() {
+		return true;
+	}
+
+	@Override
+	public void render() {
+		// TODO translate camera (instead of translating every object !)
+	}
+
+	@Override
+	public void update(double delta) {
+		if (object!=null) show(object); 
+		double rx = game.getScene().getSize()/Math.pow(2, z-1);
+		double ry = rx * Display.getHeight()/(double)Display.getWidth();
+		viewport.setFrameFromCenter(x, y, x+rx, y+ry);
+		scale = Display.getWidth() / viewport.getWidth();
+		game.getScene().updateSceneObjects();
 	}
 	
 	/**
@@ -35,21 +55,6 @@ public class Camera {
 		this.x = o.getX();
 		this.y = o.getY();
 		this.z = z;
-		updateViewport();
-	}
-	
-	/**
-	 * Updates camera viewport and scene objects
-	 */
-	public void updateViewport(){
-		if (isLocked()) return;
-		setLocked(true);
-		double rx = (scene.getSize()/Math.pow(2, z-1));
-		double ry = (rx * Display.getHeight()/Display.getWidth());
-		viewport.setFrameFromCenter(x, y, x+rx, y+ry);
-		scale = (float)(Display.getWidth() / viewport.getWidth());
-		scene.updateSceneObjects();
-		setLocked(false);
 	}
 	
 	/**
@@ -74,12 +79,10 @@ public class Camera {
 	public void zoomIn(){
 		double zMax = object != null ? getObjectZMax(object) : Z_MAX;
 		z = Math.min(zMax, z + DZ);
-		updateViewport();
 	}
 	
 	public void zoomOut(){
 		z = Math.max(Z_MIN, z - DZ);
-		updateViewport();
 	}
 	
 	/**
@@ -103,7 +106,7 @@ public class Camera {
 	 * @return
 	 */
 	public double getObjectZMax(SceneObject o){
-		return Math.log(scene.getSize()/o.getSize()*Display.getHeight()/Display.getWidth())/Math.log(2) + 2;
+		return Math.log(game.getScene().getSize()/o.getSize()*Display.getHeight()/Display.getWidth())/Math.log(2) + 2;
 	}
 	
 	public int getPolygons(SceneObject o){
@@ -125,7 +128,6 @@ public class Camera {
 
 	public void setZ(double z) {
 		this.z = z;
-		updateViewport();
 	}
 	
 	public double getX() {
@@ -138,13 +140,5 @@ public class Camera {
 	
 	public double getZ() {
 		return z;
-	}
-
-	public boolean isLocked() {
-		return locked;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
 	}
 }

@@ -3,9 +3,11 @@ package fr.ircf.humanity;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
+
 public class Galaxy implements Scene, GameElement {
 	
-	public static double SIZE = 4096, PITCH = 0.5, WINDING = 8, ARM_WIDTH = 200;
+	public static double SIZE = 8192, PITCH = 0.5, WINDING = 8, ARM_WIDTH = 200;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
 	private Star smbh; // Super massive black hole
@@ -54,6 +56,9 @@ public class Galaxy implements Scene, GameElement {
 				star.update(delta);
 			}
 		}catch(Exception e){}
+		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+	        game.setState(State.MENU);
+	    }
 	}
 
 	/**

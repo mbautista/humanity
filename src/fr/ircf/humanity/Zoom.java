@@ -1,5 +1,7 @@
 package fr.ircf.humanity;
 
+import org.lwjgl.input.Mouse;
+
 public class Zoom implements GameElement {
 
 	public static int X = 10, Y = 10;
@@ -42,5 +44,11 @@ public class Zoom implements GameElement {
 		in.update(delta);
 		out.update(delta);
 		slider.update(delta);
+		int wheel = Mouse.getDWheel();
+		if (wheel < 0) {
+			game.getCamera().zoomOut();
+	    }else if (wheel > 0){
+	    	game.getCamera().zoomIn();
+	   }
 	}
 }

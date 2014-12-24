@@ -1,10 +1,8 @@
 package fr.ircf.humanity;
 
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
 
@@ -33,16 +31,18 @@ public class Star extends Aster {
 	 */
 	@Override
 	public void create(){
-		// TODO spiral repartition
 		// TODO avoid creating too close stars
-		x = randomGaussian(Galaxy.SIZE);
-		y = randomGaussian(Galaxy.SIZE);
-		// FIXME viewport depends on Camera zoom
-		viewport = new Rectangle(
-				(int)(x-VIEWPORT_SIZE),
-				(int)(y-VIEWPORT_SIZE),
-				(int)(2*VIEWPORT_SIZE),
-				(int)(2*VIEWPORT_SIZE)
+		double angle = randomGaussian(Math.PI);
+		distance = galaxy.getSpiralDistance(angle) + randomGaussian(Galaxy.ARM_WIDTH);
+		if (random.nextInt(2)==0) angle+= Math.PI; // choose arm randomly
+		x = distance * Math.cos(angle);
+		y = distance * Math.sin(angle);
+		// FIXME star viewport depends on Camera zoom
+		viewport = new Rectangle2D.Double(
+				x-VIEWPORT_SIZE,
+				y-VIEWPORT_SIZE,
+				2*VIEWPORT_SIZE,
+				2*VIEWPORT_SIZE
 		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		updateSize();
@@ -56,6 +56,13 @@ public class Star extends Aster {
 			planet.create(i, planets);
 			this.planets.add(planet);
 		}
+	}
+	
+	public void createSuperMassiveBlackHole(){
+		energy = Galaxy.SIZE;
+		viewport = new Rectangle2D.Double(x, y, x+size, y+size);
+		updateSize();
+		updateColor();
 	}
 	
 	/**

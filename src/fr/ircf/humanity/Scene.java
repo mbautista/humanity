@@ -2,6 +2,6 @@ package fr.ircf.humanity;
 
 public interface Scene {
 
-	public int getSize();
+	public double getSize();
 	public void updateSceneObjects();
 }

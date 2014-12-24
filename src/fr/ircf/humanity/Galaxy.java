@@ -5,15 +5,19 @@ import java.util.Random;
 
 public class Galaxy implements Scene, GameElement {
 	
-	public static int SIZE = 8192;
+	public static double SIZE = 4096, PITCH = 0.5, WINDING = 8, ARM_WIDTH = 200;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
+	private Star smbh; // Super massive black hole
 	
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
 		stars = new ArrayList<Star>();
 		sceneStars = new ArrayList<Star>();
+		smbh = new Star(this);
+		smbh.createSuperMassiveBlackHole();
+		// TODO stars.add(smbh);
 		create(1);
 	}
 
@@ -74,11 +78,21 @@ public class Galaxy implements Scene, GameElement {
 	}
 	
 	@Override
-	public int getSize(){
+	public double getSize(){
 		return SIZE;
 	}
 
 	public int getStarSize(){
 		return stars.size();
+	}
+	
+	/**
+	 * Get a spiral distance from an angle a in this galaxy according to its size, pitch and winding
+	 * @see http://arxiv.org/pdf/0908.0892.pdf
+	 * @param an angle
+	 * @return distance in the spiral
+	 */
+	public double getSpiralDistance(double a){
+		return SIZE / Math.log(PITCH * Math.tan(a / WINDING));
 	}
 }

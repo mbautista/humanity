@@ -1,6 +1,6 @@
 package fr.ircf.humanity;
 
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,10 +11,10 @@ import org.lwjgl.opengl.Display;
 public abstract class Aster implements SceneObject{
 
 	protected static Random random = new Random();
-	protected double x, y, size, energy;
+	protected double x = 0, y = 0, size, energy, distance;
 	protected float[] color = new float[3];
 	protected ArrayList<Bar> bars;
-	protected Rectangle viewport;
+	protected Rectangle2D viewport;
 	protected boolean mousedown = false;
 	
 	public void create(){
@@ -67,7 +67,7 @@ public abstract class Aster implements SceneObject{
 	}
 
 	@Override
-	public Rectangle getViewport() {
+	public Rectangle2D getViewport() {
 		return viewport;
 	}
 	
@@ -98,7 +98,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	protected double randomGaussian(double max){
-		return (float) (max/2 * (1 + random.nextGaussian()));
+		return max * random.nextGaussian();
 	}
 	
 	protected double randomBetweenWithFactor(double min, double max, double factor){

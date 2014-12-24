@@ -21,7 +21,7 @@ public class Planet extends Aster {
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
 	private int satellites = 0;
-	private double distance, water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
+	private double water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
 	private ArrayList<Population> populations;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };

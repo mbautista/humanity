@@ -1,6 +1,6 @@
 package fr.ircf.humanity;
 
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 public interface SceneObject {
 
@@ -10,7 +10,7 @@ public interface SceneObject {
 	public double getScreenY();
 	public double getScreenZ();
 	public double getSize();
-	public Rectangle getViewport();
+	public Rectangle2D getViewport();
 	public Camera getCamera();
 	public void render();
 	public void update(double delta);

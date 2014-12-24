@@ -11,4 +11,5 @@ public interface Game {
 	public Options getOptions();
 	public Camera getCamera();
 	public Scene getScene();
+	public Player getPlayer();
 }

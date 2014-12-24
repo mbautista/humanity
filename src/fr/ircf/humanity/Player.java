@@ -4,29 +4,31 @@ import java.util.ArrayList;
 
 public abstract class Player implements GameElement{
 
+	private Game game;
+	private double kardashev;
+	private double year;
+	private double population;
+	// TODO avatar
+	// TODO color 
 	private ArrayList<Population> populations;
 
 	@Override
 	public void init(Game game) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.game = game;
 	}
 
 	@Override
 	public boolean visible() {
-		// TODO Auto-generated method stub
-		return false;
+		return game.getState() == State.GAME;
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		// TODO year, kardashev, population, avatar
 	}
 
 	@Override
 	public void update(double delta) {
-		// TODO Auto-generated method stub
-		
+		// TODO year, kardashev, population
 	}
 }

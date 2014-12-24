@@ -17,6 +17,7 @@ public class Humanity implements Game{
 	private ResourceBundle messages;
 	private Galaxy galaxy;
 	private Loader loader;
+	private Player player;
 
 	/**
 	 * @param args
@@ -63,6 +64,7 @@ public class Humanity implements Game{
 		galaxy = new Galaxy();
 		camera = new Camera();
 		loader = new Loader();
+		player = new Human();
 		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
 			galaxy,
@@ -72,7 +74,7 @@ public class Humanity implements Game{
 			options,
 			new Zoom(),
 			//new Map(),
-			//new Human(),
+			player,
 			//new Log(),
 			//new Actions(),
 			//new Audio(),
@@ -169,5 +171,10 @@ public class Humanity implements Game{
 	@Override
 	public Scene getScene(){
 		return galaxy;
+	}
+	
+	@Override
+	public Player getPlayer() {
+		return player;
 	}
 }

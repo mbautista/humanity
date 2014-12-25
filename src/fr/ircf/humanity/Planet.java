@@ -10,6 +10,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Planet extends Aster {
 
+	public static String[] NUMBER = new String[] {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 	public static double MIN_LOCALX = 1, MAX_LOCALX = 64,
 			MIN_WATER = 64, MAX_WATER = 128,
 			MIN_ATMOSPHERE = 64, MAX_ATMOSPHERE = 128,
@@ -75,6 +76,7 @@ public class Planet extends Aster {
 		);
 		texture = getTexture();
 		hours = randomBetween(MIN_HOURS, MAX_HOURS);
+		name = star.getName() + " " + NUMBER[rank];
 		updatePosition();
 	}
 	

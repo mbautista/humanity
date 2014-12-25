@@ -45,6 +45,7 @@ public class Star extends Aster {
 				2*VIEWPORT_SIZE
 		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
+		name = randomName();
 		updateSize();
 		updateColor();
 		createPlanets(1 + random.nextInt(galaxy.getGame().getOptions().getStarSize()));
@@ -110,7 +111,7 @@ public class Star extends Aster {
 	 * @param delta
 	 */
 	private void updateStar(double delta){
-		// TODO energy, size, color
+		// TODO position, energy, size, color
 		super.update(delta);
 	}
 

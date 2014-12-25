@@ -97,6 +97,10 @@ public abstract class Aster implements SceneObject{
 		return getCamera().getPolygons(this);
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	/**
 	 * Random helpers
 	 */
@@ -122,5 +126,33 @@ public abstract class Aster implements SceneObject{
 		c[1]*= i;
 		c[2]*= i;
 		return c;
+	}
+	
+	private static int MIN_SYLLABUS = 2, MAX_SYLLABUS = 3;
+	private static String VOWELS = "aeiouy";
+	private static String CONSONANTS = "bcdfghjklmnpqrstvwxz";
+	protected String randomName(){
+		int length = MIN_SYLLABUS + random.nextInt(MAX_SYLLABUS);
+		String name = "";
+		for (int i=0; i<length; i++) name+= randomSyllabus();
+		return name;
+	}
+	
+	private String randomSyllabus(){
+		String syllabus = "" + randomChar();
+		syllabus += randomChar(!VOWELS.contains(syllabus));
+		return syllabus;
+	}
+
+	private char randomChar(){
+		return (char)(97 + random.nextInt(26));
+	}
+	
+	private char randomChar(boolean vowel){
+		if (vowel){
+			return VOWELS.charAt(random.nextInt(VOWELS.length()));
+		}else{
+			return CONSONANTS.charAt(random.nextInt(CONSONANTS.length()));
+		}
 	}
 }

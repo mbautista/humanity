@@ -105,11 +105,12 @@ public class Planet extends Aster {
 	
 	@Override
 	public void update(double delta){
+
+		super.update(delta);
 		// TODO energy, water, atmosphere, type
 		hour+= delta / hours;
 		day += delta / days;
 		updatePosition();
-		super.update(delta);
 	}
 	
 	private void updatePosition(){

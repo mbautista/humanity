@@ -17,4 +17,5 @@ public interface Game {
 	public Audio getAudio();
 	public Scene getScene();
 	public Player getPlayer();
+	public State getPreviousState();
 }

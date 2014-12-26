@@ -10,7 +10,7 @@ public class Humanity implements Game{
 	static final String TITLE = "Humanity";
 	static final double VERSION = 0.1;
 	private GameElement[] gameElements;	
-	private State state = State.MENU;
+	private State state = State.MENU, previousState = State.MENU;
 	private long lastFrame;
 	private Options options;
 	private Camera camera;
@@ -165,6 +165,7 @@ public class Humanity implements Game{
 
 	@Override
 	public void setState(State state) {
+		previousState = this.state;
 		this.state = state;
 	}
 
@@ -186,5 +187,10 @@ public class Humanity implements Game{
 	@Override
 	public Audio getAudio() {
 		return audio;
+	}
+
+	@Override
+	public State getPreviousState() {
+		return previousState;
 	}
 }

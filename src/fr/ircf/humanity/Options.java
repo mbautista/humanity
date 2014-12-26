@@ -59,7 +59,7 @@ public class Options extends Menu {
 				public void up() { difficulty = 1 + (difficulty % 5); apply(); }
 			},
 			new Button(game.i18n("options.back")) {
-				public void up() { game.setState(State.MENU); }
+				public void up() { game.setState(game.getPreviousState()); }
 			},
 		};
 		int i = 0;

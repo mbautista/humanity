@@ -22,7 +22,9 @@ public class Planet extends Aster {
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
 	private int satellites = 0;
-	private double water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
+	private double water = 0, atmosphere = 0,
+			hours, hour = 0,
+			days, day = 0, DAYS_OVER, DAYS_OUT;
 	private ArrayList<Population> populations;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
@@ -78,41 +80,27 @@ public class Planet extends Aster {
 		hours = randomBetween(MIN_HOURS, MAX_HOURS);
 		name = star.getName() + " " + NUMBER[rank];
 		updatePosition();
+		super.create();
 	}
 	
 	/**
-	 * Render all planet elements (planet, orbit, atmosphere...)
+	 * Render all planet elements (planet, atmosphere...)
 	 */
 	@Override
 	public void render(){
-		GL11.glColor3f(color[0], color[1], color[2]);
-		renderOrbit();
-		renderPlanet();
-	}
-	
-	/**
-	 * Render orbit
-	 */
-	private void renderOrbit(){
-		// TODO
-	}
-	
-	/**
-	 * Render planet only
-	 */
-	// FIXME sometimes texture does not render ?!
-	private void renderPlanet(){
 		GL11.glPushMatrix();
-		GL11.glTranslated(getScreenX(), getScreenY(), size*getScreenZ());
+		GL11.glColor3f(color[0], color[1], color[2]);
+		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenSize());
 		GL11.glRotatef(90, 1, 0, 0); // FIXME change texture orientation to avoid this
 		GL11.glPushMatrix();
 		GL11.glRotated(hour, 0, 0, 1);
 		Sphere sphere = new Sphere();
 		sphere.setTextureFlag(true);
 		texture.bind();
-		sphere.draw((float)Math.max(1,size*getScreenZ()), getPolygons(), getPolygons());
+		sphere.draw((float)Math.max(1, getScreenSize()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
+		super.render();
 	}
 	
 	@Override
@@ -121,13 +109,23 @@ public class Planet extends Aster {
 		hour+= delta / hours;
 		day += delta / days;
 		updatePosition();
-		// TODO update viewport
 		super.update(delta);
 	}
 	
 	private void updatePosition(){
 		x = star.x + (float)(distance * Math.cos(day));
 		y = star.y + (float)(distance * Math.sin(day));
+		updateViewport();
+	}
+	
+	protected void over(){
+		// TODO slow time
+		super.over();
+	}
+	
+	protected void out(){
+		// TODO resume time
+		super.out();
 	}
 	
 	/**

@@ -9,9 +9,12 @@ public interface SceneObject {
 	public double getScreenX();
 	public double getScreenY();
 	public double getScreenZ();
+	public double getScreenSize();
 	public double getSize();
 	public Rectangle2D getViewport();
+	public Rectangle2D getExtendedViewport();
 	public Camera getCamera();
 	public void render();
 	public void update(double delta);
+	public Rectangle2D getScreenViewport();
 }

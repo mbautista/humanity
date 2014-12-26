@@ -7,17 +7,20 @@ import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 public abstract class Aster implements SceneObject{
 
-	private static float[] COLOR_OVER = {1f, 1f, 1f};
+	public static float[] COLOR_OVER = new float[] { 1.0f, 0.0f, 0.0f };
 	protected static Random random = new Random();
 	protected double x = 0, y = 0, size, energy, distance;
-	protected float[] color = new float[3], colorOut;
+	protected float[] color = new float[3];
 	protected ArrayList<Bar> bars;
-	protected Rectangle2D viewport;
-	protected boolean mousedown = false;
+	// Aster viewport represents the aster's renderable/interactive zone (e.g. star)
+	// Aster extended viewport includes children asters (e.g. star system)
+	protected Rectangle2D viewport, extendedViewport, screenViewport;
 	protected String name;
+	protected boolean highlight = false;
 	
 	public void create(){
 	}
@@ -27,26 +30,47 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void render(){
+		if (screenViewport!=null && highlight){
+			GL11.glColor3f(COLOR_OVER[0], COLOR_OVER[1], COLOR_OVER[2]);
+			GL11.glBegin(GL11.GL_LINE_STRIP);
+		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getY());
+		    	GL11.glVertex2d(screenViewport.getMaxX(), screenViewport.getY());
+		    	GL11.glVertex2d(screenViewport.getMaxX(), screenViewport.getMaxY());
+		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getMaxY());
+		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getY());
+		    GL11.glEnd();
+		}
 	}
 	
-	// FIXME viewport bug
 	@Override
 	public void update(double delta){
-		/*if (viewport!=null && viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
+		screenViewport = getScreenViewport();
+		if (screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){
 			over();
 			if (Mouse.isButtonDown(0)) click();
 		}else{
 			out();
-		}*/
+		}
+	}
+	
+	/**
+	 * Update aster viewport from x, y and size
+	 */
+	protected void updateViewport(){
+		viewport = new Rectangle2D.Double(
+			x - size,
+			y - size,
+			2 * size,
+			2 * size
+		);
 	}
 	
 	protected void over(){
-		colorOut = color;
-		color = COLOR_OVER;
+		highlight = true;
 	}
 	
 	protected void out(){
-		if (colorOut!=null) color = colorOut;
+		highlight = false;
 	}
 	
 	protected void click(){
@@ -69,6 +93,7 @@ public abstract class Aster implements SceneObject{
 		return y;
 	}
 
+	@Override
 	public double getSize() {
 		return size;
 	}
@@ -76,6 +101,11 @@ public abstract class Aster implements SceneObject{
 	@Override
 	public Rectangle2D getViewport() {
 		return viewport;
+	}
+	
+	@Override
+	public Rectangle2D getExtendedViewport() {
+		return extendedViewport;
 	}
 	
 	@Override
@@ -91,6 +121,16 @@ public abstract class Aster implements SceneObject{
 	@Override
 	public double getScreenZ(){
 		return getCamera().getObjectZ(this);
+	}
+	
+	@Override
+	public double getScreenSize(){
+		return size * getScreenZ();
+	}
+	
+	@Override
+	public Rectangle2D getScreenViewport(){
+		return getCamera().getObjectViewport(this);
 	}
 	
 	public int getPolygons(){

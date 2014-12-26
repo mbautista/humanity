@@ -18,9 +18,6 @@ public class Galaxy implements Scene, GameElement {
 		this.game = game;
 		stars = new ArrayList<Star>();
 		sceneStars = new ArrayList<Star>();
-		// TODO smbh = new Star(this);
-		// TODO smbh.createSuperMassiveBlackHole();
-		// TODO stars.add(smbh);
 		create(1);
 	}
 
@@ -68,7 +65,7 @@ public class Galaxy implements Scene, GameElement {
 	public void updateSceneObjects() {
 		sceneStars.clear();
 		for(Star star: stars){
-			if (game.getCamera().showsViewport(star)){
+			if (game.getCamera().showsExtendedViewport(star)){
 				sceneStars.add(star);
 				star.updateSceneObjects();
 			}

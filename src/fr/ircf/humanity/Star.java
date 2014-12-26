@@ -10,8 +10,7 @@ public class Star extends Aster {
 
 	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
-			MIN_Z_FOR_PLANETS = 6,
-			VIEWPORT_SIZE = Galaxy.SIZE / Math.pow(2, MIN_Z_FOR_PLANETS);
+			MIN_Z_FOR_PLANETS = 6;
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
@@ -44,18 +43,19 @@ public class Star extends Aster {
 			x = distance * Math.cos(angle);
 			y = distance * Math.sin(angle);
 		}
-		// FIXME star viewport depends on Camera zoom
-		viewport = new Rectangle2D.Double(
-				x-VIEWPORT_SIZE,
-				y-VIEWPORT_SIZE,
-				2*VIEWPORT_SIZE,
-				2*VIEWPORT_SIZE
+		extendedViewport = new Rectangle2D.Double(
+			x - Planet.MAX_LOCALX,
+			y - Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX
 		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		name = randomName();
 		updateSize();
+		updateViewport();
 		updateColor();
 		createPlanets(1 + random.nextInt(galaxy.getGame().getOptions().getStarSize()));
+		super.create();
 	}
 
 	private void createPlanets(int planets){
@@ -64,13 +64,6 @@ public class Star extends Aster {
 			planet.create(i, planets);
 			this.planets.add(planet);
 		}
-	}
-	
-	public void createSuperMassiveBlackHole(){
-		energy = Galaxy.SIZE;
-		viewport = new Rectangle2D.Double(x, y, x+size, y+size);
-		updateSize();
-		updateColor();
 	}
 	
 	/**
@@ -84,6 +77,7 @@ public class Star extends Aster {
 		for(Planet planet: scenePlanets){
 			planet.render();
 		}
+		super.render();
 	}
 
 	/**
@@ -92,10 +86,10 @@ public class Star extends Aster {
 	private void renderStar(){
 		// TODO enlighten sphere
 		GL11.glPushMatrix();
-		GL11.glTranslated(getScreenX(), getScreenY(), getScreenZ());
+		GL11.glTranslated(getScreenX(), getScreenY(), getScreenSize());
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
-		s.draw(Math.max(1, (float)(size*getScreenZ())), getPolygons(), getPolygons());
+		s.draw(Math.max(1, (float)getScreenSize()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 	}
 	

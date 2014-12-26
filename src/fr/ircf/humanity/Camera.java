@@ -72,6 +72,9 @@ public class Camera implements GameElement {
 	public boolean showsViewport(SceneObject o){
 		 return viewport.intersects(o.getViewport());
 	}
+	public boolean showsExtendedViewport(SceneObject o){
+		 return viewport.intersects(o.getExtendedViewport());
+	}
 	
 	/**
 	 * Zoom helpers
@@ -100,6 +103,15 @@ public class Camera implements GameElement {
 		return scale;
 	}
 	
+	public Rectangle2D getObjectViewport(SceneObject o){
+		return new Rectangle2D.Double(
+			(o.getViewport().getX() - viewport.getX()) * scale,
+			(o.getViewport().getY() - viewport.getY()) * scale,
+			o.getViewport().getWidth() * scale,
+			o.getViewport().getHeight() * scale
+		);
+	}
+	
 	/**
 	 * Computes the maximum zoom for object, so that it can fit on screen
 	 * @param o
@@ -113,10 +125,9 @@ public class Camera implements GameElement {
 		return Math.max(3, (int)(4*z));
 	}
 	
-	// DEPRECATED : use getObjectZ instead
-	/*public int getObjectSize(SceneObject o){
-		return (int) (o.getSize() * scale);
-	}*/
+	public double getObjectSize(SceneObject o){
+		return o.getSize() * scale;
+	}
 	
 	public void setX(double x) {
 		this.x = x;

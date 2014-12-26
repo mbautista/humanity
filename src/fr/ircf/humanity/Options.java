@@ -9,7 +9,7 @@ public class Options extends Menu {
 	private static DisplayMode[] DISPLAY_MODES;
 	private static Locale[] LOCALES = new Locale[] { Locale.US, Locale.FRANCE };
 	private int displayMode = 0, locale = 0, soundVolume = 50, musicVolume = 30,
-			galaxySize = 2000, starSize = 6, 
+			galaxySize = 1000, starSize = 6, 
 			life = 10, speed = 2, difficulty = 1;
 	private boolean fullScreen = false;
 	

@@ -10,7 +10,7 @@ public class Star extends Aster {
 
 	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
-			MIN_Z_FOR_PLANETS = 5,
+			MIN_Z_FOR_PLANETS = 6,
 			VIEWPORT_SIZE = Galaxy.SIZE / Math.pow(2, MIN_Z_FOR_PLANETS);
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
@@ -32,11 +32,18 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		// TODO avoid creating too close stars
-		double angle = randomGaussian(Math.PI);
-		distance = galaxy.getSpiralDistance(angle) + randomGaussian(Galaxy.ARM_WIDTH);
-		if (random.nextInt(2)==0) angle+= Math.PI; // randomly choose arm
-		x = distance * Math.cos(angle);
-		y = distance * Math.sin(angle);
+		double angle = Math.abs(randomGaussian(Math.PI/2));
+		if (angle < Galaxy.BULB_LIMIT){
+			// bulb
+			x = randomGaussian(Galaxy.BULB_WIDTH);
+			y = randomGaussian(Galaxy.BULB_HEIGHT);
+		}else{
+			// arm
+			distance = galaxy.getSpiralDistance(angle) + randomGaussian(Galaxy.ARM_WIDTH);
+			if (random.nextInt(2)==0) angle+= Math.PI; // randomly choose arm
+			x = distance * Math.cos(angle);
+			y = distance * Math.sin(angle);
+		}
 		// FIXME star viewport depends on Camera zoom
 		viewport = new Rectangle2D.Double(
 				x-VIEWPORT_SIZE,

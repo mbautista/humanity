@@ -7,7 +7,8 @@ import org.lwjgl.input.Keyboard;
 
 public class Galaxy implements Scene, GameElement {
 	
-	public static double SIZE = 8192, PITCH = 0.5, WINDING = 8, ARM_WIDTH = 200;
+	public static double SIZE = 8192, PITCH = 0.5, WINDING = 8,
+			ARM_WIDTH = 200, BULB_LIMIT = 0.2, BULB_WIDTH = 800, BULB_HEIGHT = 200;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
 	private Star smbh; // Super massive black hole

@@ -10,11 +10,11 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Audio implements GameElement{
 
-	public static String SOUNDS = "../assets/sounds/", MUSICS = "assets/musics/",
-			BUTTON_OVER = "button-over.ogg", BUTTON_UP = "button-up.ogg";
+	public static String SOUNDS = "assets/sounds/", MUSICS = "assets/musics/",
+			CLICK = "click.ogg", STOP = "stop.ogg";
 	private ArrayList<String> musics;
 	private org.newdawn.slick.openal.Audio music, sound;
-	private String requestedMusic, requestedSound;
+	private static String requestedMusic, requestedSound;
 	private Game game;
 	
 	public void init(Game game) throws Exception {
@@ -50,6 +50,8 @@ public class Audio implements GameElement{
 		if (requestedSound!=null){
 			updateSound();
 		}
+		// update music volume
+		SoundStore.get().setCurrentMusicVolume(getMusicVolume());
 		// queue music buffers
 		SoundStore.get().poll(0);
 	}
@@ -58,7 +60,7 @@ public class Audio implements GameElement{
 		try {
 			if (requestedMusic==null) requestedMusic = randomMusic();
 			music = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource(MUSICS + requestedMusic));
-			music.playAsSoundEffect(1.0f, (float)(game.getOptions().getMusicVolume()/100), false);
+			music.playAsMusic(1.0f, getMusicVolume(), false);
 			requestedMusic = null;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -69,7 +71,7 @@ public class Audio implements GameElement{
 	private void updateSound(){
 		try {
 			sound = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream(SOUNDS + requestedSound));
-			sound.playAsSoundEffect(1.0f, (float)(game.getOptions().getSoundVolume()/100), false);
+			sound.playAsSoundEffect(1.0f, getSoundVolume(), false);
 			requestedSound = null;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -77,11 +79,11 @@ public class Audio implements GameElement{
 		}
 	}
 	
-	public void playMusic(String music){
+	public static void playMusic(String music){
 		requestedMusic = music;
 	}
 	
-	public void playSound(String sound){
+	public static void playSound(String sound){
 		requestedSound = sound;
 	}
 	
@@ -89,5 +91,16 @@ public class Audio implements GameElement{
 		// TODO avoid repeating current music
 		Random random = new Random();
 		return musics.get(random.nextInt(musics.size()));
+	}
+	
+	/**
+	 *  Volume helpers
+	 */
+	public float getMusicVolume(){
+		return game.getOptions().getMusicVolume()/100.0f;
+	}
+	
+	public float getSoundVolume(){
+		return game.getOptions().getSoundVolume()/100.0f;
 	}
 }

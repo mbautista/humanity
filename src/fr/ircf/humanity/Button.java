@@ -8,7 +8,7 @@ public class Button extends Component {
 
 	private static float[] COLOR_OUT = {0.2f, 0.2f, 0.2f, 0.5f};
 	private static float[] COLOR_OVER = {0.4f, 0.4f, 0.4f, 0.5f};
-	private static float[] COLOR_CLICK = {1f, 1f, 1f, 0.5f};
+	private static float[] COLOR_CLICK = {0.6f, 0.6f, 0.6f, 0.5f};
 	private float[] color;
 	private int padding = 10;
 	private Text text;
@@ -29,7 +29,10 @@ public class Button extends Component {
 	public void update(double delta) {
 		if (viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
 			over();
-			if (Mouse.isButtonDown(0)) click();
+			if (Mouse.isButtonDown(0)) down();
+			while (Mouse.next()){
+			    if (!Mouse.getEventButtonState() && Mouse.getEventButton() == 0) up();
+			}
 		}else{
 			out();
 		}
@@ -43,8 +46,12 @@ public class Button extends Component {
 		setColor(COLOR_OUT);
 	}
 	
-	public void click(){
+	public void down(){
 		setColor(COLOR_CLICK);
+	}
+	
+	public void up(){
+		setColor(COLOR_OUT);
 	}
 	
 	public int getWidth() {

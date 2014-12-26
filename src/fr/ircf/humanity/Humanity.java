@@ -18,7 +18,12 @@ public class Humanity implements Game{
 	private Galaxy galaxy;
 	private Loader loader;
 	private Player player;
+	private Audio audio;
 
+	public Humanity(){
+		options = new Options();
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -31,6 +36,7 @@ public class Humanity implements Game{
     @Override
 	public void init(){
 		try{
+			initLocale();
 			initDisplay();
 			initGl();
 			initGameElements();
@@ -40,9 +46,14 @@ public class Humanity implements Game{
 		}
 	}
 	
-	private void initDisplay() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(800, 600));
-		//Display.setFullscreen(true);
+	public void initLocale(){
+		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
+	}
+    
+	public void initDisplay() throws LWJGLException {
+		Display.setDisplayMode(options.getDisplayMode());
+		Display.setFullscreen(options.isFullScreen());
+		if (Display.isCreated()) return;
 		Display.setVSyncEnabled(true);
 		Display.setTitle(TITLE);
 		Display.create();
@@ -52,21 +63,19 @@ public class Humanity implements Game{
 		GL11.glClearDepth(1);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -100, 100);
-		//float aspect = Display.getDisplayMode().getWidth() / (float) Display.getDisplayMode().getHeight();
-	    //GLU.gluPerspective(45f, aspect, 0.1f, 100.0f);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	}
 	
 	private void initGameElements() throws Exception{
 		lastFrame = getTime();
-		options = new Options();
-		messages = ResourceBundle.getBundle(TITLE, options.getLocale());
 		galaxy = new Galaxy();
 		camera = new Camera();
 		loader = new Loader();
 		player = new Human();
+		audio = new Audio();
 		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
+			audio,
 			galaxy,
 			camera,
 			new Title(),
@@ -77,7 +86,6 @@ public class Humanity implements Game{
 			player,
 			//new Log(),
 			//new Actions(),
-			//new Audio(),
 			loader,
 		};
 		for(GameElement gameElement : gameElements){
@@ -109,17 +117,14 @@ public class Humanity implements Game{
     private void update(double delta){
     	switch(state){
 	    	case NEW :
-	    		//System.out.println("new game");
 	    		state = State.LOAD;
 	    		loader.setMax(options.getGalaxySize());
 	    		galaxy.create(options.getGalaxySize());
 	    		break;
 	    	case LOAD :
-	    		//System.out.println("loading...");
 	    		loader.setValue(galaxy.getStarSize());
 	    		break;
 	    	case GAME :
-	    		//System.out.println("game started");
 	    		break;
     	}
 		for(GameElement gameElement : gameElements){
@@ -176,5 +181,10 @@ public class Humanity implements Game{
 	@Override
 	public Player getPlayer() {
 		return player;
+	}
+
+	@Override
+	public Audio getAudio() {
+		return audio;
 	}
 }

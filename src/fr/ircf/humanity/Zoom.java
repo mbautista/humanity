@@ -14,15 +14,15 @@ public class Zoom implements GameElement {
 	public void init(final Game game) throws Exception {
 		this.game = game;
 		in = new Button("+") {
-			public void click() { game.getCamera().zoomIn(); }
+			public void down() { game.getCamera().zoomIn(); }
 		};
 		in.setPosition(X, Y);
 		slider = new Slider() {
-			public void slide() { game.getCamera().setZ(getValue()); }
+			public void up() { game.getCamera().setZ(getValue()); }
 		};
 		slider.setPosition(X, Y + in.getHeight());
 		out = new Button("-") {
-			public void click() { game.getCamera().zoomOut(); }
+			public void down() { game.getCamera().zoomOut(); }
 		};
 		out.setPosition(X, slider.getY() + slider.getHeight());
 	}

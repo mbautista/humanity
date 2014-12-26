@@ -34,7 +34,7 @@ public class Star extends Aster {
 		// TODO avoid creating too close stars
 		double angle = randomGaussian(Math.PI);
 		distance = galaxy.getSpiralDistance(angle) + randomGaussian(Galaxy.ARM_WIDTH);
-		if (random.nextInt(2)==0) angle+= Math.PI; // choose arm randomly
+		if (random.nextInt(2)==0) angle+= Math.PI; // randomly choose arm
 		x = distance * Math.cos(angle);
 		y = distance * Math.sin(angle);
 		// FIXME star viewport depends on Camera zoom

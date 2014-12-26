@@ -2,7 +2,7 @@ package fr.ircf.humanity;
 
 import java.util.ArrayList;
 
-public abstract class Player implements GameElement{
+public abstract class Player extends Panel implements GameElement{
 
 	private Game game;
 	private double kardashev;

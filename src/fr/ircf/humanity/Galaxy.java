@@ -17,8 +17,8 @@ public class Galaxy implements Scene, GameElement {
 		this.game = game;
 		stars = new ArrayList<Star>();
 		sceneStars = new ArrayList<Star>();
-		smbh = new Star(this);
-		smbh.createSuperMassiveBlackHole();
+		// TODO smbh = new Star(this);
+		// TODO smbh.createSuperMassiveBlackHole();
 		// TODO stars.add(smbh);
 		create(1);
 	}
@@ -57,7 +57,7 @@ public class Galaxy implements Scene, GameElement {
 			}
 		}catch(Exception e){}
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-	        game.setState(State.MENU);
+	        game.setState(State.PAUSE);
 	    }
 	}
 

@@ -13,14 +13,17 @@ public class Menu implements GameElement {
 		this.game = game;
 		buttons = new Button[] {
 			new Button(game.i18n("menu.new")) {
-				public void up() { game.setState(State.NEW);
-			}},
+				public void up() { game.setState(State.NEW); }
+			},
+			new Button(game.i18n("menu.resume")) {
+				public void up() { game.setState(State.GAME); }
+			},
 			new Button(game.i18n("menu.options")) {
-				public void up() { game.setState(State.OPTIONS);
-			}},
+				public void up() { game.setState(State.OPTIONS); }
+			},
 			new Button(game.i18n("menu.quit")) {
-				public void up() { game.setState(State.QUIT);
-			}},
+				public void up() { game.setState(State.QUIT); }
+			},
 		};
 		int i = 0;
 		for (Button button: buttons){
@@ -34,7 +37,7 @@ public class Menu implements GameElement {
 
 	@Override
 	public boolean visible() {
-		return game.getState() == State.MENU;
+		return game.getState() == State.MENU || game.getState() == State.PAUSE;
 	}
 
 	@Override
@@ -46,6 +49,8 @@ public class Menu implements GameElement {
 
 	@Override
 	public void update(double delta) {
+		buttons[0].setDisabled(game.getState() == State.PAUSE);
+		buttons[1].setDisabled(game.getState() == State.MENU);
 		for (Button button: buttons){
 			button.update(delta);
 		}

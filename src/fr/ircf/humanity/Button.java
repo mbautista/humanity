@@ -6,6 +6,7 @@ import org.lwjgl.opengl.*;
 
 public class Button extends Component {
 
+	private static float[] COLOR_DISABLED = {0.1f, 0.1f, 0.1f, 0.5f};
 	private static float[] COLOR_OUT = {0.2f, 0.2f, 0.2f, 0.5f};
 	private static float[] COLOR_OVER = {0.4f, 0.4f, 0.4f, 0.5f};
 	private static float[] COLOR_CLICK = {0.6f, 0.6f, 0.6f, 0.5f};
@@ -13,6 +14,7 @@ public class Button extends Component {
 	private int padding = 10;
 	private Text text;
 	private Rectangle viewport;
+	private boolean disabled;
 	
 	public Button(String label) throws Exception {
 		this.text = new Text(label);
@@ -21,13 +23,17 @@ public class Button extends Component {
 	}
 
 	public void render() {
-		GL11.glColor4f(color[0], color[1], color[2], color[3]);
-		GL11.glRecti(x, y, x + getWidth(), y + getHeight());
-		text.render();
+		if (visible()) {
+			GL11.glColor4f(color[0], color[1], color[2], color[3]);
+			GL11.glRecti(x, y, x + getWidth(), y + getHeight());
+			text.render();
+		}
 	}
 
 	public void update(double delta) {
-		if (viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
+		if (disabled){
+			setColor(COLOR_DISABLED);
+		}else if (viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
 			over();
 			if (Mouse.isButtonDown(0)) down();
 			while (Mouse.next()){
@@ -75,5 +81,13 @@ public class Button extends Component {
 	
 	private void updateViewport(){
 		viewport = new Rectangle(x, y, getWidth(), getHeight());
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 }

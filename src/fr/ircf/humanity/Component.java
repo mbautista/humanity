@@ -4,6 +4,10 @@ abstract class Component {
 
 	protected int x, y, width, height;
 
+	public boolean visible(){
+		return true;
+	}
+	
 	abstract public void render();
 	
 	public void setPosition(int x, int y){

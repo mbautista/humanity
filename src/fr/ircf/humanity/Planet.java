@@ -11,7 +11,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Planet extends Aster {
 
 	public static String[] NUMBER = new String[] {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-	public static double MIN_LOCALX = 1, MAX_LOCALX = 64,
+	public static double MIN_LOCALX = 2, MAX_LOCALX = 64,
 			MIN_WATER = 64, MAX_WATER = 128,
 			MIN_ATMOSPHERE = 64, MAX_ATMOSPHERE = 128,
 			MIN_ENERGY = 64, MAX_ENERGY = 128,

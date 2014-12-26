@@ -156,7 +156,7 @@ public class Planet extends Aster {
 	 */
 	private double BODE_A = 0.4, BODE_B = 0.15, BODE_C = 2;
 	private double bode(int rank){
-		return BODE_A + BODE_B * Math.pow(BODE_C, rank+1);
+		return BODE_A + BODE_B * Math.pow(BODE_C, rank+2);
 	}
 	
 	/**

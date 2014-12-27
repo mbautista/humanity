@@ -15,6 +15,11 @@ abstract class Component {
 		this.y = y;
 	}
 	
+	public void setPosition(double x, double y){
+		this.x = (int)x;
+		this.y = (int)y;
+	}
+	
 	public void update(double delta){	
 	}
 

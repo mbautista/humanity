@@ -153,9 +153,9 @@ public class Camera implements GameElement {
 	public void setSlowMotion(SceneObject o, boolean slowMotion){
 		if (slowMotion){
 			hightlight = o;
-			if (game.getOptions().getSpeed()>1) game.getOptions().setSpeed(1);
+			if (game.getOptions().getSpeed()>0) game.getOptions().setSpeed(0);
 		}else if (hightlight == o){
-			if (game.getOptions().getSpeed()<=1) game.getOptions().restoreSpeed();
+			if (game.getOptions().getSpeed()<=0) game.getOptions().restoreSpeed();
 		}
 	}
 	public void setX(double x) {

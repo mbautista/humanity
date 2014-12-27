@@ -3,6 +3,8 @@ package fr.ircf.humanity;
 import java.awt.geom.Rectangle2D;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.lwjgl.input.Mouse;
@@ -11,19 +13,53 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class Aster implements SceneObject{
 
-	public static double MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
-	public static float[] COLOR_OVER = new float[] { 1.0f, 0.0f, 0.0f };
+	public static int
+		ENERGY = 0,
+		FOOD = 1,
+		WATER = 2,
+		PEOPLE = 3,
+		ATMOSPHERE = 4,
+		OVER = 5;
+	public static float[][] COLORS = {
+		new float[] { 1, 1, 0 },
+		new float[] { 0, 1, 0 },
+		new float[] { 0, 0, 1 },
+		new float[] { 1, 0, 0 },
+		new float[] { 0, 1, 1 },
+		new float[] { 1, 0, 0 }
+	};
+	public static double
+		TEXT_DY = 11, // Spacing between planet and text
+		MIN_Z_FOR_TEXT = 4, // do not display texts at galaxy scale
+		MAX_RESOURCE = 128,
+		MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
 	protected static Random random = new Random();
-	protected double x = 0, y = 0, size, energy, distance;
+	protected String name;
+	protected double x = 0, y = 0, size, distance;
 	protected float[] color = new float[3];
-	protected ArrayList<Bar> bars;
+	protected HashMap<Integer, Double> resources;
 	// Aster viewport represents the aster's renderable/interactive zone (e.g. star)
 	// Aster extended viewport includes children asters (e.g. star system)
 	protected Rectangle2D viewport, extendedViewport, screenViewport;
-	protected String name;
+	protected Text text;
+	protected HashMap<Integer, TextBar> bars;
 	protected boolean highlight = false;
 	
+	public Aster(){
+		resources = new HashMap<Integer, Double>();
+	}
+	
 	public void create(){
+		text = new Text(name);
+		bars = new HashMap<Integer, TextBar>();
+		for(Entry<Integer, Double> resource : resources.entrySet()){
+			bars.put(resource.getKey(), new TextBar(
+					getGame().i18n("resources." + resource.getKey()), 
+					COLORS[resource.getKey()]
+			));
+			bars.get(resource.getKey()).setValue(resource.getValue());
+			bars.get(resource.getKey()).setMax(MAX_RESOURCE);
+		}
 	}
 	
 	public void destroy(){
@@ -32,8 +68,28 @@ public abstract class Aster implements SceneObject{
 	@Override
 	public void render(){
 		if (getCamera().hasZMax()) return;
+		renderViewport();
+		if (getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
+		if (highlight) renderBars();
+	}
+	
+	private void renderText(){
+		text.setPosition(getScreenX(), getScreenY() - this.getScreenSize() - (bars.size()+1) * TEXT_DY);
+		text.render();
+	}
+	
+	private void renderBars(){
+		int i = 0;
+		for(Entry<Integer, TextBar> bar : bars.entrySet()){
+			bar.getValue().setPosition(getScreenX(), getScreenY() - this.getScreenSize() - (bars.size()-i) * TEXT_DY);
+			bar.getValue().render();
+			i++;
+		}
+	}
+	
+	private void renderViewport(){
 		if (screenViewport!=null && highlight){
-			GL11.glColor3f(COLOR_OVER[0], COLOR_OVER[1], COLOR_OVER[2]);
+			GL11.glColor3f(COLORS[OVER][0], COLORS[OVER][1], COLORS[OVER][2]);
 			GL11.glBegin(GL11.GL_LINE_STRIP);
 		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getY());
 		    	GL11.glVertex2d(screenViewport.getMaxX(), screenViewport.getY());
@@ -211,4 +267,6 @@ public abstract class Aster implements SceneObject{
 			return CONSONANTS.charAt(random.nextInt(CONSONANTS.length()));
 		}
 	}
+	
+	public abstract Game getGame();
 }

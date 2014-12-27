@@ -21,19 +21,19 @@ public class Text extends Component {
 	private TrueTypeFont font;
 	private static HashMap<String, TrueTypeFont> fonts;
 
-	public Text(String text) throws Exception {
+	public Text(String text) {
 		this(text, COLOR, SIZE, FONT);
 	}
 	
-	public Text(String text, Color color) throws Exception {
+	public Text(String text, Color color) {
 		this(text, color, SIZE, FONT);
 	}
 	
-	public Text(String text, Color color, float size) throws Exception {
+	public Text(String text, Color color, float size) {
 		this(text, color, size, FONT);
 	}
 	
-	public Text(String text, Color color, float size, String file) throws Exception {
+	public Text(String text, Color color, float size, String file) {
 		this.text = text;
 		this.color = color;
 		this.size = size;
@@ -47,15 +47,19 @@ public class Text extends Component {
         GL11.glDisable(GL11.GL_BLEND);
 	}
 	
-	private void initFont(String file, float size) throws Exception {
-		if (fonts == null) fonts = new HashMap<String, TrueTypeFont>();
-		if (fonts.containsKey(file + size)){
-			font = fonts.get(file + size);
-		}else{
-			InputStream fontStream = ResourceLoader.getResourceAsStream(file);
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
-			font = new TrueTypeFont(awtFont.deriveFont(size), ALIASING);
-			fonts.put(file + size, font);
+	private void initFont(String file, float size) {
+		try{
+			if (fonts == null) fonts = new HashMap<String, TrueTypeFont>();
+			if (fonts.containsKey(file + size)){
+				font = fonts.get(file + size);
+			}else{
+				InputStream fontStream = ResourceLoader.getResourceAsStream(file);
+				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+				font = new TrueTypeFont(awtFont.deriveFont(size), ALIASING);
+				fonts.put(file + size, font);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 	

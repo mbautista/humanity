@@ -22,8 +22,7 @@ public class Planet extends Aster {
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
 	private int satellites = 0;
-	private double water = 0, atmosphere = 0, hours, hour = 0, days, day = 0;
-	private ArrayList<Population> populations;
+	private double hours, hour = 0, days, day = 0;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
 	private Rings rings = Rings.NONE;
@@ -31,6 +30,7 @@ public class Planet extends Aster {
 	private Texture texture;
 	
 	public Planet(Star star){
+		super();
 		this.star = star;
 	}
 	
@@ -57,18 +57,18 @@ public class Planet extends Aster {
 		}
 		day = 2 * random.nextDouble() * Math.PI;
 		days = kepler3();
-		type =  (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
+		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (habitable()) type = PlanetType.HABITABLE;
 		if (type == PlanetType.HABITABLE){
-			atmosphere = randomBetween(MIN_ATMOSPHERE, MAX_ATMOSPHERE);
-			water = randomBetween(MIN_WATER, MAX_WATER);
+			resources.put(ATMOSPHERE, randomBetween(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
+			resources.put(WATER, randomBetween(MIN_WATER, MAX_WATER));
 		}
 		int dust = random.nextInt(3);
 		if (type == PlanetType.GAZEOUS && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
 		size = randomBetweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
-		energy = randomBetweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE);
+		resources.put(ENERGY, randomBetweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
 		satellites = (int) randomBetweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
 		color = randomColorBetweenIntensity(
 				MIN_INTENSITY + type.getValue(),
@@ -188,5 +188,10 @@ public class Planet extends Aster {
 
 	public Star getStar() {
 		return star;
+	}
+	
+	@Override
+	public Game getGame(){
+		return star.getGame();
 	}
 }

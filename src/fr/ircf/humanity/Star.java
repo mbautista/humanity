@@ -12,11 +12,12 @@ public class Star extends Aster {
 
 	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
-			MIN_Z_FOR_PLANETS = 6;
+			MIN_Z_FOR_PLANETS = 7;
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
 	public Star(Galaxy galaxy){
+		super();
 		this.galaxy = galaxy;
 		planets = new  ArrayList<Planet>();
 		scenePlanets = new ArrayList<Planet>();
@@ -32,7 +33,7 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		createPosition();
-		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
+		resources.put(ENERGY, randomBetween(MIN_ENERGY, MAX_ENERGY));
 		name = randomName();
 		updateSize();
 		updateViewport();
@@ -155,7 +156,7 @@ public class Star extends Aster {
 	 * @see http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 	 */
 	private void updateColor(){
-		double t = energy * 100 / MAX_ENERGY;
+		double t = resources.get(ENERGY) * 100 / MAX_ENERGY;
 		if (t <= 66){
 			color[0] = 1;
 			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
@@ -178,10 +179,10 @@ public class Star extends Aster {
 	private static double SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (MAX_ENERGY - RED_GIANT_ENERGY);
 	private static double SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
 	private void updateSize() {
-		if (energy < RED_GIANT_ENERGY){
-			size = (energy * SIZE_PEAK_A);
+		if (resources.get(ENERGY) < RED_GIANT_ENERGY){
+			size = (resources.get(ENERGY) * SIZE_PEAK_A);
 		}else{
-			size = (SIZE_PEAK_B * energy + SIZE_PEAK_C);
+			size = (SIZE_PEAK_B * resources.get(ENERGY) + SIZE_PEAK_C);
 		}
 		size = Math.max(0.2f, size); // FIXME min size should be 0, be not reachable on create
 	}
@@ -198,6 +199,11 @@ public class Star extends Aster {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Game getGame(){
+		return galaxy.getGame();
 	}
 	
 	@Override

@@ -16,7 +16,11 @@ public class Button extends Component {
 	private Rectangle viewport;
 	private boolean disabled;
 	
-	public Button(String label) throws Exception {
+	public Button() {
+		this("");
+	}
+	
+	public Button(String label) {
 		this.text = new Text(label);
 		updateViewport();
 		setColor(COLOR_OUT);
@@ -89,5 +93,10 @@ public class Button extends Component {
 
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	
+	public void setText(String text){
+		this.text.setText(text);
+		updateViewport();
 	}
 }

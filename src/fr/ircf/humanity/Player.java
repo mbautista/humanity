@@ -10,21 +10,25 @@ public abstract class Player extends Panel implements GameElement{
 	private Game game;
 	private double humanity = 0, kardashev = 0;
 	private Text[] texts;
+	private Button home;
 	// TODO avatar
 	// TODO color 
 	private Planet planet;
 	private ArrayList<Population> populations;
 
 	@Override
-	// TODO dynamic text
-	public void init(Game game) throws Exception {
+	public void init(final Game game) throws Exception {
 		this.game = game;
 		texts = new Text[] { new Text(), new Text(), new Text() };
-		int i = 0;
+		int i = 2;
 		for (Text text: texts){
 			text.setPosition(X, (Display.getHeight() - getHeight()) + i * DY);
 			i++;
 		}
+		home = new Button() {
+			public void up(){ game.getCamera().show(planet); }
+		};
+		home.setPosition(X, Display.getHeight() - getHeight());
 	}
 
 	@Override
@@ -35,6 +39,8 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void render() {
 		// TODO avatar
+		home.setText(planet.getName());
+		home.render();
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
 		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
 		texts[2].setText(game.i18n("player.kardashev") + " : " + kardashev);
@@ -45,12 +51,13 @@ public abstract class Player extends Panel implements GameElement{
 
 	@Override
 	public void update(double delta) {
+		home.update(delta);
 		// TODO kardashev
-		// TODO population
+		// TODO humanity
 	}
 	
 	public int getHeight(){
-		return texts.length * (texts[0].getHeight() + DY);
+		return (2 + texts.length) * (texts[0].getHeight() + DY);
 	}
 
 	public Planet getPlanet() {

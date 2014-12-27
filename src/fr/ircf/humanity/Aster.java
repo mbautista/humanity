@@ -31,6 +31,7 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void render(){
+		if (getCamera().getGame().getState() != State.GAME) return;
 		if (screenViewport!=null && highlight){
 			GL11.glColor3f(COLOR_OVER[0], COLOR_OVER[1], COLOR_OVER[2]);
 			GL11.glBegin(GL11.GL_LINE_STRIP);
@@ -45,11 +46,15 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void update(double delta){
+		if (getCamera().getGame().getState() != State.GAME) return;
 		screenViewport = getScreenViewport();
 		if (screenViewport.getWidth() < MIN_SCREEN_VIEWPORT_X) screenViewport = getScreenExtendedViewport();
 		if (screenViewport!=null && screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){
 			over();
-			if (Mouse.isButtonDown(0)) click();
+			if (Mouse.isButtonDown(0)) down();
+			while (Mouse.next()){
+			    if (!Mouse.getEventButtonState() && Mouse.getEventButton() == 0) up();
+			}
 		}else{
 			out();
 		}
@@ -75,7 +80,10 @@ public abstract class Aster implements SceneObject{
 		highlight = false;
 	}
 	
-	protected void click(){
+	protected void down(){
+	}
+	
+	protected void up(){
 		getCamera().show(this);
 	}
 	

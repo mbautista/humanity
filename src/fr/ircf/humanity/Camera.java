@@ -109,6 +109,7 @@ public class Camera implements GameElement {
 	public Rectangle2D getObjectExtendedViewport(SceneObject o){
 		return getObjectViewport(o, o.getExtendedViewport());
 	}
+
 	public Rectangle2D getObjectViewport(SceneObject o, Rectangle2D ov){
 		if (ov == null) return null;
 		return new Rectangle2D.Double(
@@ -162,5 +163,9 @@ public class Camera implements GameElement {
 	
 	public SceneObject getObject(){
 		return object;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 }

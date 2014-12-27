@@ -1,12 +1,10 @@
 package fr.ircf.humanity;
 
+import org.newdawn.slick.Color;
 import java.awt.geom.Rectangle2D;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -50,7 +48,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	public void create(){
-		text = new Text(name);
+		text = new Text(name, new Color(color[0], color[1], color[2]));
 		bars = new HashMap<Integer, TextBar>();
 		for(Entry<Integer, Double> resource : resources.entrySet()){
 			bars.put(resource.getKey(), new TextBar(
@@ -69,7 +67,7 @@ public abstract class Aster implements SceneObject{
 	public void render(){
 		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
 		renderViewport();
-		if (getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
+		if (highlight || getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
 		if (highlight) renderBars();
 	}
 	

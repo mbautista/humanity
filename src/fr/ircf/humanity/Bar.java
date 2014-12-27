@@ -22,7 +22,7 @@ public class Bar extends Component {
 		GL11.glColor4f(COLOR_BACK[0], COLOR_BACK[1], COLOR_BACK[2], COLOR_BACK[3]);
 		GL11.glRecti(x, y, x + width + 2*padding, y + height + 2*padding);
 		GL11.glColor3d(color[0], color[1], color[2]);
-		GL11.glRectd(x + padding, y + padding, x + value*width/max, y + height);
+		GL11.glRectd(x + padding, y + padding, x + width*Math.min(value/max, 1), y + height);
 	}
 
 	public double getValue() {

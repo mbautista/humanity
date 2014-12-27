@@ -152,4 +152,8 @@ public class Camera implements GameElement {
 	public double getZ() {
 		return z;
 	}
+	
+	public SceneObject getObject(){
+		return object;
+	}
 }

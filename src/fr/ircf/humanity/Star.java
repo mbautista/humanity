@@ -1,8 +1,10 @@
 package fr.ircf.humanity;
 
 import java.awt.geom.Rectangle2D;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
 
@@ -30,6 +32,12 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		createPosition();
+		extendedViewport = new Rectangle2D.Double(
+			x - Planet.MAX_LOCALX,
+			y - Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX
+		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		name = randomName();
 		updateSize();
@@ -53,12 +61,6 @@ public class Star extends Aster {
 			x = distance * Math.cos(angle);
 			y = distance * Math.sin(angle);
 		}
-		extendedViewport = new Rectangle2D.Double(
-			x - Planet.MAX_LOCALX,
-			y - Planet.MAX_LOCALX,
-			2 * Planet.MAX_LOCALX,
-			2 * Planet.MAX_LOCALX
-		);
 	}
 	
 	private void createPlanets(int planets){
@@ -74,7 +76,7 @@ public class Star extends Aster {
 	 */
 	@Override
 	public void render(){
-		if (getCamera().shows(this)){
+		if (isEnlighten() || getCamera().shows(this)){
 			renderStar();
 		}
 		for(Planet planet: scenePlanets){
@@ -84,16 +86,37 @@ public class Star extends Aster {
 	}
 
 	/**
-	 * Render star only
+	 * Render star itself
 	 */
 	private void renderStar(){
-		// TODO enlighten sphere
 		GL11.glPushMatrix();
 		GL11.glTranslated(getScreenX(), getScreenY(), getScreenSize());
+		if (isEnlighten()) renderLight();
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
 		s.draw(Math.max(1, (float)getScreenSize()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
+	}
+	
+	private void renderLight(){
+		FloatBuffer position = BufferUtils.createFloatBuffer(4);
+		position.put(new float[] { 0f, 0f, 0f, 1f, });
+		position.flip();
+		
+		FloatBuffer color = BufferUtils.createFloatBuffer(4);
+		color.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
+		color.flip();
+
+		//GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_LIGHT0);
+		GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, color);
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
+		//GL11.glDisable(GL11.GL_LIGHTING);
+	}
+	
+	public boolean isEnlighten(){
+		SceneObject o = getCamera().getObject();
+		return o == this || o instanceof Planet && ((Planet)o).getStar() == this;
 	}
 	
 	/**

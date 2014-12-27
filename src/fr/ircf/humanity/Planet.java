@@ -86,6 +86,7 @@ public class Planet extends Aster {
 	 */
 	@Override
 	public void render(){
+		if (star.isEnlighten()) GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPushMatrix();
 		GL11.glColor3f(color[0], color[1], color[2]);
 		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenSize());
@@ -99,6 +100,7 @@ public class Planet extends Aster {
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
 		super.render();
+		if (star.isEnlighten()) GL11.glDisable(GL11.GL_LIGHTING);
 	}
 	
 	@Override
@@ -182,5 +184,9 @@ public class Planet extends Aster {
 	
 	public double getDistance() {
 		return distance;
+	}
+
+	public Star getStar() {
+		return star;
 	}
 }

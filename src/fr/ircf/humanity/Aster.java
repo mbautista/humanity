@@ -67,7 +67,7 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void render(){
-		if (getCamera().hasZMax()) return;
+		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
 		renderViewport();
 		if (getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
 		if (highlight) renderBars();
@@ -102,7 +102,7 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void update(double delta){
-		if (getCamera().hasZMax()) return;
+		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
 		screenViewport = getScreenViewport();
 		if (extendedViewport!=null && screenViewport.getWidth() < MIN_SCREEN_VIEWPORT_X) screenViewport = getScreenExtendedViewport();
 		if (screenViewport!=null && screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){

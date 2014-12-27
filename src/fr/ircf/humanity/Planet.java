@@ -55,8 +55,8 @@ public class Planet extends Aster {
 		}else{
 			distance = randomBetween(star.getSize() + MIN_LOCALX, MAX_LOCALX/bode(max));
 		}
-		day = 2 * random.nextDouble() * Math.PI;
 		days = kepler3();
+		day = random.nextDouble() * days;
 		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (habitable()) type = PlanetType.HABITABLE;
 		if (type == PlanetType.HABITABLE){
@@ -106,15 +106,15 @@ public class Planet extends Aster {
 	public void update(double delta){
 		super.update(delta);
 		// TODO energy, water, atmosphere, type
-		hour+= delta / hours;
-		day += delta / days;
-		year = (int) day; // FIXME fix scale so that year = day / days
+		hour+= delta;
+		day = hour / hours;
+		year = (int)(day / days);
 		updatePosition();
 	}
 	
 	private void updatePosition(){
-		x = star.x + distance * Math.cos(day);
-		y = star.y + distance * Math.sin(day);
+		x = star.x + distance * Math.cos(day * 2 * Math.PI / days);
+		y = star.y + distance * Math.sin(day * 2 * Math.PI / days);
 		updateViewport();
 	}
 	
@@ -161,7 +161,7 @@ public class Planet extends Aster {
 	 * Kepler's 3rd law for planet orbit period
 	 * KEPLER_A is the time scale factor
 	 */
-	private double KEPLER_A = 10, KEPLER_B = 1.5;
+	private double KEPLER_A = 5, KEPLER_B = 1.5;
 	private double kepler3(){
 		return KEPLER_A * Math.pow(distance, KEPLER_B);
 	}

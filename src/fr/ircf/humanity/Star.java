@@ -139,7 +139,7 @@ public class Star extends Aster {
 		if (getCamera().shows(this)){
 			updateStar(delta);
 		}
-		for(Planet planet: scenePlanets){
+		for(Planet planet: planets ){//scenePlanets){
 			planet.update(delta);
 		}
 	}

@@ -46,13 +46,10 @@ public class Galaxy implements Scene, GameElement {
 	}
 	
 	@Override
-	// FIXME Concurrent Modification Exception caused by zooming/clicking asters
 	public void update(double delta) {
-		//try{
-			for (Star star: sceneStars){
-				star.update(delta);
-			}
-		//}catch(Exception e){}
+		for (Star star: stars){ //sceneStars){
+			star.update(delta);
+		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 	        game.setState(State.PAUSE);
 	    }

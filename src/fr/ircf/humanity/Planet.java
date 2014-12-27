@@ -99,8 +99,8 @@ public class Planet extends Aster {
 		sphere.draw((float)Math.max(1, getScreenSize()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
-		super.render();
 		if (star.isEnlighten()) GL11.glDisable(GL11.GL_LIGHTING);
+		super.render();
 	}
 	
 	@Override

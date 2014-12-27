@@ -100,7 +100,7 @@ public class Humanity implements Game{
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			render();
 			update(getDelta());
-			Display.sync(60);
+			Display.sync(40);
 			Display.update();
 		}
 		Display.destroy();

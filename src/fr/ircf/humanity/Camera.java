@@ -104,11 +104,18 @@ public class Camera implements GameElement {
 	}
 	
 	public Rectangle2D getObjectViewport(SceneObject o){
+		return getObjectViewport(o, o.getViewport());
+	}
+	public Rectangle2D getObjectExtendedViewport(SceneObject o){
+		return getObjectViewport(o, o.getExtendedViewport());
+	}
+	public Rectangle2D getObjectViewport(SceneObject o, Rectangle2D ov){
+		if (ov == null) return null;
 		return new Rectangle2D.Double(
-			(o.getViewport().getX() - viewport.getX()) * scale,
-			(o.getViewport().getY() - viewport.getY()) * scale,
-			o.getViewport().getWidth() * scale,
-			o.getViewport().getHeight() * scale
+			(ov.getX() - viewport.getX()) * scale,
+			(ov.getY() - viewport.getY()) * scale,
+			ov.getWidth() * scale,
+			ov.getHeight() * scale
 		);
 	}
 	

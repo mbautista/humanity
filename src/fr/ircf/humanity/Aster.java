@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class Aster implements SceneObject{
 
+	public static double MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
 	public static float[] COLOR_OVER = new float[] { 1.0f, 0.0f, 0.0f };
 	protected static Random random = new Random();
 	protected double x = 0, y = 0, size, energy, distance;
@@ -45,7 +46,8 @@ public abstract class Aster implements SceneObject{
 	@Override
 	public void update(double delta){
 		screenViewport = getScreenViewport();
-		if (screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){
+		if (screenViewport.getWidth() < MIN_SCREEN_VIEWPORT_X) screenViewport = getScreenExtendedViewport();
+		if (screenViewport!=null && screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){
 			over();
 			if (Mouse.isButtonDown(0)) click();
 		}else{
@@ -131,6 +133,10 @@ public abstract class Aster implements SceneObject{
 	@Override
 	public Rectangle2D getScreenViewport(){
 		return getCamera().getObjectViewport(this);
+	}
+	
+	public Rectangle2D getScreenExtendedViewport(){
+		return getCamera().getObjectExtendedViewport(this);
 	}
 	
 	public int getPolygons(){

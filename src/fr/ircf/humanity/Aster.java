@@ -240,7 +240,7 @@ public abstract class Aster implements SceneObject{
 		return c;
 	}
 	
-	private static int MIN_SYLLABUS = 2, MAX_SYLLABUS = 3;
+	private static int MIN_SYLLABUS = 1, MAX_SYLLABUS = 3;
 	private static String VOWELS = "aeiouy";
 	private static String CONSONANTS = "bcdfghjklmnpqrstvwxz";
 	protected String randomName(){

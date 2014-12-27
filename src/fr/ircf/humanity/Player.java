@@ -8,7 +8,7 @@ public abstract class Player extends Panel implements GameElement{
 
 	private static int X = 10, DY = 20;
 	private Game game;
-	private double population = 0, kardashev = 0;
+	private double humanity = 0, kardashev = 0;
 	private Text[] texts;
 	// TODO avatar
 	// TODO color 
@@ -36,7 +36,7 @@ public abstract class Player extends Panel implements GameElement{
 	public void render() {
 		// TODO avatar
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
-		texts[1].setText(game.i18n("player.population") + " : " + population);
+		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
 		texts[2].setText(game.i18n("player.kardashev") + " : " + kardashev);
 		for (Text text: texts){
 			text.render();

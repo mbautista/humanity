@@ -8,7 +8,7 @@ import org.lwjgl.util.glu.GLU;
 public class Humanity implements Game{
 
 	static final String TITLE = "Humanity";
-	static final double VERSION = 0.1;
+	static final double VERSION = 0.1, SPEED_SCALE = 500;
 	private GameElement[] gameElements;	
 	private State state = State.MENU, previousState = State.MENU;
 	private long lastFrame;
@@ -143,7 +143,7 @@ public class Humanity implements Game{
 	
 	private double getDelta() {
 		long currentTime = getTime();
-		double delta = ((double) currentTime - (double) lastFrame) * options.getSpeed()/10;
+		double delta = ((double) currentTime - (double) lastFrame) * options.getSpeed()/SPEED_SCALE;
 		lastFrame = getTime();
 		return delta;
 	}

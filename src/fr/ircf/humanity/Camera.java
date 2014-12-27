@@ -9,7 +9,7 @@ public class Camera implements GameElement {
 	public static double Z_MIN = 0, Z_MAX = 12, DZ = 0.1f;
 	private double x, y, z, scale;
 	private Rectangle2D viewport;
-	private SceneObject object;
+	private SceneObject object, hightlight;
 	private Game game;
 
 	@Override
@@ -80,12 +80,19 @@ public class Camera implements GameElement {
 	 * Zoom helpers
 	 */
 	public void zoomIn(){
-		double zMax = object != null ? getObjectZMax(object) : Z_MAX;
-		z = Math.min(zMax, z + DZ);
+		z = Math.min(getZMax(), z + DZ);
 	}
 	
 	public void zoomOut(){
 		z = Math.max(Z_MIN, z - DZ);
+	}
+	
+	public double getZMax(){
+		return object != null ? getObjectZMax(object) : Z_MAX;
+	}
+	
+	public boolean hasZMax(){
+		return z == getZMax();
 	}
 	
 	/**
@@ -137,6 +144,20 @@ public class Camera implements GameElement {
 		return o.getSize() * scale;
 	}
 	
+	/**
+	 * Set slow motion mode for a given scene object
+	 * @see Aster.over() and Aster.out()
+	 * @param o
+	 * @param slowMotion
+	 */
+	public void setSlowMotion(SceneObject o, boolean slowMotion){
+		if (slowMotion){
+			hightlight = o;
+			if (game.getOptions().getSpeed()>1) game.getOptions().setSpeed(1);
+		}else if (hightlight == o){
+			if (game.getOptions().getSpeed()<=1) game.getOptions().restoreSpeed();
+		}
+	}
 	public void setX(double x) {
 		this.x = x;
 	}

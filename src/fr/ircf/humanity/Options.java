@@ -10,7 +10,7 @@ public class Options extends Menu {
 	private static Locale[] LOCALES = new Locale[] { Locale.US, Locale.FRANCE };
 	private int displayMode = 0, locale = 0, soundVolume = 10, musicVolume = 10,
 			galaxySize = 1000, starSize = 6, 
-			life = 10, speed = 2, difficulty = 1;
+			life = 10, previousSpeed = 40, speed = 40, difficulty = 40;
 	private boolean fullScreen = false;
 	
 	public Options(){
@@ -52,11 +52,11 @@ public class Options extends Menu {
 			new Button(game.i18n("options.life") + " : " + life + "%") {
 				public void up() { life = (life + 10) % 110; apply(); }
 			},
-			new Button(game.i18n("options.speed") + " : " + speed + "/5") {
-				public void up() { speed = 1 + (speed % 5); apply(); }
+			new Button(game.i18n("options.speed") + " : " + speed + "%") {
+				public void up() { speed = 10 + (speed % 100); apply(); }
 			},
-			new Button(game.i18n("options.difficulty") + " : " + difficulty + "/5") {
-				public void up() { difficulty = 1 + (difficulty % 5); apply(); }
+			new Button(game.i18n("options.difficulty") + " : " + difficulty + "%") {
+				public void up() { difficulty = 10 + (difficulty % 100); apply(); }
 			},
 			new Button(game.i18n("options.back")) {
 				public void up() { game.setState(game.getPreviousState()); }
@@ -109,6 +109,13 @@ public class Options extends Menu {
 	}
 	public int getGalaxySize() {
 		return galaxySize;
+	}
+	public void setSpeed(int speed){
+		previousSpeed = this.speed;
+		this.speed = speed;
+	}
+	public void restoreSpeed(){
+		speed = previousSpeed;
 	}
 	public int getSpeed() {
 		return speed;

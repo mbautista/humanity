@@ -23,14 +23,24 @@ public class Star extends Aster {
 	/**
 	 * Create a star in the galaxy :
 	 * generate (x,y) randomly on a gaussian and spiral distribution (spiral shape)
-	 * viewport represents the star system size (actually constant)
-	 * size represents the star size
+	 * external viewport represents the star system size (constant)
 	 * size and color depend on energy, they may also be computed during updateStar()
 	 * each star have at least one planet (for game convenience)
 	 */
 	@Override
 	public void create(){
-		// TODO avoid creating too close stars
+		createPosition();
+		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
+		name = randomName();
+		updateSize();
+		updateViewport();
+		updateColor();
+		createPlanets(1 + random.nextInt(galaxy.getGame().getOptions().getStarSize()));
+		super.create();
+	}
+
+	// TODO avoid creating too close stars
+	private void createPosition(){
 		double angle = Math.abs(randomGaussian(Math.PI/2));
 		if (angle < Galaxy.BULB_LIMIT){
 			// bulb
@@ -49,15 +59,8 @@ public class Star extends Aster {
 			2 * Planet.MAX_LOCALX,
 			2 * Planet.MAX_LOCALX
 		);
-		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
-		name = randomName();
-		updateSize();
-		updateViewport();
-		updateColor();
-		createPlanets(1 + random.nextInt(galaxy.getGame().getOptions().getStarSize()));
-		super.create();
 	}
-
+	
 	private void createPlanets(int planets){
 		for (int i=0; i<planets; i++){
 			Planet planet = new Planet(this);

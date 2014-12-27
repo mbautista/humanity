@@ -15,6 +15,7 @@ public abstract class Player extends Panel implements GameElement{
 	private ArrayList<Population> populations;
 
 	@Override
+	// TODO dynamic text
 	public void init(Game game) throws Exception {
 		this.game = game;
 		texts = new Text[] {

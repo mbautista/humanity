@@ -32,12 +32,6 @@ public class Star extends Aster {
 	@Override
 	public void create(){
 		createPosition();
-		extendedViewport = new Rectangle2D.Double(
-			x - Planet.MAX_LOCALX,
-			y - Planet.MAX_LOCALX,
-			2 * Planet.MAX_LOCALX,
-			2 * Planet.MAX_LOCALX
-		);
 		energy = randomBetween(MIN_ENERGY, MAX_ENERGY);
 		name = randomName();
 		updateSize();
@@ -61,6 +55,20 @@ public class Star extends Aster {
 			x = distance * Math.cos(angle);
 			y = distance * Math.sin(angle);
 		}
+		extendedViewport = new Rectangle2D.Double(
+			x - Planet.MAX_LOCALX,
+			y - Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX,
+			2 * Planet.MAX_LOCALX
+		);
+		if (aStarIsTooClose()) createPosition();
+	}
+	
+	private boolean aStarIsTooClose(){
+		for (Star star: galaxy.getStars()){
+			if (star.getExtendedViewport().intersects(extendedViewport)) return true;
+		}
+		return false;
 	}
 	
 	private void createPlanets(int planets){

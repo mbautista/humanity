@@ -7,8 +7,8 @@ import org.lwjgl.input.Keyboard;
 
 public class Galaxy implements Scene, GameElement {
 	
-	public static double SIZE = 8192, PITCH = 0.5, WINDING = 8,
-			ARM_WIDTH = 200, BULB_LIMIT = 0.2, BULB_WIDTH = 800, BULB_HEIGHT = 200;
+	public static double SIZE = 16000, PITCH = 0.5, WINDING = 8,
+			ARM_WIDTH = 400, BULB_LIMIT = 0.2, BULB_WIDTH = 1600, BULB_HEIGHT = 400;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
 	private Star smbh; // Super massive black hole
@@ -72,6 +72,16 @@ public class Galaxy implements Scene, GameElement {
 		}
 	}
 	
+	/**
+	 * Get a spiral distance from an angle a in this galaxy according to its size, pitch and winding
+	 * @see http://arxiv.org/pdf/0908.0892.pdf
+	 * @param an angle
+	 * @return distance in the spiral
+	 */
+	public double getSpiralDistance(double a){
+		return SIZE / Math.log(PITCH * Math.tan(a / WINDING));
+	}
+
 	public Star getRandomStar(){
 		return stars.get(new Random().nextInt(stars.size()));
 	}
@@ -89,13 +99,7 @@ public class Galaxy implements Scene, GameElement {
 		return stars.size();
 	}
 	
-	/**
-	 * Get a spiral distance from an angle a in this galaxy according to its size, pitch and winding
-	 * @see http://arxiv.org/pdf/0908.0892.pdf
-	 * @param an angle
-	 * @return distance in the spiral
-	 */
-	public double getSpiralDistance(double a){
-		return SIZE / Math.log(PITCH * Math.tan(a / WINDING));
+	public ArrayList<Star> getStars() {
+		return stars;
 	}
 }

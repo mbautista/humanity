@@ -190,6 +190,10 @@ public class Planet extends Aster {
 		return star;
 	}
 	
+	public PlanetType getType(){
+		return type;
+	}
+	
 	@Override
 	public Game getGame(){
 		return star.getGame();

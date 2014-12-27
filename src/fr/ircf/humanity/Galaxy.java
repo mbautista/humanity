@@ -11,7 +11,6 @@ public class Galaxy implements Scene, GameElement {
 			ARM_WIDTH = 400, BULB_LIMIT = 0.2, BULB_WIDTH = 1600, BULB_HEIGHT = 400;
 	private Game game;
 	private ArrayList<Star> stars, sceneStars;
-	private Star smbh; // Super massive black hole
 	
 	@Override
 	public void init(Game game) throws Exception {
@@ -33,7 +32,7 @@ public class Galaxy implements Scene, GameElement {
 	public void create(int stars){
 		for (int i=0; i<stars; i++){
 			Star star = new Star(this);
-			star.create();
+			star.create(stars==1);
 			this.stars.add(star);
 		}
 	}
@@ -49,11 +48,11 @@ public class Galaxy implements Scene, GameElement {
 	@Override
 	// FIXME Concurrent Modification Exception caused by zooming/clicking asters
 	public void update(double delta) {
-		try{
+		//try{
 			for (Star star: sceneStars){
 				star.update(delta);
 			}
-		}catch(Exception e){}
+		//}catch(Exception e){}
 		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 	        game.setState(State.PAUSE);
 	    }
@@ -82,8 +81,18 @@ public class Galaxy implements Scene, GameElement {
 		return SIZE / Math.log(PITCH * Math.tan(a / WINDING));
 	}
 
-	public Star getRandomStar(){
-		return stars.get(new Random().nextInt(stars.size()));
+	/**
+	 * Get a random habitable planet in the galaxy (for the player)
+	 * @return Planet
+	 */
+	public Planet getRandomHabitablePlanet(){
+		Planet planet = null;
+		for (Star s: stars){
+			for (Planet p: s.getPlanets()){
+				if (p.getType() == PlanetType.HABITABLE) return p;
+			}
+		}
+		return planet;
 	}
 	
 	public Game getGame(){

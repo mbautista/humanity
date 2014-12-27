@@ -91,7 +91,9 @@ public class Humanity implements Game{
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);
 		}
-		camera.showWithZMax(galaxy.getRandomStar().getRandomPlanet()); // TODO set & show player planet
+		// set and show player planet
+		player.setPlanet(galaxy.getRandomHabitablePlanet());
+		camera.showWithZMax(player.getPlanet());
 	}
 	
     @Override

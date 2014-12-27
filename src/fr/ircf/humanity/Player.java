@@ -12,6 +12,7 @@ public abstract class Player extends Panel implements GameElement{
 	private Text[] texts;
 	// TODO avatar
 	// TODO color 
+	private Planet planet;
 	private ArrayList<Population> populations;
 
 	@Override
@@ -45,10 +46,20 @@ public abstract class Player extends Panel implements GameElement{
 
 	@Override
 	public void update(double delta) {
-		// TODO year, kardashev, population
+		// TODO year
+		// TODO kardashev
+		// TODO population
 	}
 	
 	public int getHeight(){
 		return texts.length * (texts[0].getHeight() + DY);
+	}
+
+	public Planet getPlanet() {
+		return planet;
+	}
+
+	public void setPlanet(Planet planet) {
+		this.planet = planet;
 	}
 }

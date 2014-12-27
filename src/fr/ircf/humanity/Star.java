@@ -13,6 +13,7 @@ public class Star extends Aster {
 	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
 			MIN_Z_FOR_PLANETS = 7;
+	public static int FIRST_STAR_PLANETS = 5; // Ensure we have at least one habitable planet for the player 
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
@@ -29,20 +30,23 @@ public class Star extends Aster {
 	 * external viewport represents the star system size (constant)
 	 * size and color depend on energy, they may also be computed during updateStar()
 	 * each star have at least one planet (for game convenience)
+	 * @boolean first (player) star system in the galaxy
 	 */
 	@Override
 	public void create(){
+		create(false);
+	}
+	public void create(boolean first){
 		createPosition();
 		resources.put(ENERGY, randomBetween(MIN_ENERGY, MAX_ENERGY));
 		name = randomName();
 		updateSize();
 		updateViewport();
 		updateColor();
-		createPlanets(1 + random.nextInt(galaxy.getGame().getOptions().getStarSize()));
+		createPlanets(first ? FIRST_STAR_PLANETS : random.nextInt(galaxy.getGame().getOptions().getStarSize()));
 		super.create();
 	}
 
-	// TODO avoid creating too close stars
 	private void createPosition(){
 		double angle = Math.abs(randomGaussian(Math.PI/2));
 		if (angle < Galaxy.BULB_LIMIT){
@@ -116,11 +120,9 @@ public class Star extends Aster {
 		color.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
 		color.flip();
 
-		//GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);
 		GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, color);
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
-		//GL11.glDisable(GL11.GL_LIGHTING);
 	}
 	
 	public boolean isEnlighten(){
@@ -211,11 +213,11 @@ public class Star extends Aster {
 		return galaxy.getGame().getCamera();
 	}
 
-	public Planet getPlanet(int rank){
-		return planets.get(rank);
+	public ArrayList<Planet> getPlanets(){
+		return planets;
 	}
 	
-	public Planet getRandomPlanet(){
-		return planets.get(random.nextInt(planets.size()));
+	public Planet getPlanet(int rank){
+		return planets.get(rank);
 	}
 }

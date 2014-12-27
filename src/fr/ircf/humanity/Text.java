@@ -21,6 +21,10 @@ public class Text extends Component {
 	private TrueTypeFont font;
 	private static HashMap<String, TrueTypeFont> fonts;
 
+	public Text(){
+		this("", COLOR, SIZE, FONT);
+	}
+	
 	public Text(String text) {
 		this(text, COLOR, SIZE, FONT);
 	}
@@ -69,5 +73,9 @@ public class Text extends Component {
 	
 	public int getHeight(){
 		return font.getHeight(text);	
+	}
+	
+	public void setText(String text){
+		this.text = text;
 	}
 }

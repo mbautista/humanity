@@ -133,7 +133,7 @@ public class Camera implements GameElement {
 	 * @return
 	 */
 	public double getObjectZMax(SceneObject o){
-		return Math.log(game.getScene().getSize()/o.getSize()*Display.getHeight()/Display.getWidth())/Math.log(2) + 2;
+		return Math.log(game.getScene().getSize()/o.getSize()*Display.getHeight()/Display.getWidth())/Math.log(2) + 1;
 	}
 	
 	public int getPolygons(SceneObject o){

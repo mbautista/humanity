@@ -8,7 +8,7 @@ public abstract class Player extends Panel implements GameElement{
 
 	private static int X = 10, DY = 20;
 	private Game game;
-	private double year = 0, population = 0, kardashev = 0;
+	private double population = 0, kardashev = 0;
 	private Text[] texts;
 	// TODO avatar
 	// TODO color 
@@ -19,11 +19,7 @@ public abstract class Player extends Panel implements GameElement{
 	// TODO dynamic text
 	public void init(Game game) throws Exception {
 		this.game = game;
-		texts = new Text[] {
-			new Text(game.i18n("player.year") + " : " + year),
-			new Text(game.i18n("player.population") + " : " + population),
-			new Text(game.i18n("player.kardashev") + " : " + kardashev),
-		};
+		texts = new Text[] { new Text(), new Text(), new Text() };
 		int i = 0;
 		for (Text text: texts){
 			text.setPosition(X, (Display.getHeight() - getHeight()) + i * DY);
@@ -39,6 +35,9 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void render() {
 		// TODO avatar
+		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
+		texts[1].setText(game.i18n("player.population") + " : " + population);
+		texts[2].setText(game.i18n("player.kardashev") + " : " + kardashev);
 		for (Text text: texts){
 			text.render();
 		}
@@ -46,7 +45,6 @@ public abstract class Player extends Panel implements GameElement{
 
 	@Override
 	public void update(double delta) {
-		// TODO year
 		// TODO kardashev
 		// TODO population
 	}

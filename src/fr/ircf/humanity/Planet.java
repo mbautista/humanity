@@ -21,7 +21,7 @@ public class Planet extends Aster {
 			ROCKY_LIMIT = 0.5;
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
-	private int satellites = 0;
+	private int satellites = 0	, year = 0;
 	private double hours, hour = 0, days, day = 0;
 	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
@@ -89,7 +89,7 @@ public class Planet extends Aster {
 		if (star.isEnlighten()) GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPushMatrix();
 		GL11.glColor3f(color[0], color[1], color[2]);
-		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenSize());
+		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenSize()); // TODO getScreenZ()
 		GL11.glRotatef(90, 1, 0, 0); // FIXME change texture orientation to avoid this
 		GL11.glPushMatrix();
 		GL11.glRotated(hour, 0, 0, 1);
@@ -109,12 +109,13 @@ public class Planet extends Aster {
 		// TODO energy, water, atmosphere, type
 		hour+= delta / hours;
 		day += delta / days;
+		year = (int) day; // FIXME fix scale so that year = day / days
 		updatePosition();
 	}
 	
 	private void updatePosition(){
-		x = star.x + (float)(distance * Math.cos(day));
-		y = star.y + (float)(distance * Math.sin(day));
+		x = star.x + distance * Math.cos(day);
+		y = star.y + distance * Math.sin(day);
 		updateViewport();
 	}
 	
@@ -192,6 +193,10 @@ public class Planet extends Aster {
 	
 	public PlanetType getType(){
 		return type;
+	}
+	
+	public int getYear(){
+		return year;
 	}
 	
 	@Override

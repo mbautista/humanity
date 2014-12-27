@@ -62,7 +62,7 @@ public class Humanity implements Game{
 	private void initGl(){
 		GL11.glClearDepth(1);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -100, 100);
+		GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -2000, 0);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	}
 	

@@ -103,7 +103,8 @@ public class Star extends Aster {
 	 */
 	private void renderStar(){
 		GL11.glPushMatrix();
-		GL11.glTranslated(getScreenX(), getScreenY(), getScreenSize()); // TODO getScreenZ()
+		GL11.glTranslated(getScreenX(), getScreenY(), getScreenZ());
+		System.out.println("star z : " + getScreenZ());
 		if (isEnlighten()) renderLight();
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();

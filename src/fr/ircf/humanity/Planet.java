@@ -89,7 +89,8 @@ public class Planet extends Aster {
 		if (star.isEnlighten()) GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPushMatrix();
 		GL11.glColor3f(color[0], color[1], color[2]);
-		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenSize()); // TODO getScreenZ()
+		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenZ());
+		System.out.println("planet z : " + getScreenZ());
 		GL11.glRotatef(90, 1, 0, 0); // FIXME change texture orientation to avoid this
 		GL11.glPushMatrix();
 		GL11.glRotated(hour, 0, 0, 1);

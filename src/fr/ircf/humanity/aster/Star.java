@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.aster;
 
 import java.awt.geom.Rectangle2D;
 import java.nio.FloatBuffer;
@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
+
+import fr.ircf.humanity.Camera;
+import fr.ircf.humanity.Galaxy;
+import fr.ircf.humanity.Game;
+import fr.ircf.humanity.SceneObject;
 
 public class Star extends Aster {
 

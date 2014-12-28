@@ -1,4 +1,4 @@
-package fr.ircf.humanity.tests;
+package fr.ircf.humanity.test;
 
 import java.awt.Button;
 import java.awt.Canvas;

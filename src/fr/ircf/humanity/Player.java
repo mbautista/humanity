@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
 
+import fr.ircf.humanity.aster.Planet;
+import fr.ircf.humanity.ui.Button;
+import fr.ircf.humanity.ui.Panel;
+import fr.ircf.humanity.ui.Text;
+
 public abstract class Player extends Panel implements GameElement{
 
 	private static int X = 10, DY = 20;

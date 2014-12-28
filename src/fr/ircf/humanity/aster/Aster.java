@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.aster;
 
 import org.newdawn.slick.Color;
 import java.awt.geom.Rectangle2D;
@@ -8,6 +8,12 @@ import java.util.Random;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import fr.ircf.humanity.Game;
+import fr.ircf.humanity.SceneObject;
+import fr.ircf.humanity.State;
+import fr.ircf.humanity.ui.Text;
+import fr.ircf.humanity.ui.TextBar;
 
 public abstract class Aster implements SceneObject{
 

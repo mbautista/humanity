@@ -2,6 +2,9 @@ package fr.ircf.humanity;
 
 import org.lwjgl.input.Mouse;
 
+import fr.ircf.humanity.ui.Button;
+import fr.ircf.humanity.ui.Slider;
+
 public class Zoom implements GameElement {
 
 	public static int X = 10, Y = 10;

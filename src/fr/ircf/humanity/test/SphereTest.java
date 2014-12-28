@@ -1,4 +1,4 @@
-package fr.ircf.humanity.tests;
+package fr.ircf.humanity.test;
 
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;

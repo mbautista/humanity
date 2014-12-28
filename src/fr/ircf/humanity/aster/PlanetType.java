@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.aster;
 
 public enum PlanetType {
 	ROCKY(0, "rocky"), HABITABLE(1, "habitable"), GAZEOUS(2, "gazeous");

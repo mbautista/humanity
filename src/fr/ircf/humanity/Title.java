@@ -3,6 +3,8 @@ package fr.ircf.humanity;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
+import fr.ircf.humanity.ui.Text;
+
 public class Title implements GameElement {
 
 	private static Color COLOR = Color.white;

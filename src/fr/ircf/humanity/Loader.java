@@ -2,6 +2,8 @@ package fr.ircf.humanity;
 
 import org.lwjgl.opengl.Display;
 
+import fr.ircf.humanity.ui.Bar;
+
 public class Loader extends Bar implements GameElement {
 
 	private Game game;

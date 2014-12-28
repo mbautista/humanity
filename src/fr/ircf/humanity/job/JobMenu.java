@@ -1,6 +1,8 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.job;
 
 import java.util.ArrayList;
+
+import fr.ircf.humanity.Menu;
 
 public class JobMenu extends Menu {
 

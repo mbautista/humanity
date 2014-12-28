@@ -2,6 +2,8 @@ package fr.ircf.humanity;
 
 import org.lwjgl.opengl.Display;
 
+import fr.ircf.humanity.ui.Button;
+
 public class Menu implements GameElement {
 
 	protected static int DY = 5;

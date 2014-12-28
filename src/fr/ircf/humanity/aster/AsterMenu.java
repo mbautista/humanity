@@ -1,6 +1,12 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.aster;
 
 import java.util.HashMap;
+
+import fr.ircf.humanity.Game;
+import fr.ircf.humanity.GameElement;
+import fr.ircf.humanity.State;
+import fr.ircf.humanity.ui.Slider;
+import fr.ircf.humanity.ui.Text;
 
 public class AsterMenu implements GameElement {
 

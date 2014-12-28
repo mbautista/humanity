@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.ui;
 
 public class Panel extends Component {
 

@@ -5,6 +5,10 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import fr.ircf.humanity.aster.Planet;
+import fr.ircf.humanity.aster.PlanetType;
+import fr.ircf.humanity.aster.Star;
+
 public class Galaxy implements Scene, GameElement {
 	
 	public static double SIZE = 16000, PITCH = 0.5, WINDING = 8,

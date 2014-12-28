@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.ui;
 
 import java.awt.Font;
 import java.io.InputStream;

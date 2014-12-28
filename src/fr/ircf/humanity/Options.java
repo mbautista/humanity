@@ -4,6 +4,8 @@ import java.util.Locale;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import fr.ircf.humanity.ui.Button;
+
 public class Options extends Menu {
 
 	private static DisplayMode[] DISPLAY_MODES;

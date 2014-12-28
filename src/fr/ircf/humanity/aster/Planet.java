@@ -1,4 +1,4 @@
-package fr.ircf.humanity;
+package fr.ircf.humanity.aster;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,9 @@ import org.lwjgl.util.glu.Sphere;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import fr.ircf.humanity.Camera;
+import fr.ircf.humanity.Game;
 
 public class Planet extends Aster {
 
@@ -113,8 +116,8 @@ public class Planet extends Aster {
 	}
 	
 	private void updatePosition(){
-		x = star.x + distance * Math.cos(day * 2 * Math.PI / days);
-		y = star.y + distance * Math.sin(day * 2 * Math.PI / days);
+		x = star.getX() + distance * Math.cos(day * 2 * Math.PI / days);
+		y = star.getY() + distance * Math.sin(day * 2 * Math.PI / days);
 		updateViewport();
 	}
 	

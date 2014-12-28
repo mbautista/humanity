@@ -1,18 +1,17 @@
 package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.Game;
-import fr.ircf.humanity.job.Job;
 
 public class GrowFood extends Action {
 
 	public static String name = "growFood";
 
 	public void init(Game game){
-		setJob(Job.FARMERS);
+		super.init(game);
 	}
 	
 	public void render(){
-		// TODO button, bar (if running)
+		super.render();
 	}
 	
 	public void update(double delta){

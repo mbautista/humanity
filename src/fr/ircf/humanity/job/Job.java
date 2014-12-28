@@ -10,19 +10,24 @@ import fr.ircf.humanity.ui.Button;
 
 abstract public class Job implements GameElement {
 	
-	public static Job FARMERS = new Farmers();
-	
+	public static int
+		FARMERS = 0,
+		PHYSICISTS = 1,
+		BIOLOGISTS = 2,
+		ARMY = 3,
+		MERCHANTS = 4;
 	public static String name;
 	public static String icon;
 	public static float[] color;
 	protected ArrayList<Action> actions;
-	protected Button button;
+	protected Button button; // TODO use JobMenu buttons instead (?)
 	protected Game game;
 
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
-		
+		actions = new ArrayList<Action>();
+		button = new Button(game.i18n(name));
 	}
 	@Override
 	public boolean visible() {
@@ -30,14 +35,22 @@ abstract public class Job implements GameElement {
 	}
 	
 	@Override
-	public void render(){	
+	public void render(){
+		button.render();
+		for (Action action: actions){
+			action.render();
+		}
 	}
 	
 	@Override
 	public void update(double delta){
+		for (Action action: actions){
+			action.update(delta);
+		}
 	}
 	
 	public void addAction(Action action){
 		actions.add(action);
+		action.setJob(this);
 	}
 }

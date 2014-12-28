@@ -19,9 +19,12 @@ abstract public class Action implements GameElement {
 	
 	public void init(Game game){
 		this.game = game;
+		button = new Button(game.i18n("action." + name));
 	}
 	
-	public void render(){	
+	public void render(){
+		button.render();
+		if (running) bar.render();
 	}
 	
 	public void update(double delta){
@@ -31,8 +34,7 @@ abstract public class Action implements GameElement {
 		return true;
 	}
 	
-	protected void setJob(Job job){
+	public void setJob(Job job){
 		this.job = job;
-		this.job.addAction(this);
 	}
 }

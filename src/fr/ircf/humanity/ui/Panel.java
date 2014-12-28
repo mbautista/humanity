@@ -7,5 +7,8 @@ public class Panel extends Component {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void add(Component c){
+		// TODO
+	}
 }

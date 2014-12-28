@@ -12,13 +12,14 @@ public class Humanity implements Game{
 	private GameElement[] gameElements;	
 	private State state = State.MENU, previousState = State.MENU;
 	private long lastFrame;
+	private ResourceBundle messages;
 	private Options options;
 	private Camera camera;
-	private ResourceBundle messages;
 	private Galaxy galaxy;
 	private Loader loader;
 	private Player player;
 	private Audio audio;
+	private Log log;
 
 	public Humanity(){
 		options = new Options();
@@ -73,6 +74,7 @@ public class Humanity implements Game{
 		loader = new Loader();
 		player = new Human();
 		audio = new Audio();
+		log = new Log();
 		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
 			audio,
@@ -84,8 +86,8 @@ public class Humanity implements Game{
 			new Zoom(),
 			//new Map(),
 			player,
-			//new Log(),
-			//new Actions(),
+			//log,
+			//new JobMenu(),
 			loader,
 		};
 		for(GameElement gameElement : gameElements){
@@ -197,5 +199,9 @@ public class Humanity implements Game{
 	
 	public Galaxy getGalaxy() {
 		return galaxy;
+	}
+	
+	public Log getLog(){
+		return log;
 	}
 }

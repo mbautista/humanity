@@ -1,6 +1,6 @@
 package fr.ircf.humanity.ui;
 
-abstract class Component {
+public abstract class Component {
 
 	protected int x, y, width, height;
 

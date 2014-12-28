@@ -11,6 +11,7 @@ import fr.ircf.humanity.ui.Text;
 
 public abstract class Player extends Panel implements GameElement{
 
+	public static double MIN_POPULATION = 32, MAX_POPULATION = 128;
 	private static int X = 10, DY = 20;
 	private Game game;
 	private double humanity = 0, kardashev = 0;
@@ -20,14 +21,12 @@ public abstract class Player extends Panel implements GameElement{
 	// TODO color
 	private Planet planet;
 	private ArrayList<Population> populations;
-
-	public Player(){
-		populations = new ArrayList<Population>();
-	}
 	
 	@Override
 	public void init(final Game game) throws Exception {
 		this.game = game;
+		planet = ((Humanity)game).getGalaxy().getRandomHabitablePlanet();
+		// TODO planet = game.getElement(Humanity.GALAXY).getRandomHabitablePlanet();
 		initPopulations();
 		initUi();
 	}
@@ -46,9 +45,9 @@ public abstract class Player extends Panel implements GameElement{
 	}
 	
 	private void initPopulations(){
+		populations = new ArrayList<Population>();
 		Population population = new Population(this, planet);
-		// TODO population.setPeople();
-		// TODO population.setLifespan();
+		population.initPeople(1 - game.getOptions().getDifficulty()/100);
 		addPopulation(population);
 	}
 	
@@ -73,13 +72,15 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void update(double delta) {
 		home.update(delta);
-		updatePopulations();
+		updatePopulations(delta);
 		// TODO kardashev
 		// TODO humanity
 	}
 	
-	private void updatePopulations(){
-		
+	private void updatePopulations(double delta){
+		for (Population population: populations){
+			population.update(delta);
+		}
 	}
 	
 	public int getHeight(){

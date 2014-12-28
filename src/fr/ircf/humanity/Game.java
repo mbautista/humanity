@@ -9,7 +9,7 @@ public interface Game {
 	public void initLocale();
 	public void run();
 	public State getState();
-	// TODO public GameElement getElement(String name);
+	// TODO public GameElement getElement(int id);
 	public void setState(State state);
 	public String i18n(String message);
 	public Options getOptions();

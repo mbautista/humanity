@@ -92,7 +92,6 @@ public class Humanity implements Game{
 			gameElement.init(this);
 		}
 		// set and show player planet
-		player.setPlanet(galaxy.getRandomHabitablePlanet());
 		camera.showWithZMax(player.getPlanet());
 	}
 	
@@ -194,5 +193,9 @@ public class Humanity implements Game{
 	@Override
 	public State getPreviousState() {
 		return previousState;
+	}
+	
+	public Galaxy getGalaxy() {
+		return galaxy;
 	}
 }

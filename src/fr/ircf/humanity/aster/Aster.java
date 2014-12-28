@@ -55,14 +55,6 @@ public abstract class Aster implements SceneObject{
 	public void create(){
 		text = new Text(name, new Color(color[0], color[1], color[2]));
 		bars = new HashMap<Integer, TextBar>();
-		for(Entry<Integer, Double> resource : resources.entrySet()){
-			bars.put(resource.getKey(), new TextBar(
-					getGame().i18n("resources." + resource.getKey()), 
-					COLORS[resource.getKey()]
-			));
-			bars.get(resource.getKey()).setValue(resource.getValue());
-			bars.get(resource.getKey()).setMax(MAX_RESOURCE);
-		}
 	}
 	
 	public void destroy(){
@@ -82,7 +74,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	private void renderBars(){
-		int i = 0;
+		int i = 0;		
 		for(Entry<Integer, TextBar> bar : bars.entrySet()){
 			bar.getValue().setPosition(getScreenX(), getScreenY() - this.getScreenSize() - (bars.size()-i) * TEXT_DY);
 			bar.getValue().render();
@@ -117,6 +109,7 @@ public abstract class Aster implements SceneObject{
 		}else{
 			out();
 		}
+		updateBars();
 	}
 	
 	/**
@@ -129,6 +122,19 @@ public abstract class Aster implements SceneObject{
 			2 * size,
 			2 * size
 		);
+	}
+	
+	protected void updateBars(){
+		for (Entry<Integer, Double> resource : resources.entrySet()){
+			if (bars.get(resource.getKey()) == null){
+				bars.put(resource.getKey(), new TextBar(
+					getGame().i18n("resources." + resource.getKey()), 
+					COLORS[resource.getKey()]
+				));
+				bars.get(resource.getKey()).setMax(MAX_RESOURCE);
+			}
+			bars.get(resource.getKey()).setValue(resource.getValue());
+		}
 	}
 	
 	protected void over(){
@@ -146,6 +152,10 @@ public abstract class Aster implements SceneObject{
 	
 	protected void up(){
 		getCamera().show(this);
+	}
+	
+	public void setResource(int key, double value){
+		resources.put(key, value);		
 	}
 	
 	public void serialize(){

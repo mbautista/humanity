@@ -44,7 +44,7 @@ public class Star extends Aster {
 	}
 	public void create(boolean first){
 		createPosition();
-		resources.put(ENERGY, Random.between(MIN_ENERGY, MAX_ENERGY));
+		setResource(ENERGY, Random.between(MIN_ENERGY, MAX_ENERGY));
 		name = Random.name();
 		updateSize();
 		updateViewport();

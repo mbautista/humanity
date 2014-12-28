@@ -1,6 +1,5 @@
 package fr.ircf.humanity.aster;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
@@ -64,15 +63,15 @@ public class Planet extends Aster {
 		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (habitable()) type = PlanetType.HABITABLE;
 		if (type == PlanetType.HABITABLE){
-			resources.put(ATMOSPHERE, Random.between(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
-			resources.put(WATER, Random.between(MIN_WATER, MAX_WATER));
+			//setResource(ATMOSPHERE, Random.between(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
+			setResource(WATER, Random.between(MIN_WATER, MAX_WATER));
 		}
 		int dust = Random.nextInt(3);
 		if (type == PlanetType.GAZEOUS && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
 		size = Random.betweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
-		resources.put(ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
+		setResource(ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
 		satellites = (int) Random.betweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
 		color = Random.colorBetweenIntensity(
 				MIN_INTENSITY + type.getValue(),

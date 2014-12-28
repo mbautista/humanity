@@ -17,13 +17,22 @@ public abstract class Player extends Panel implements GameElement{
 	private Text[] texts;
 	private Button home;
 	// TODO avatar
-	// TODO color 
+	// TODO color
 	private Planet planet;
 	private ArrayList<Population> populations;
 
+	public Player(){
+		populations = new ArrayList<Population>();
+	}
+	
 	@Override
 	public void init(final Game game) throws Exception {
 		this.game = game;
+		initPopulations();
+		initUi();
+	}
+
+	private void initUi(){
 		texts = new Text[] { new Text(), new Text(), new Text() };
 		int i = 2;
 		for (Text text: texts){
@@ -35,7 +44,14 @@ public abstract class Player extends Panel implements GameElement{
 		};
 		home.setPosition(X, Display.getHeight() - getHeight());
 	}
-
+	
+	private void initPopulations(){
+		Population population = new Population(this, planet);
+		// TODO population.setPeople();
+		// TODO population.setLifespan();
+		addPopulation(population);
+	}
+	
 	@Override
 	public boolean visible() {
 		return game.getState() == State.GAME;
@@ -57,8 +73,13 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void update(double delta) {
 		home.update(delta);
+		updatePopulations();
 		// TODO kardashev
 		// TODO humanity
+	}
+	
+	private void updatePopulations(){
+		
 	}
 	
 	public int getHeight(){
@@ -71,5 +92,9 @@ public abstract class Player extends Panel implements GameElement{
 
 	public void setPlanet(Planet planet) {
 		this.planet = planet;
+	}
+	
+	public void addPopulation(Population population){
+		populations.add(population);
 	}
 }

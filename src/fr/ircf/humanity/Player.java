@@ -73,14 +73,22 @@ public abstract class Player extends Panel implements GameElement{
 	public void update(double delta) {
 		home.update(delta);
 		updatePopulations(delta);
+		updateHumanity();
 		// TODO kardashev
-		// TODO humanity
 	}
 	
 	private void updatePopulations(double delta){
 		for (Population population: populations){
 			population.update(delta);
 		}
+	}
+	
+	private void updateHumanity(){
+		humanity = 0;
+		for (Population population: populations){
+			humanity += population.getPeople();
+		}
+		humanity = Math.round(humanity * 100) / 100;
 	}
 	
 	public int getHeight(){

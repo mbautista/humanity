@@ -4,13 +4,17 @@ public class ScrollPane extends Panel {
 	
 	private Slider slider;
 	private Button up, down;
-	private Panel panel;
 	
 	public ScrollPane(){
-		// TODO
+		up = new Button();
+		down = new Button();
+		slider = new Slider();
 	}
 	
 	public void render(){
-		// TODO
+		up.render();
+		down.render();
+		slider.render();
+		super.render();
 	}
 }

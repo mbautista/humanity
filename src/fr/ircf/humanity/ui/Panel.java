@@ -1,14 +1,19 @@
 package fr.ircf.humanity.ui;
 
+import java.util.ArrayList;
+
 public class Panel extends Component {
 
+	private ArrayList<Component> components;
+	
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		for (Component component: components){
+			component.render();
+		}
 	}
 	
 	public void add(Component c){
-		// TODO
+		components.add(c);
 	}
 }

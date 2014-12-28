@@ -10,6 +10,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import fr.ircf.humanity.Camera;
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Random;
 
 public class Planet extends Aster {
 
@@ -56,29 +57,29 @@ public class Planet extends Aster {
 		if (rank>0){
 			distance = bode(rank) * star.getPlanet(0).getDistance();
 		}else{
-			distance = randomBetween(star.getSize() + MIN_LOCALX, MAX_LOCALX/bode(max));
+			distance = Random.between(star.getSize() + MIN_LOCALX, MAX_LOCALX/bode(max));
 		}
 		days = kepler3();
-		day = random.nextDouble() * days;
+		day = Random.nextDouble() * days;
 		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
 		if (habitable()) type = PlanetType.HABITABLE;
 		if (type == PlanetType.HABITABLE){
-			resources.put(ATMOSPHERE, randomBetween(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
-			resources.put(WATER, randomBetween(MIN_WATER, MAX_WATER));
+			resources.put(ATMOSPHERE, Random.between(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
+			resources.put(WATER, Random.between(MIN_WATER, MAX_WATER));
 		}
-		int dust = random.nextInt(3);
+		int dust = Random.nextInt(3);
 		if (type == PlanetType.GAZEOUS && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
-		size = randomBetweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
-		resources.put(ENERGY, randomBetweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
-		satellites = (int) randomBetweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
-		color = randomColorBetweenIntensity(
+		size = Random.betweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
+		resources.put(ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
+		satellites = (int) Random.betweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
+		color = Random.colorBetweenIntensity(
 				MIN_INTENSITY + type.getValue(),
 				MIN_INTENSITY + (type.getValue()+1) * (MAX_INTENSITY - MIN_INTENSITY) / 3
 		);
 		texture = getTexture();
-		hours = randomBetween(MIN_HOURS, MAX_HOURS);
+		hours = Random.between(MIN_HOURS, MAX_HOURS);
 		name = star.getName() + " " + NUMBER[rank];
 		updatePosition();
 		super.create();

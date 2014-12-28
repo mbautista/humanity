@@ -37,7 +37,6 @@ public abstract class Aster implements SceneObject{
 		MIN_Z_FOR_TEXT = 4, // do not display texts at galaxy scale
 		MAX_RESOURCE = 128,
 		MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
-	protected static Random random = new Random();
 	protected String name;
 	protected double x = 0, y = 0, size, distance;
 	protected float[] color = new float[3];
@@ -215,61 +214,6 @@ public abstract class Aster implements SceneObject{
 	
 	public String getName() {
 		return name;
-	}
-	
-	/**
-	 * Random helpers
-	 */
-	protected double randomBetween(double min, double max){
-		return min + random.nextDouble() * (max - min);
-	}
-	
-	protected double randomGaussian(double max){
-		return max * random.nextGaussian();
-	}
-	
-	protected double randomBetweenWithFactor(double min, double max, double factor){
-		return min + random.nextDouble() * (max-min) * factor;
-	}
-	
-	protected float[] randomColorBetweenIntensity(double min, double max){
-		float[] c = new float[3];
-		c[0] = random.nextFloat();
-		c[1] = random.nextFloat();
-		c[2] = random.nextFloat();
-		float i = (float) (3 * (min + random.nextDouble() * (max-min)) / (c[0] + c[1] + c[2]));
-		c[0]*= i;
-		c[1]*= i;
-		c[2]*= i;
-		return c;
-	}
-	
-	private static int MIN_SYLLABUS = 1, MAX_SYLLABUS = 3;
-	private static String VOWELS = "aeiouy";
-	private static String CONSONANTS = "bcdfghjklmnpqrstvwxz";
-	protected String randomName(){
-		int length = MIN_SYLLABUS + random.nextInt(MAX_SYLLABUS);
-		String name = "";
-		for (int i=0; i<length; i++) name+= randomSyllabus();
-		return name;
-	}
-	
-	private String randomSyllabus(){
-		String syllabus = "" + randomChar();
-		syllabus += randomChar(!VOWELS.contains(syllabus));
-		return syllabus;
-	}
-
-	private char randomChar(){
-		return (char)(97 + random.nextInt(26));
-	}
-	
-	private char randomChar(boolean vowel){
-		if (vowel){
-			return VOWELS.charAt(random.nextInt(VOWELS.length()));
-		}else{
-			return CONSONANTS.charAt(random.nextInt(CONSONANTS.length()));
-		}
 	}
 	
 	public abstract Game getGame();

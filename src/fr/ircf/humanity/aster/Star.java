@@ -11,6 +11,7 @@ import org.lwjgl.util.glu.Sphere;
 import fr.ircf.humanity.Camera;
 import fr.ircf.humanity.Galaxy;
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Random;
 import fr.ircf.humanity.SceneObject;
 
 public class Star extends Aster {
@@ -43,25 +44,25 @@ public class Star extends Aster {
 	}
 	public void create(boolean first){
 		createPosition();
-		resources.put(ENERGY, randomBetween(MIN_ENERGY, MAX_ENERGY));
-		name = randomName();
+		resources.put(ENERGY, Random.between(MIN_ENERGY, MAX_ENERGY));
+		name = Random.name();
 		updateSize();
 		updateViewport();
 		updateColor();
-		createPlanets(first ? FIRST_STAR_PLANETS : random.nextInt(galaxy.getGame().getOptions().getStarSize()));
+		createPlanets(first ? FIRST_STAR_PLANETS : Random.nextInt(galaxy.getGame().getOptions().getStarSize()));
 		super.create();
 	}
 
 	private void createPosition(){
-		double angle = Math.abs(randomGaussian(Math.PI/2));
+		double angle = Math.abs(Random.gaussian(Math.PI/2));
 		if (angle < Galaxy.BULB_LIMIT){
 			// bulb
-			x = randomGaussian(Galaxy.BULB_WIDTH);
-			y = randomGaussian(Galaxy.BULB_HEIGHT);
+			x = Random.gaussian(Galaxy.BULB_WIDTH);
+			y = Random.gaussian(Galaxy.BULB_HEIGHT);
 		}else{
 			// arm
-			distance = galaxy.getSpiralDistance(angle) + randomGaussian(Galaxy.ARM_WIDTH);
-			if (random.nextInt(2)==0) angle+= Math.PI; // randomly choose arm
+			distance = galaxy.getSpiralDistance(angle) + Random.gaussian(Galaxy.ARM_WIDTH);
+			if (Random.nextInt(2)==0) angle+= Math.PI; // randomly choose arm
 			x = distance * Math.cos(angle);
 			y = distance * Math.sin(angle);
 		}

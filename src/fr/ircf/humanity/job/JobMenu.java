@@ -13,6 +13,7 @@ public class JobMenu extends Menu {
 	public void init(Game game) throws Exception{
 		this.game = game;
 		addJob(Job.FARMERS, new Farmers());
+		addJob(Job.ASTRONOMERS, new Astronomers());
 		addJob(Job.PHYSICISTS, new Physicists());
 		addJob(Job.BIOLOGISTS, new Biologists());
 		addJob(Job.ARMY, new Army());

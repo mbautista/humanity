@@ -12,10 +12,11 @@ abstract public class Job implements GameElement {
 	
 	public static int
 		FARMERS = 0,
-		PHYSICISTS = 1,
-		BIOLOGISTS = 2,
-		ARMY = 3,
-		MERCHANTS = 4;
+		ASTRONOMERS = 1,
+		PHYSICISTS = 2,
+		BIOLOGISTS = 3,
+		ARMY = 4,
+		MERCHANTS = 5;
 	public static String name;
 	public static String icon;
 	public static float[] color;

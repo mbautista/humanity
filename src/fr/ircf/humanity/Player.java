@@ -106,4 +106,8 @@ public abstract class Player extends Panel implements GameElement{
 	public void addPopulation(Population population){
 		populations.add(population);
 	}
+	
+	public double getZMin(){
+		return Camera.Z_MIN; // TODO optics level
+	}
 }

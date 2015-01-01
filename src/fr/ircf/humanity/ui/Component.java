@@ -2,7 +2,7 @@ package fr.ircf.humanity.ui;
 
 public abstract class Component {
 
-	protected int x, y, width, height;
+	protected int x, y, width = 0, height = 0;
 
 	public boolean visible(){
 		return true;

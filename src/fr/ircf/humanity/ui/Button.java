@@ -65,11 +65,11 @@ public class Button extends Component {
 	}
 	
 	public int getWidth() {
-		return text.getWidth() + 2*padding;
+		return width>0 ? width : text.getWidth() + 2*padding;
 	}
 	
 	public int getHeight() {
-		return text.getHeight() + 2*padding;
+		return height>0 ? height : text.getHeight() + 2*padding;
 	}
 	
 	public void setPosition(int x, int y) {

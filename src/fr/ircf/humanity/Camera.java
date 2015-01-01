@@ -6,7 +6,7 @@ import org.lwjgl.opengl.Display;
 
 public class Camera implements GameElement {
 
-	public static double Z_MIN = 0, Z_MAX = 12, DZ = 0.1f;
+	public static double Z_MIN = 0, Z_MAX = 18, DZ = 0.1f;
 	private double x, y, z, scale;
 	private Rectangle2D viewport;
 	private SceneObject object, hightlight;

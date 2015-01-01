@@ -27,7 +27,6 @@ public class Zoom implements GameElement {
 		out = new Button("-") {
 			public void down() { game.getCamera().zoomOut(); }
 		};
-		out.setPosition(X, slider.getY() + slider.getHeight());
 	}
 
 	@Override
@@ -45,8 +44,11 @@ public class Zoom implements GameElement {
 	@Override
 	public void update(double delta) {
 		in.update(delta);
-		out.update(delta);
+		slider.setValue(Camera.Z_MAX - game.getCamera().getZ());
+		slider.setMax(Camera.Z_MAX - game.getPlayer().getZMin());
 		slider.update(delta);
+		out.setPosition(X, slider.getY() + slider.getHeight());
+		out.update(delta);
 		int wheel = Mouse.getDWheel();
 		if (wheel < 0) {
 			game.getCamera().zoomOut();

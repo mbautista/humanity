@@ -1,17 +1,23 @@
 package fr.ircf.humanity.ui;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class Slider extends Component {
 	
 	private static float[] COLOR_DEFAULT = {1f, 1f, 1f, 0.5f};
 	private static float[] COLOR_BACK = {0.1f, 0.1f, 0.1f, 1f};
-	private static int BUTTON_WIDTH = 28, BUTTON_HEIGHT = 10, BAR_HEIGHT = 10, BAR_WIDTH = 4;
+	private static int BUTTON_WIDTH = 28, BUTTON_HEIGHT = 20, BAR_HEIGHT = 10, BAR_WIDTH = 4;
 	private double value, max;
 	private Button button;
 	
 	public Slider(){
-		button = new Button();
+		final Slider slider = this;
+		button = new Button() {
+			public void down() { slider.down(); }
+			public void up() { slider.up(); }
+		};
 		button.setWidth(BUTTON_WIDTH);
 		button.setHeight(BUTTON_HEIGHT);
 	}
@@ -23,8 +29,16 @@ public class Slider extends Component {
 	}
 
 	public void update(double delta) {
-		button.setPosition(x, y + Math.min(value,  max) * BAR_HEIGHT);
+		button.setPosition(x, y + Math.min(value,  max) * BAR_HEIGHT - BUTTON_HEIGHT/2);
 		button.update(delta);
+	}
+	
+	public void down(){
+		value = Math.min(getHeight(), Math.max(0, Display.getHeight()-Mouse.getY()-y)) / (double)BAR_HEIGHT;
+	}
+	
+	public void up(){
+		
 	}
 	
 	public int getWidth(){

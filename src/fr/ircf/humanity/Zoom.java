@@ -21,7 +21,7 @@ public class Zoom implements GameElement {
 		};
 		in.setPosition(X, Y);
 		slider = new Slider() {
-			public void up() { game.getCamera().setZ(getValue()); }
+			public void down() { super.down(); game.getCamera().setZ(Camera.Z_MAX - getValue()); }
 		};
 		slider.setPosition(X, Y + in.getHeight());
 		out = new Button("-") {

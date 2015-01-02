@@ -22,7 +22,6 @@ public class Button extends Component {
 	
 	public Button(String label) {
 		this.text = new Text(label);
-		updateViewport();
 		setColor(COLOR_OUT);
 	}
 
@@ -35,6 +34,7 @@ public class Button extends Component {
 	}
 
 	public void update(double delta) {
+		updateViewport();
 		if (disabled){
 			setColor(COLOR_DISABLED);
 		}else if (viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){

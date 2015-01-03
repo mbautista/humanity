@@ -5,47 +5,39 @@ import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.Humanity;
 import fr.ircf.humanity.job.Job;
-import fr.ircf.humanity.ui.Bar;
-import fr.ircf.humanity.ui.Button;
 
-abstract public class Action implements GameElement {
+abstract public class Action {
 	
 	public static String name;
 	public static String icon;
+	public static enum State { START, STOP };
 	protected double level, duration, time;
-	protected boolean running;
+	protected State state = State.STOP;
 	protected Job job;
 	protected Game game;
-	protected Button button; // start action button
-	protected Bar bar; // progress bar if action is running
-	
-	public void init(Game game){
+
+	public void init(Game game) {
 		this.game = game;
-		final Action action = this;
-		button = new Button(game.i18n("action." + name)) {
-			public void up() { action.run(); }
-		};
 	}
 	
 	public void render(){
-		button.render();
-		if (running) bar.render();
+		// TODO render action
 	}
 	
 	public void update(double delta){
-		// TODO run action
+		// TODO update action
 	}
 	
-	public boolean visible() {
-		return true;
-	}
-	
-	public void run(){
-		running = true;
-		((Humanity)game).getLog().add(new Event(this));
+	public void start(){
+		state = State.START;
+		// TODO ((Humanity)game).getLog().add(new Event(this));
 	}
 	
 	public void setJob(Job job){
 		this.job = job;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

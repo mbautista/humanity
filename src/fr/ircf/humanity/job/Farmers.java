@@ -1,8 +1,6 @@
 package fr.ircf.humanity.job;
 
-import fr.ircf.humanity.Game;
 import fr.ircf.humanity.action.*;
-
 
 public class Farmers extends Job {
 
@@ -10,8 +8,7 @@ public class Farmers extends Job {
 	public static String icon;
 	public static float[] color;
 	
-	public void init(Game game) throws Exception {
-		super.init(game);
+	public Farmers() {
 		addAction(new GrowFood());
 		addAction(new UseChemicals());
 		addAction(new UseHydroponics());

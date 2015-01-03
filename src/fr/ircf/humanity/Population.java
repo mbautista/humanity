@@ -5,6 +5,8 @@ import java.util.HashMap;
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
+import fr.ircf.humanity.job.Job;
+import fr.ircf.humanity.job.JobFactory;
 
 public class Population {
 
@@ -14,12 +16,13 @@ public class Population {
 	private Player player;
 	private Planet planet;
 	private double people, lifespan;
-	private HashMap<Integer, Double> jobRepartition;
-	private HashMap<Integer, Action> actions;
+	private HashMap<Class<?>, Job> jobs;
 	
 	public Population(Player player, Planet planet){
 		this.player = player;
 		this.planet = planet;
+		this.planet.setPopulation(this);
+		jobs = JobFactory.getJobs();
 	}
 
 	public void initPeople(double factor){
@@ -46,5 +49,17 @@ public class Population {
 
 	public void setLifespan(double lifespan) {
 		this.lifespan = lifespan;
+	}
+
+	public HashMap<Class<?>, Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(HashMap<Class<?>, Job> jobs) {
+		this.jobs = jobs;
+	}
+
+	public Job getJob(Class<?> key) {
+		return jobs.get(key);
 	}
 }

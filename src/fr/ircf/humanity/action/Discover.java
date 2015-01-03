@@ -5,10 +5,6 @@ import fr.ircf.humanity.Game;
 public class Discover extends Action {
 
 	public static String name = "discover";
-
-	public void init(Game game){
-		super.init(game);
-	}
 	
 	public void render(){
 		super.render();

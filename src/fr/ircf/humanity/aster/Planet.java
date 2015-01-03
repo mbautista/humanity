@@ -9,6 +9,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import fr.ircf.humanity.Camera;
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Population;
 import fr.ircf.humanity.Random;
 
 public class Planet extends Aster {
@@ -31,6 +32,7 @@ public class Planet extends Aster {
 	private Rings rings = Rings.NONE;
 	private static HashMap<String, Texture> textures;
 	private Texture texture;
+	private Population population;
 	
 	public Planet(Star star){
 		super();
@@ -204,5 +206,13 @@ public class Planet extends Aster {
 	@Override
 	public Game getGame(){
 		return star.getGame();
+	}
+
+	public void setPopulation(Population population) {
+		this.population = population;
+	}
+	
+	public Population getPopulation() {
+		return population;
 	}
 }

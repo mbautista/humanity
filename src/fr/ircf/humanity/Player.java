@@ -8,6 +8,7 @@ import org.lwjgl.opengl.Display;
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.job.Job;
+import fr.ircf.humanity.job.JobFactory;
 import fr.ircf.humanity.ui.Button;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.Text;
@@ -24,12 +25,13 @@ public abstract class Player extends Panel implements GameElement{
 	// TODO color
 	private Planet planet;
 	private ArrayList<Population> populations;
-	private HashMap<Integer, Job> jobs;
+	private HashMap<Class<?>, Job> jobs;
 	
 	@Override
 	public void init(final Game game) throws Exception {
 		this.game = game;
 		planet = ((Humanity)game).getGalaxy().getRandomHabitablePlanet();
+		jobs = JobFactory.getJobs();
 		initPopulations();
 		initUi();
 	}

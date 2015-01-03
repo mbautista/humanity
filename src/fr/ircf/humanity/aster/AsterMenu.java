@@ -1,14 +1,14 @@
 package fr.ircf.humanity.aster;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
-import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.job.Job;
-import fr.ircf.humanity.ui.Button;
-import fr.ircf.humanity.ui.Slider;
+import fr.ircf.humanity.job.JobFactory;
+import fr.ircf.humanity.job.JobMenuItem;
 import fr.ircf.humanity.ui.Text;
 
 public class AsterMenu implements GameElement {
@@ -16,14 +16,16 @@ public class AsterMenu implements GameElement {
 	private Text name;
 	private Aster aster;
 	private Game game;
-	private HashMap<Integer, Job> jobs;
-	private HashMap<Integer, Action> actions;
+	private HashMap<Class<?>, JobMenuItem> jobMenuItems;
 	// TODO type, people
 	
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
 		name = new Text();
+		// TODO name.setPosition();
+		jobMenuItems = JobFactory.getJobMenuItems();
+		// TODO jobMenuItems.setPosition();
 	}
 	
 	@Override
@@ -33,7 +35,10 @@ public class AsterMenu implements GameElement {
 	
 	@Override
 	public void render() {
-		// TODO render name, jobs, actions
+		name.render();
+		for(Entry<Class<?>, JobMenuItem> e : jobMenuItems.entrySet()){
+			e.getValue().render();
+		}
 	}
 	
 	@Override
@@ -41,8 +46,10 @@ public class AsterMenu implements GameElement {
 		if (aster != (Aster)game.getCamera().getObject()){
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
-			// TODO update jobs according to player
-			// TODO update actions according to population
+			for(Entry<Class<?>, JobMenuItem> e : jobMenuItems.entrySet()){
+				e.getValue().setJob(((Planet)aster).getPopulation().getJob(e.getKey()));
+				e.getValue().update(delta);
+			}
 		}
 	}
 }

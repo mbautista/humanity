@@ -5,19 +5,25 @@ import java.util.HashMap;
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
+import fr.ircf.humanity.action.Action;
+import fr.ircf.humanity.job.Job;
+import fr.ircf.humanity.ui.Button;
 import fr.ircf.humanity.ui.Slider;
 import fr.ircf.humanity.ui.Text;
 
 public class AsterMenu implements GameElement {
 
 	private Text name;
-	private HashMap<Integer, Slider> jobs;
 	private Aster aster;
 	private Game game;
+	private HashMap<Integer, Job> jobs;
+	private HashMap<Integer, Action> actions;
+	// TODO type, people
 	
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
+		name = new Text();
 	}
 	
 	@Override
@@ -27,15 +33,16 @@ public class AsterMenu implements GameElement {
 	
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		// TODO render name, jobs, actions
 	}
 	
 	@Override
 	public void update(double delta) {	
 		if (aster != (Aster)game.getCamera().getObject()){
 			aster = (Aster) game.getCamera().getObject();
-			try { name = new Text(aster.getName()); } catch(Exception e){}
-			// TODO jobs
+			name.setText(aster.getName());
+			// TODO update jobs according to player
+			// TODO update actions according to population
 		}
 	}
 }

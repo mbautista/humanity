@@ -1,5 +1,8 @@
 package fr.ircf.humanity;
 
+import java.util.HashMap;
+
+import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
 
@@ -11,6 +14,8 @@ public class Population {
 	private Player player;
 	private Planet planet;
 	private double people, lifespan;
+	private HashMap<Integer, Double> jobRepartition;
+	private HashMap<Integer, Action> actions;
 	
 	public Population(Player player, Planet planet){
 		this.player = player;
@@ -23,7 +28,7 @@ public class Population {
 	}
 	
 	public void update(double delta){
-		// TODO people, lifespan
+		// TODO people, lifespan, actions
 		planet.setResource(Aster.PEOPLE, people);
 	}
 	

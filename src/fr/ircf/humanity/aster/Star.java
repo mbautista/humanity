@@ -45,7 +45,7 @@ public class Star extends Aster {
 	}
 	public void create(boolean first){
 		createPosition();
-		setResource(ENERGY, Random.between(MIN_ENERGY, MAX_ENERGY));
+		addResource(ResourceType.ENERGY, Random.between(MIN_ENERGY, MAX_ENERGY));
 		name = Random.name();
 		updateSize();
 		updateViewport();
@@ -165,7 +165,7 @@ public class Star extends Aster {
 	 * @see http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 	 */
 	private void updateColor(){
-		double t = resources.get(ENERGY) * 100 / MAX_ENERGY;
+		double t = getResourceValue(ResourceType.ENERGY) * 100 / MAX_ENERGY;
 		if (t <= 66){
 			color[0] = 1;
 			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
@@ -190,10 +190,10 @@ public class Star extends Aster {
 	private static double SIZE_PEAK_B = (MIN_SIZE - MAX_SIZE) / (MAX_ENERGY - RED_GIANT_ENERGY);
 	private static double SIZE_PEAK_C = MIN_SIZE - SIZE_PEAK_B * MAX_ENERGY;
 	private void updateSize() {
-		if (resources.get(ENERGY) < RED_GIANT_ENERGY){
-			size = (resources.get(ENERGY) * SIZE_PEAK_A);
+		if (getResourceValue(ResourceType.ENERGY) < RED_GIANT_ENERGY){
+			size = getResourceValue(ResourceType.ENERGY) * SIZE_PEAK_A;
 		}else{
-			size = (SIZE_PEAK_B * resources.get(ENERGY) + SIZE_PEAK_C);
+			size = getResourceValue(ResourceType.ENERGY) * SIZE_PEAK_B + SIZE_PEAK_C;
 		}
 		size = Math.max(0.2f, size); // FIXME min size should be 0, be not reachable on create
 	}

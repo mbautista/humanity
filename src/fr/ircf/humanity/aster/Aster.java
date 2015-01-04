@@ -17,21 +17,7 @@ import fr.ircf.humanity.ui.TextBar;
 
 public abstract class Aster implements SceneObject{
 
-	public static int
-		ENERGY = 0,
-		FOOD = 1,
-		WATER = 2,
-		PEOPLE = 3,
-		ATMOSPHERE = 4,
-		OVER = 5;
-	public static float[][] COLORS = {
-		new float[] { 1, 1, 0 },
-		new float[] { 0, 1, 0 },
-		new float[] { 0, 0, 1 },
-		new float[] { 1, 0, 0 },
-		new float[] { 0, 1, 1 },
-		new float[] { 1, 0, 0 }
-	};
+	public static float[] COLOR_OVER = new float[] { 1, 0, 0 };
 	public static double
 		TEXT_DY = 11, // Spacing between planet and text
 		MIN_Z_FOR_TEXT = 4, // do not display texts at galaxy scale
@@ -41,21 +27,21 @@ public abstract class Aster implements SceneObject{
 	protected AsterType type;
 	protected double x = 0, y = 0, size, distance;
 	protected float[] color = new float[3];
-	protected HashMap<Integer, Double> resources; // TODO <Integer, Resource>
+	protected HashMap<ResourceType, Resource> resources;
 	// Aster viewport represents the aster's renderable/interactive zone (e.g. star)
 	// Aster extended viewport includes children asters (e.g. star system)
 	protected Rectangle2D viewport, extendedViewport, screenViewport;
 	protected Text text;
-	protected HashMap<Integer, TextBar> bars;
+	protected HashMap<ResourceType, TextBar> bars;
 	protected boolean highlight = false;
 	
 	public Aster(){
-		resources = new HashMap<Integer, Double>();
+		resources = new HashMap<ResourceType, Resource>();
+		bars = new HashMap<ResourceType, TextBar>();
 	}
 	
 	public void create(){
 		text = new Text(name, new Color(color[0], color[1], color[2]));
-		bars = new HashMap<Integer, TextBar>();
 	}
 	
 	public void destroy(){
@@ -66,7 +52,7 @@ public abstract class Aster implements SceneObject{
 		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
 		renderViewport();
 		if (highlight || getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
-		if (highlight) renderBars();
+		if (highlight) renderResources();
 	}
 	
 	private void renderText(){
@@ -74,9 +60,9 @@ public abstract class Aster implements SceneObject{
 		text.render();
 	}
 	
-	private void renderBars(){
+	private void renderResources(){
 		int i = 0;		
-		for(Entry<Integer, TextBar> bar : bars.entrySet()){
+		for(Entry<ResourceType, TextBar> bar : bars.entrySet()){
 			bar.getValue().setPosition(getScreenX(), getScreenY() - this.getScreenSize() - (bars.size()-i) * TEXT_DY);
 			bar.getValue().render();
 			i++;
@@ -85,7 +71,7 @@ public abstract class Aster implements SceneObject{
 	
 	private void renderViewport(){
 		if (screenViewport!=null && highlight){
-			GL11.glColor3f(COLORS[OVER][0], COLORS[OVER][1], COLORS[OVER][2]);
+			GL11.glColor3f(COLOR_OVER[0], COLOR_OVER[1], COLOR_OVER[2]);
 			GL11.glBegin(GL11.GL_LINE_STRIP);
 		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getY());
 		    	GL11.glVertex2d(screenViewport.getMaxX(), screenViewport.getY());
@@ -110,7 +96,7 @@ public abstract class Aster implements SceneObject{
 		}else{
 			out();
 		}
-		updateBars();
+		updateResources();
 	}
 	
 	/**
@@ -125,16 +111,16 @@ public abstract class Aster implements SceneObject{
 		);
 	}
 	
-	protected void updateBars(){
-		for (Entry<Integer, Double> resource : resources.entrySet()){
+	protected void updateResources(){
+		for (Entry<ResourceType, Resource> resource : resources.entrySet()){
 			if (bars.get(resource.getKey()) == null){
 				bars.put(resource.getKey(), new TextBar(
-					getGame().i18n("resources." + resource.getKey()), 
-					COLORS[resource.getKey()]
+					getGame().i18n("resources." + resource.getKey().getName()), 
+					resource.getKey().getColor()
 				));
 				bars.get(resource.getKey()).setMax(MAX_RESOURCE);
 			}
-			bars.get(resource.getKey()).setValue(resource.getValue());
+			bars.get(resource.getKey()).setValue(resource.getValue().getValue());
 		}
 	}
 	
@@ -155,8 +141,16 @@ public abstract class Aster implements SceneObject{
 		getCamera().show(this);
 	}
 	
-	public void setResource(int key, double value){
-		resources.put(key, value);		
+	public Resource getResource(ResourceType key){
+		return resources.get(key);
+	}
+	
+	public void addResource(ResourceType key, double value){
+		resources.put(key, new Resource(key, value));
+	}
+	
+	public double getResourceValue(ResourceType key){
+		return resources.get(key).getValue();
 	}
 	
 	public void serialize(){

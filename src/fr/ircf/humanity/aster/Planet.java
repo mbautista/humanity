@@ -66,14 +66,14 @@ public class Planet extends Aster {
 		if (habitable()) type = AsterType.HABITABLE_PLANET;
 		if (type == AsterType.HABITABLE_PLANET){
 			//setResource(ATMOSPHERE, Random.between(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
-			setResource(WATER, Random.between(MIN_WATER, MAX_WATER));
+			addResource(ResourceType.WATER, Random.between(MIN_WATER, MAX_WATER));
 		}
 		int dust = Random.nextInt(3);
 		if (type == AsterType.GAZEOUS_PLANET && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
 		size = Random.betweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
-		setResource(ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
+		addResource(ResourceType.ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
 		satellites = (int) Random.betweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
 		color = Random.colorBetweenIntensity(
 				MIN_INTENSITY + type.getPlanetValue(),

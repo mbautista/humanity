@@ -41,7 +41,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	public void create(){
-		text = new Text(name, new Color(color[0], color[1], color[2]));
+		text = new Text(name, color);
 	}
 	
 	public void destroy(){
@@ -115,7 +115,7 @@ public abstract class Aster implements SceneObject{
 		for (Entry<ResourceType, Resource> resource : resources.entrySet()){
 			if (bars.get(resource.getKey()) == null){
 				bars.put(resource.getKey(), new TextBar(
-					getGame().i18n("resources." + resource.getKey().getName()), 
+					getGame().i18n("resource." + resource.getKey().getName()), 
 					resource.getKey().getColor()
 				));
 				bars.get(resource.getKey()).setMax(MAX_RESOURCE);
@@ -139,6 +139,10 @@ public abstract class Aster implements SceneObject{
 	
 	protected void up(){
 		getCamera().show(this);
+	}
+	
+	public HashMap<ResourceType, Resource> getResources(){
+		return resources;
 	}
 	
 	public Resource getResource(ResourceType key){

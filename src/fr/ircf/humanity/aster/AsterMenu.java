@@ -17,12 +17,12 @@ import fr.ircf.humanity.ui.Text;
 
 public class AsterMenu extends Panel implements GameElement {
 
-	private static int X = 10, Y = 10, DY = 20, WIDTH = 120;
+	private static int X = 10, Y = 10, DY = 20, WIDTH = 150;
 	private Text name, type;
-	private HashMap<Integer, Text> resources;
+	private HashMap<ResourceType, Text> resources;
 	private Aster aster;
 	private Game game;
-	private HashMap<Class<?>, JobMenuItem> jobMenuItems;
+	private HashMap<Class<?>, JobMenuItem> jobs;
 	
 	@Override
 	public void init(Game game) throws Exception {
@@ -31,9 +31,18 @@ public class AsterMenu extends Panel implements GameElement {
 		name.setPosition(Display.getWidth() - getWidth() - X, Y);
 		type = new Text();
 		type.setPosition(Display.getWidth() - getWidth() - X, Y + DY);
-		// TODO init resources
-		// TODO jobMenuItems = JobFactory.getJobMenuItems();
-		// TODO jobMenuItems.setPosition();
+		initResources();
+		// TODO jobs = JobFactory.getJobMenuItems();
+		// TODO jobs.setPosition();
+	}
+	
+	public void initResources(){
+		resources = new HashMap<ResourceType, Text>();
+		for (ResourceType type : ResourceType.values()){
+			Text t = new Text(null, type.getColor());
+			t.setX(Display.getWidth() - getWidth() - X);
+			resources.put(type, t);
+		}
 	}
 	
 	@Override
@@ -45,9 +54,20 @@ public class AsterMenu extends Panel implements GameElement {
 	public void render() {
 		name.render();
 		type.render();
-		/*for(Entry<Class<?>, JobMenuItem> e : jobMenuItems.entrySet()){
+		renderResources();
+		// TODO renderJobs();
+	}
+	
+	public void renderResources(){
+		for (Entry<ResourceType, Text> e : resources.entrySet()) {
 			e.getValue().render();
-		}*/
+		}
+	}
+	
+	public void renderJobs(){
+		for(Entry<Class<?>, JobMenuItem> job : jobs.entrySet()){
+			job.getValue().render();
+		}
 	}
 	
 	@Override
@@ -56,10 +76,26 @@ public class AsterMenu extends Panel implements GameElement {
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
 			type.setText(game.i18n("aster." + aster.getType().getName()));
-			/*for(Entry<Class<?>, JobMenuItem> e : jobMenuItems.entrySet()){
-				e.getValue().setJob(((Planet)aster).getPopulation().getJob(e.getKey()));
-				e.getValue().update(delta);
-			}*/
+			// TODO updateJobs(delta);
+		}
+		updateResources();
+	}
+	
+	public void updateResources(){
+		int i = 0;
+		for (Entry<ResourceType, Text> e : resources.entrySet()) {
+			Resource r = aster.getResource(e.getKey());
+			e.getValue().setText(r==null ? null : r.toString(game));
+			if (r==null) continue;
+			e.getValue().setY(Y + DY * (2 + i));
+			i++;
+		}
+	}
+	
+	public void updateJobs(double delta){
+		for(Entry<Class<?>, JobMenuItem> job : jobs.entrySet()){
+			job.getValue().setJob(((Planet)aster).getPopulation().getJob(job.getKey()));
+			job.getValue().update(delta);
 		}
 	}
 	

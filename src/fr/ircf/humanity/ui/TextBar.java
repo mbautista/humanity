@@ -1,7 +1,5 @@
 package fr.ircf.humanity.ui;
 
-import org.newdawn.slick.Color;
-
 public class TextBar extends Bar {
 
 	private static int SPACING = 10, BAR_Y = 2;
@@ -9,7 +7,7 @@ public class TextBar extends Bar {
 	
 	public TextBar(String text, float[] color) {
 		super(color);
-		this.text = new Text(text, new Color(color[0], color[1], color[2]));
+		this.text = new Text(text, color);
 	}
 
 	@Override

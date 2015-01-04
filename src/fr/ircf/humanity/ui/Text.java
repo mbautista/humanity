@@ -22,11 +22,15 @@ public class Text extends Component {
 	private static HashMap<String, TrueTypeFont> fonts;
 
 	public Text(){
-		this("", COLOR, SIZE, FONT);
+		this(null, COLOR, SIZE, FONT);
 	}
 	
 	public Text(String text) {
 		this(text, COLOR, SIZE, FONT);
+	}
+	
+	public Text(String text, float[] color){
+		this(text, new Color(color[0], color[1], color[2]), SIZE, FONT);
 	}
 	
 	public Text(String text, Color color) {
@@ -45,6 +49,7 @@ public class Text extends Component {
 	}
 	
 	public void render(){
+		if (isEmpty()) return;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         font.drawString(x, y, text, color);
@@ -77,5 +82,9 @@ public class Text extends Component {
 	
 	public void setText(String text){
 		this.text = text;
+	}
+
+	public boolean isEmpty() {
+		return text == null;
 	}
 }

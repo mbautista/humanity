@@ -19,13 +19,14 @@ public class Star extends Aster {
 	public static double MIN_SIZE = 1, MAX_SIZE = 4,
 			RED_GIANT_ENERGY = 128, MIN_ENERGY = 32, MAX_ENERGY = 512,
 			MIN_Z_FOR_PLANETS = 7;
-	public static int FIRST_STAR_PLANETS = 5; // Ensure we have at least one habitable planet for the player 
+	public static int FIRST_STAR_PLANETS = 5; // Ensure we have at least one habitable planet for the player
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
 	
 	public Star(Galaxy galaxy){
 		super();
 		this.galaxy = galaxy;
+		type = AsterType.STAR;
 		planets = new  ArrayList<Planet>();
 		scenePlanets = new ArrayList<Planet>();
 	}
@@ -160,7 +161,7 @@ public class Star extends Aster {
 	}
 
 	/**
-	 * Update star color from energy
+	 * Update star color and type from energy
 	 * @see http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 	 */
 	private void updateColor(){
@@ -169,10 +170,12 @@ public class Star extends Aster {
 			color[0] = 1;
 			color[1] = (float) Math.min(1, Math.max(0, 0.388557823 * Math.log(t) - 0.629373313));
 			color[2] = (float) Math.min(1, Math.max(0, 0.541084888 * Math.log(t - 10) - 1.191581222));
+			type = t < 50 ? AsterType.RED_GIANT_STAR : AsterType.MEDIUM_STAR;
 		}else{
 			color[0] = (float) Math.min(1, Math.max(0, 1.287885654 * Math.pow(t - 60, -0.1332047592)));
 			color[1] = (float) Math.min(1, Math.max(0, 1.125477225 * Math.pow(t - 60, -0.0755148492)));
 			color[2] = 1;
+			type = t < 80 ? AsterType.MEDIUM_STAR : AsterType.BLUE_STAR;
 		}
 	}
 

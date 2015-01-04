@@ -38,9 +38,10 @@ public abstract class Aster implements SceneObject{
 		MAX_RESOURCE = 128,
 		MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
 	protected String name;
+	protected AsterType type;
 	protected double x = 0, y = 0, size, distance;
 	protected float[] color = new float[3];
-	protected HashMap<Integer, Double> resources;
+	protected HashMap<Integer, Double> resources; // TODO <Integer, Resource>
 	// Aster viewport represents the aster's renderable/interactive zone (e.g. star)
 	// Aster extended viewport includes children asters (e.g. star system)
 	protected Rectangle2D viewport, extendedViewport, screenViewport;
@@ -227,4 +228,8 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	public abstract Game getGame();
+	
+	public AsterType getType(){
+		return type;
+	}
 }

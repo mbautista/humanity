@@ -27,7 +27,6 @@ public class Planet extends Aster {
 	private Star star;
 	private int satellites = 0	, year = 0;
 	private double hours, hour = 0, days, day = 0;
-	private PlanetType type = PlanetType.ROCKY;
 	private enum Rings { NONE, THIN, LARGE };
 	private Rings rings = Rings.NONE;
 	private static HashMap<String, Texture> textures;
@@ -37,6 +36,7 @@ public class Planet extends Aster {
 	public Planet(Star star){
 		super();
 		this.star = star;
+		type = AsterType.PLANET;
 	}
 	
 	/**
@@ -46,10 +46,10 @@ public class Planet extends Aster {
 	 * other planets distance depends on bode's law and first planet distance
 	 * type and size depends on distance (r)
 	 * energy and satellites depends on size
-	 * HABITABLE are located in the habitable zone and have water and atmosphere
-	 * GAZEOUS may have rings
+	 * HABITABLE_PLANET are located in the habitable zone and have water and atmosphere
+	 * GAZEOUS_PLANET may have rings
 	 * TODO water should depend on atmosphere (or inversely)
-	 * TODO HABITABLE may have AI populations
+	 * TODO HABITABLE_PLANET may have AI populations
 	 * color intensity depends on type
 	 * @param planet's rank around the star, needed for our modified BODE law
 	 * @param number of planets around the star, needed for our modified BODE law
@@ -62,22 +62,22 @@ public class Planet extends Aster {
 		}
 		days = kepler3();
 		day = Random.nextDouble() * days;
-		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? PlanetType.ROCKY : PlanetType.GAZEOUS;
-		if (habitable()) type = PlanetType.HABITABLE;
-		if (type == PlanetType.HABITABLE){
+		type = (ROCKY_LIMIT - distance/MAX_LOCALX > 0) ? AsterType.ROCKY_PLANET : AsterType.GAZEOUS_PLANET;
+		if (habitable()) type = AsterType.HABITABLE_PLANET;
+		if (type == AsterType.HABITABLE_PLANET){
 			//setResource(ATMOSPHERE, Random.between(MIN_ATMOSPHERE, MAX_ATMOSPHERE));
 			setResource(WATER, Random.between(MIN_WATER, MAX_WATER));
 		}
 		int dust = Random.nextInt(3);
-		if (type == PlanetType.GAZEOUS && dust>0){
+		if (type == AsterType.GAZEOUS_PLANET && dust>0){
 			rings = dust<2 ? Rings.THIN : Rings.LARGE;
 		}
 		size = Random.betweenWithFactor(MIN_SIZE, MAX_SIZE, distance/MAX_LOCALX); // TODO unrealistic
 		setResource(ENERGY, Random.betweenWithFactor(MIN_ENERGY, MAX_ENERGY, size/MAX_SIZE));
 		satellites = (int) Random.betweenWithFactor(0, MAX_SATELLITES, size/MAX_SIZE);
 		color = Random.colorBetweenIntensity(
-				MIN_INTENSITY + type.getValue(),
-				MIN_INTENSITY + (type.getValue()+1) * (MAX_INTENSITY - MIN_INTENSITY) / 3
+				MIN_INTENSITY + type.getPlanetValue(),
+				MIN_INTENSITY + (type.getPlanetValue() + 1) * (MAX_INTENSITY - MIN_INTENSITY) / 3
 		);
 		texture = getTexture();
 		hours = Random.between(MIN_HOURS, MAX_HOURS);
@@ -193,10 +193,6 @@ public class Planet extends Aster {
 
 	public Star getStar() {
 		return star;
-	}
-	
-	public PlanetType getType(){
-		return type;
 	}
 	
 	public int getYear(){

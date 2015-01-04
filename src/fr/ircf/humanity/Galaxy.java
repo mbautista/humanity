@@ -6,7 +6,7 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 
 import fr.ircf.humanity.aster.Planet;
-import fr.ircf.humanity.aster.PlanetType;
+import fr.ircf.humanity.aster.AsterType;
 import fr.ircf.humanity.aster.Star;
 
 public class Galaxy implements Scene, GameElement {
@@ -90,7 +90,7 @@ public class Galaxy implements Scene, GameElement {
 		Planet planet = null;
 		for (Star s: stars){
 			for (Planet p: s.getPlanets()){
-				if (p.getType() == PlanetType.HABITABLE) return p;
+				if (p.getType() == AsterType.HABITABLE_PLANET) return p;
 			}
 		}
 		return planet;

@@ -5,6 +5,8 @@ import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
+import fr.ircf.humanity.aster.AsterMenu;
+
 public class Humanity implements Game{
 
 	static final String TITLE = "Humanity";
@@ -87,7 +89,7 @@ public class Humanity implements Game{
 			//new Map(),
 			player,
 			//log,
-			//new JobMenu(),
+			new AsterMenu(),
 			loader,
 		};
 		for(GameElement gameElement : gameElements){

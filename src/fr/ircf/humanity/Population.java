@@ -12,9 +12,9 @@ import fr.ircf.humanity.job.JobFactory;
 public class Population {
 
 	public static double
-		MIN_PEOPLE = 32, MAX_PEOPLE = 128,
-		MIN_LIFESPAN = 32, MAX_LIFESPAN = 128,
-		MIN_FERTILITY = 0.1, MAX_FERTILITY = 2;
+		MIN_PEOPLE = 32, MAX_PEOPLE = 64,
+		MIN_LIFESPAN = 32, MAX_LIFESPAN = 64,
+		MIN_FERTILITY = 0.1, MAX_FERTILITY = 4;
 	private Player player;
 	private Planet planet;
 	private double people, lifespan, fertility;

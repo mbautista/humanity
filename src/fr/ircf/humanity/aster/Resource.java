@@ -29,11 +29,10 @@ public class Resource {
 	}
 	
 	// TODO make Game.i18n() static and remove game parameter (?)
-	// FIXME value and delta do NOT display decimals ?!
 	public String toString(Game game){
 		return game.i18n("resource." + type.getName())
-				+ " : " + (Math.round(value*100)/100)
-				+ " " + (delta<0 ? "" : "+") + (Math.round(delta*100)/100)
+				+ " : " + (Math.round(value*100)/100d)
+				+ " " + (delta<0 ? "" : "+") + (Math.round(delta*100)/100d)
 				+ "/" + game.i18n("resource.year");
 	}
 }

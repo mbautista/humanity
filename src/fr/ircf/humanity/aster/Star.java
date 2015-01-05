@@ -128,10 +128,10 @@ public class Star extends Aster {
 		color.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
 		color.flip();
 		FloatBuffer ambiant = BufferUtils.createFloatBuffer(4);
-		ambiant.put(new float[] { 1f, 1f, 1f, 1f });
+		ambiant.put(new float[] { this.color[0], this.color[1], this.color[2], 0.1f, });
 		ambiant.flip();
 		FloatBuffer specular = BufferUtils.createFloatBuffer(4);
-		specular.put(new float[] { 0f, 0f, 0f, 1f });
+		specular.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
 		specular.flip();
 		
 		// TODO tweak ambiant/specular to add "glow" effect
@@ -140,6 +140,7 @@ public class Star extends Aster {
 	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, color);
 	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, ambiant);
 	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, specular);
+		//GL11.glLight(GL11.GL_LIGHT0, GL11.GL_EMISSION, color);
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
 	}
 	

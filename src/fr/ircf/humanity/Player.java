@@ -93,7 +93,7 @@ public abstract class Player extends Panel implements GameElement{
 		for (Population population: populations){
 			humanity += population.getPeople();
 		}
-		humanity = Math.round(humanity * 100) / 100;
+		humanity = Math.round(humanity * 100) / 100d;
 	}
 	
 	public int getHeight(){

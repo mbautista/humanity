@@ -26,7 +26,7 @@ public class Planet extends Aster {
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
 	private int satellites = 0	, year = 0;
-	private double hours, hour = 0, days, day = 0;
+	private double hours, hour = 0, days, day = 0, hoursInYear = 0;
 	private enum Rings { NONE, THIN, LARGE };
 	private Rings rings = Rings.NONE;
 	private static HashMap<String, Texture> textures;
@@ -81,6 +81,7 @@ public class Planet extends Aster {
 		);
 		texture = getTexture();
 		hours = Random.between(MIN_HOURS, MAX_HOURS);
+		hoursInYear = hours * days;
 		name = star.getName() + " " + NUMBER[rank];
 		updatePosition();
 		super.create();
@@ -197,6 +198,10 @@ public class Planet extends Aster {
 	
 	public int getYear(){
 		return year;
+	}
+	
+	public double getHoursInYear(){
+		return hoursInYear;
 	}
 	
 	@Override

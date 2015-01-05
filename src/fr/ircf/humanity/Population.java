@@ -13,10 +13,11 @@ public class Population {
 
 	public static double
 		MIN_PEOPLE = 32, MAX_PEOPLE = 128,
-		MIN_LIFESPAN = 32, MAX_LIFESPAN = 128;
+		MIN_LIFESPAN = 32, MAX_LIFESPAN = 128,
+		MIN_FERTILITY = 0.1, MAX_FERTILITY = 2;
 	private Player player;
 	private Planet planet;
-	private double people, lifespan;
+	private double people, lifespan, fertility;
 	private HashMap<Class<?>, Job> jobs;
 	
 	public Population(Player player, Planet planet){
@@ -27,14 +28,27 @@ public class Population {
 	}
 
 	public void initPeople(double factor){
-		people = Random.betweenWithFactor(MIN_PEOPLE, MAX_PEOPLE, factor);
-		lifespan = Random.betweenWithFactor(MIN_LIFESPAN, MAX_LIFESPAN, factor);
+		people = Random.betweenWithFactor(MIN_PEOPLE, MAX_PEOPLE, factor); // TODO random centered gaussian
+		lifespan = Random.betweenWithFactor(MIN_LIFESPAN, MAX_LIFESPAN, factor); // TODO random centered gaussian
+		fertility = Random.betweenWithFactor(MIN_FERTILITY, MAX_FERTILITY, factor); // TODO random centered gaussian
 		planet.addResource(ResourceType.PEOPLE, people);
 	}
 	
 	public void update(double delta){
-		// TODO people, lifespan, actions
+		// TODO lifespan, fertility, actions
+		updatePeople(delta);
+	}
+	
+	/**
+	 * Update people on planet depending on fertility and lifespan
+	 * @param delta
+	 */
+	// TODO move this to Aster.updateResources() (?)
+	public void updatePeople(double delta){
+		double peopleInYear = people * (fertility - 1) / lifespan;
+		people += peopleInYear * delta / planet.getHoursInYear();
 		planet.getResource(ResourceType.PEOPLE).setValue(people);
+		planet.getResource(ResourceType.PEOPLE).setDelta(peopleInYear);
 	}
 	
 	public double getPeople() {

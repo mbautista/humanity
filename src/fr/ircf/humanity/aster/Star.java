@@ -111,7 +111,7 @@ public class Star extends Aster {
 	private void renderStar(){
 		GL11.glPushMatrix();
 		GL11.glTranslated(getScreenX(), getScreenY(), getScreenZ());
-		if (isEnlighten()) renderLight();
+		if (isEnlighten()) renderLight();		
 		GL11.glColor3f(color[0], color[1], color[2]);
 		Sphere s = new Sphere();
 		s.draw(Math.max(1, (float)getScreenSize()), getPolygons(), getPolygons());
@@ -123,12 +123,23 @@ public class Star extends Aster {
 		position.put(new float[] { 0f, 0f, 0f, 1f, });
 		position.flip();
 		
+		// TODO simplify color handling (use FloatBuffer everywhere ?)
 		FloatBuffer color = BufferUtils.createFloatBuffer(4);
 		color.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
 		color.flip();
-
+		FloatBuffer ambiant = BufferUtils.createFloatBuffer(4);
+		ambiant.put(new float[] { 1f, 1f, 1f, 1f });
+		ambiant.flip();
+		FloatBuffer specular = BufferUtils.createFloatBuffer(4);
+		specular.put(new float[] { 0f, 0f, 0f, 1f });
+		specular.flip();
+		
+		// TODO tweak ambiant/specular to add "glow" effect
 		GL11.glEnable(GL11.GL_LIGHT0);
-		GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, color);
+		//GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, color);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, color);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, ambiant);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, specular);
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
 	}
 	

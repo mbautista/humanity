@@ -21,7 +21,6 @@ public abstract class Aster implements SceneObject{
 	public static double
 		TEXT_DY = 11, // Spacing between planet and text
 		MIN_Z_FOR_TEXT = 4, // do not display texts at galaxy scale
-		MAX_RESOURCE = 128,
 		MIN_SCREEN_VIEWPORT_X = 10; // Avoid to display/interact viewports below that size
 	protected String name;
 	protected AsterType type;
@@ -118,7 +117,7 @@ public abstract class Aster implements SceneObject{
 					getGame().i18n("resource." + resource.getKey().getName()), 
 					resource.getKey().getColor()
 				));
-				bars.get(resource.getKey()).setMax(MAX_RESOURCE);
+				bars.get(resource.getKey()).setMax(resource.getKey().getMax());
 			}
 			bars.get(resource.getKey()).setValue(resource.getValue().getValue());
 		}

@@ -43,7 +43,6 @@ public class Camera implements GameElement {
 	 * @param o
 	 */
 	public void show(SceneObject o){
-		if (o != object) game.getLog().add(new Event("show " + o.getName())); // TODO remove
 		show(o, z);
 	}
 	

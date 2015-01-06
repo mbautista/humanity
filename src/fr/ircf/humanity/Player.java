@@ -17,7 +17,6 @@ import fr.ircf.humanity.ui.Text;
 
 public abstract class Player extends Panel implements GameElement{
 
-	public static double MIN_POPULATION = 32, MAX_POPULATION = 128;
 	private static int X = 10, DY = 20;
 	private Game game;
 	private double humanity = 0, kardashev = 0;
@@ -49,7 +48,6 @@ public abstract class Player extends Panel implements GameElement{
 			public void up(){ game.getCamera().show(planet); }
 		};
 		home.setPosition(X, Display.getHeight() - getHeight());
-		System.out.println("player height = " + getHeight());
 	}
 	
 	private void initPopulations(){
@@ -92,11 +90,16 @@ public abstract class Player extends Panel implements GameElement{
 	}
 	
 	private void updateHumanity(){
+		double old = humanity;
 		humanity = 0;
 		for (Population population: populations){
 			humanity += population.getPeople();
 		}
 		humanity = Math.round(humanity * 100) / 100d;
+		int oi = (int)Math.floor(old);
+		int hi = (int)Math.floor(humanity);
+		// TODO scanf
+		if (oi != hi) game.getLog().add(new Event(game.i18n("event.humanity_passed") + " " + hi + " " + game.i18n("event.billions")));
 	}
 	
 	public int getHeight(){

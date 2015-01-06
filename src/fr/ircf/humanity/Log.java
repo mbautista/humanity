@@ -26,4 +26,12 @@ public class Log extends ScrollPane implements GameElement {
 	public boolean visible(){
 		return this.game.getState() == State.GAME;
 	}
+
+	public void addEvent(String message) {
+		add(new Event(game.i18n("event.year") + " " + getYear() + " : " + message));
+	}
+	
+	public int getYear(){
+		return game.getPlayer().getPlanet().getYear();
+	}
 }

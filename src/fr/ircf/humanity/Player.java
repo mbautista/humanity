@@ -98,8 +98,9 @@ public abstract class Player extends Panel implements GameElement{
 		humanity = Math.round(humanity * 100) / 100d;
 		int oi = (int)Math.floor(old);
 		int hi = (int)Math.floor(humanity);
-		// TODO scanf
-		if (oi != hi) game.getLog().add(new Event(game.i18n("event.humanity_passed") + " " + hi + " " + game.i18n("event.billions")));
+		if (oi != hi){
+			game.getLog().addEvent(String.format(game.i18n("event.humanity_passed_billion" + (hi>1?"s":"")), hi));	
+		}
 	}
 	
 	public int getHeight(){

@@ -25,7 +25,7 @@ public class Planet extends Aster {
 			ROCKY_LIMIT = 0.5;
 	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
 	private Star star;
-	private int satellites = 0	, year = 0;
+	private int satellites = 0, year = 0;
 	private double hours, hour = 0, days, day = 0, hoursInYear = 0;
 	private enum Rings { NONE, THIN, LARGE };
 	private Rings rings = Rings.NONE;

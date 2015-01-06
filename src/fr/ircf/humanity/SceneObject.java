@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 
 public interface SceneObject {
 
+	public String getName();
 	public double getX();
 	public double getY();
 	public double getScreenX();

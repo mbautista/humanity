@@ -88,7 +88,7 @@ public class Humanity implements Game{
 			new Zoom(),
 			//new Map(),
 			player,
-			//log,
+			log,
 			new AsterMenu(),
 			loader,
 		};
@@ -130,6 +130,7 @@ public class Humanity implements Game{
 	    		loader.setValue(galaxy.getStarSize());
 	    		break;
 	    	case GAME :
+	    		log.add(new Event(i18n("event.welcome")));
 	    		break;
     	}
 		for(GameElement gameElement : gameElements){

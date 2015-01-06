@@ -18,4 +18,5 @@ public interface Game {
 	public Scene getScene();
 	public Player getPlayer();
 	public State getPreviousState();
+	public Log getLog();
 }

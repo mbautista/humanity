@@ -1,9 +1,12 @@
 package fr.ircf.humanity.ui;
 
+import java.awt.Rectangle;
+
 public abstract class Component {
 
 	protected int x, y, width = 0, height = 0;
-
+	protected Rectangle viewport;
+	
 	public boolean visible(){
 		return true;
 	}
@@ -21,6 +24,14 @@ public abstract class Component {
 	}
 	
 	public void update(double delta){	
+	}
+	
+	public void updateViewport(){
+		viewport = new Rectangle(x, y, getWidth(), getHeight());
+	}
+
+	public Rectangle getViewport() {
+		return viewport;
 	}
 
 	public int getX() {

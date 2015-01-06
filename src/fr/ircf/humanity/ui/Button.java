@@ -1,6 +1,5 @@
 package fr.ircf.humanity.ui;
 
-import java.awt.Rectangle;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 
@@ -13,7 +12,6 @@ public class Button extends Component {
 	private float[] color;
 	private int padding = 10;
 	private Text text;
-	private Rectangle viewport;
 	private boolean disabled;
 	
 	public Button() {
@@ -81,10 +79,6 @@ public class Button extends Component {
 	
 	public void setColor(float[] color) {
 		this.color = color;
-	}
-	
-	private void updateViewport(){
-		viewport = new Rectangle(x, y, getWidth(), getHeight());
 	}
 
 	public boolean isDisabled() {

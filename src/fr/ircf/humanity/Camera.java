@@ -44,6 +44,7 @@ public class Camera implements GameElement {
 	 */
 	public void show(SceneObject o){
 		show(o, z);
+		game.getLog().add(new Event("show " + o.getName())); // TODO remove
 	}
 	
 	public void showWithZMax(SceneObject o){

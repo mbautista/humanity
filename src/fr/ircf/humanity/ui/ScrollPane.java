@@ -1,5 +1,6 @@
 package fr.ircf.humanity.ui;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class ScrollPane extends Panel {
@@ -24,20 +25,18 @@ public class ScrollPane extends Panel {
 			down.render();
 			slider.render();
 		}
-		//GL11.glEnable(GL11.GL_SCISSOR_TEST);
+		GL11.glScissor(x, Display.getHeight() - y - height, width, height);
+		GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		container.render();
-		//GL11.glScissor(x, y, width, height);
-		//GL11.glDisable(GL11.GL_SCISSOR_TEST);
+		GL11.glDisable(GL11.GL_SCISSOR_TEST);
 	}
 	
 	public void add(Component c){
 		container.add(c);
-		if (autoscroll) scrollTo(0, - Math.min(0, height - container.getHeight()));
+		if (autoscroll) scrollTo(0, Math.min(0, height - container.getHeight()));
 	}
 	
 	public void scrollTo(int x, int y){
-		System.out.println("scrollpane scrollTo : y = " + y);
-		//container.moveComponentsTo(x, y);
 		container.setPosition(this.x + x, this.y + y);
 	}
 	

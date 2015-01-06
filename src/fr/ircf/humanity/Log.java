@@ -9,13 +9,13 @@ import fr.ircf.humanity.ui.Text;
 
 public class Log extends ScrollPane implements GameElement {
 
-	private static int X = 150, WIDTH = 400, HEIGHT = 60;
+	private static int X = 150, WIDTH = 400, HEIGHT = 90, MARGIN_BOTTOM = 10;
 	private Game game;
 	
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
-		setPosition(X, Display.getHeight() - HEIGHT);
+		setPosition(X, Display.getHeight() - HEIGHT - MARGIN_BOTTOM);
 		setWidth(WIDTH);
 		setHeight(HEIGHT);
 		updateViewport();

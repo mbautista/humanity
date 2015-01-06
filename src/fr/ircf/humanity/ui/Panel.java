@@ -18,7 +18,7 @@ public class Panel extends Component {
 	@Override
 	public void render() {
 		GL11.glPushMatrix();
-		GL11.glTranslated(x, y, 0);
+		GL11.glTranslated(x, y, 0);		
 		for (Component c: components){
 			c.render();
 		}

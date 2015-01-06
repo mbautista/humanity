@@ -2,6 +2,8 @@ package fr.ircf.humanity.ui;
 
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.GL11;
+
 public class Panel extends Component {
 
 	private ArrayList<Component> components;
@@ -15,39 +17,25 @@ public class Panel extends Component {
 	
 	@Override
 	public void render() {
+		GL11.glPushMatrix();
+		GL11.glTranslated(x, y, 0);
 		for (Component c: components){
-			if (viewport != null && viewport.contains(c.getViewport())){
-				c.render();
-			}
+			c.render();
 		}
+		GL11.glPopMatrix();
 	}
 	
 	public void add(Component c){
 		components.add(c);
-		c.setPosition(x + cursorX, y + cursorY);
+		c.setPosition(cursorX, cursorY);
 		if (display == DisplayMode.INLINE){
 			cursorX += c.getWidth();
 			// TODO CRLF
 		}else{
 			cursorY += c.getHeight();
 		}
-	}
-	
-	public void setPosition(int x, int y){
-		moveComponentsTo(x, y); // TODO useless if components position would be relative
-		super.setPosition(x, y);
-	}
-	
-	public void moveComponentsBy(int dx, int dy){
-		for (Component c: components){
-			c.setPosition(c.getX() + dx, c.getY() + dy);
-		}
-	}
-	
-	public void moveComponentsTo(int x, int y){
-		for (Component c: components){
-			c.setPosition(c.getX() - this.x + x, c.getY() - this.y + y);
-		}
+		width = Math.max(c.getWidth(), cursorX);
+		height = Math.max(c.getHeight(), cursorY);
 	}
 	
 	public int getCursorX(){

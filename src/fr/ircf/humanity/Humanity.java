@@ -97,6 +97,8 @@ public class Humanity implements Game{
 		}
 		// set and show player planet
 		camera.showWithZMax(player.getPlanet());
+		// welcome message
+		log.add(new Event(i18n("event.welcome")));
 	}
 	
     @Override
@@ -130,7 +132,6 @@ public class Humanity implements Game{
 	    		loader.setValue(galaxy.getStarSize());
 	    		break;
 	    	case GAME :
-	    		log.add(new Event(i18n("event.welcome")));
 	    		break;
     	}
 		for(GameElement gameElement : gameElements){

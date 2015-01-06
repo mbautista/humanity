@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.job.Job;
 import fr.ircf.humanity.job.JobFactory;
 import fr.ircf.humanity.ui.Button;
+import fr.ircf.humanity.ui.Component;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.Text;
 
@@ -47,6 +49,7 @@ public abstract class Player extends Panel implements GameElement{
 			public void up(){ game.getCamera().show(planet); }
 		};
 		home.setPosition(X, Display.getHeight() - getHeight());
+		System.out.println("player height = " + getHeight());
 	}
 	
 	private void initPopulations(){
@@ -63,7 +66,7 @@ public abstract class Player extends Panel implements GameElement{
 
 	@Override
 	public void render() {
-		// TODO avatar
+		// TODO avatar	
 		home.setText(planet.getName());
 		home.render();
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
@@ -97,7 +100,7 @@ public abstract class Player extends Panel implements GameElement{
 	}
 	
 	public int getHeight(){
-		return (2 + texts.length) * (texts[0].getHeight() + DY);
+		return (2 + texts.length) * DY;
 	}
 
 	public Planet getPlanet() {

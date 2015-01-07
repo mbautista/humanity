@@ -32,8 +32,7 @@ public class AsterMenu extends Panel implements GameElement {
 		type = new Text();
 		type.setPosition(Display.getWidth() - getWidth() - X, Y + DY);
 		initResources();
-		// TODO jobs = JobFactory.getJobMenuItems();
-		// TODO jobs.setPosition();
+		initJobs();
 	}
 	
 	public void initResources(){
@@ -42,6 +41,15 @@ public class AsterMenu extends Panel implements GameElement {
 			Text t = new Text(null, type.getColor());
 			t.setX(Display.getWidth() - getWidth() - X);
 			resources.put(type, t);
+		}
+	}
+	
+	public void initJobs(){
+		jobs = JobFactory.getJobMenuItems();
+		int i = 2;
+		for (Entry<Class<?>, JobMenuItem> e : jobs.entrySet()){
+			e.getValue().setPosition(Display.getWidth() - getWidth() - X, Y + i * DY);
+			i++;
 		}
 	}
 	

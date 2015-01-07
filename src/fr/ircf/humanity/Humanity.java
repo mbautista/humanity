@@ -91,6 +91,7 @@ public class Humanity implements Game{
 			log,
 			new AsterMenu(),
 			loader,
+			new End()
 		};
 		for(GameElement gameElement : gameElements){
 			gameElement.init(this);

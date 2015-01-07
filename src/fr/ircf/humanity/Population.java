@@ -13,8 +13,8 @@ public class Population {
 
 	public static double
 		MIN_PEOPLE = 0.7, MAX_PEOPLE = 0.9,
-		MIN_LIFESPAN = 32, MAX_LIFESPAN = 64,
-		MIN_FERTILITY = 4, MAX_FERTILITY = 8;
+		MIN_LIFESPAN = 1, MAX_LIFESPAN = 10, //MIN_LIFESPAN = 32, MAX_LIFESPAN = 64,
+		MIN_FERTILITY = 0, MAX_FERTILITY = 1; //MIN_FERTILITY = 1, MAX_FERTILITY = 4;
 	private Player player;
 	private Planet planet;
 	private double people, lifespan, fertility;
@@ -46,7 +46,7 @@ public class Population {
 	// TODO move this to Aster.updateResources() (?)
 	public void updatePeople(double delta){
 		double peopleInYear = people * (fertility - 1) / lifespan;
-		people += peopleInYear * delta / planet.getHoursInYear();
+		people += Planet.YEAR_SCALE * peopleInYear * delta / planet.getHoursInYear();
 		planet.getResource(ResourceType.PEOPLE).setValue(people);
 		planet.getResource(ResourceType.PEOPLE).setDelta(peopleInYear);
 	}

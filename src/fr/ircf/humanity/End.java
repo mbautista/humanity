@@ -1,43 +1,41 @@
 package fr.ircf.humanity;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import fr.ircf.humanity.ui.Text;
 
-public class Title implements GameElement {
+public class End implements GameElement {
 
 	private static Color COLOR = Color.white;
 	private static float SIZE = 48f; // FIXME display bug above 48f ?!
 	private static String FONT = "assets/fonts/hyperspace/Hyperspace.ttf";
 	private static int Y = 0;
-	private Text title, version;
+	private Text end;
 	private Game game;
 
 	@Override
 	public void init(Game game) throws Exception {
 		this.game = game;
-		title = new Text(game.i18n("game.title"), COLOR, SIZE, FONT);
-		version = new Text("v" + Humanity.VERSION);
-		int x = (Display.getDisplayMode().getWidth() - title.getWidth())/2;
-		int versionX = x + title.getWidth();
-		int versionY = Y + title.getHeight() - version.getHeight() - 8;
-		title.setPosition(x, Y);
-		version.setPosition(versionX, versionY);
+		end = new Text(game.i18n("game.end"), COLOR, SIZE, FONT);
+		int x = (Display.getWidth() - end.getWidth())/2;
+		int y = (Display.getHeight() - end.getHeight())/2;
+		end.setPosition(x, y);
 	}
 	
 	@Override
 	public boolean visible(){
-		return game.getState() != State.GAME && game.getState() != State.END;
+		return game.getState() == State.END;
 	}
 	
 	@Override
 	public void render(){
-		title.render();
-		version.render();
+		end.render();
 	}
 
 	@Override
 	public void update(double delta){
+		if (Mouse.isButtonDown(0)) game.setState(State.MENU);
 	}
 }

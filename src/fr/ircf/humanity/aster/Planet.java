@@ -22,8 +22,9 @@ public class Planet extends Aster {
 			MIN_SIZE = 0.2f, MAX_SIZE = 1,
 			MIN_HOURS = 10, MAX_HOURS = 30,
 			MAX_SATELLITES = 20,
-			ROCKY_LIMIT = 0.5;
-	public static double MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f;
+			ROCKY_LIMIT = 0.5,
+			MIN_INTENSITY = 0.3f, MAX_INTENSITY = 0.7f,
+			YEAR_SCALE = 10;
 	private Star star;
 	private int satellites = 0, year = 0;
 	private double hours, hour = 0, days, day = 0, hoursInYear = 0;
@@ -114,7 +115,7 @@ public class Planet extends Aster {
 		// TODO energy, water, atmosphere, type
 		hour+= delta;
 		day = hour / hours;
-		year = (int)(day / days);
+		year = (int)(YEAR_SCALE * day / days);
 		updatePosition();
 	}
 	

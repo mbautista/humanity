@@ -96,9 +96,12 @@ public abstract class Player extends Panel implements GameElement{
 			humanity += population.getPeople();
 		}
 		humanity = Math.round(humanity * 100) / 100d;
+		// Humanity ends
+		if (humanity <= 0) game.setState(State.END);
+		// Humanity passed billions event
 		int oi = (int)Math.floor(old);
 		int hi = (int)Math.floor(humanity);
-		if (oi != hi){
+		if (hi > oi){
 			game.getLog().addEvent(String.format(game.i18n("event.humanity_passed_billion" + (hi>1?"s":"")), hi));	
 		}
 	}

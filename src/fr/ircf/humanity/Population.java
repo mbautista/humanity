@@ -13,8 +13,8 @@ public class Population {
 
 	public static double
 		MIN_PEOPLE = 0.7, MAX_PEOPLE = 0.9,
-		MIN_LIFESPAN = 1, MAX_LIFESPAN = 10, //MIN_LIFESPAN = 32, MAX_LIFESPAN = 64,
-		MIN_FERTILITY = 0, MAX_FERTILITY = 1; //MIN_FERTILITY = 1, MAX_FERTILITY = 4;
+		MIN_LIFESPAN = 32, MAX_LIFESPAN = 64,
+		MIN_FERTILITY = 1, MAX_FERTILITY = 4;
 	private Player player;
 	private Planet planet;
 	private double people, lifespan, fertility;

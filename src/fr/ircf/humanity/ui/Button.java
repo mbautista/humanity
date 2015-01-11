@@ -5,14 +5,16 @@ import org.lwjgl.opengl.*;
 
 public class Button extends Component {
 
-	private static float[] COLOR_DISABLED = {0.1f, 0.1f, 0.1f, 0.5f};
-	private static float[] COLOR_OUT = {0.2f, 0.2f, 0.2f, 0.5f};
-	private static float[] COLOR_OVER = {0.4f, 0.4f, 0.4f, 0.5f};
-	private static float[] COLOR_CLICK = {0.6f, 0.6f, 0.6f, 0.5f};
-	private float[] color;
-	private int padding = 10;
-	private Text text;
-	private boolean disabled;
+	public static enum State { OUT, OVER, DOWN, UP, RDOWN, RUP };
+	protected State state = State.OUT;
+	protected static float[] COLOR_DISABLED = {0.1f, 0.1f, 0.1f, 0.5f};
+	protected static float[] COLOR_OUT = {0.2f, 0.2f, 0.2f, 0.5f};
+	protected static float[] COLOR_OVER = {0.4f, 0.4f, 0.4f, 0.5f};
+	protected static float[] COLOR_CLICK = {0.6f, 0.6f, 0.6f, 0.5f};
+	protected float[] color;
+	protected int padding = 10;
+	protected Text text;
+	protected boolean disabled;
 	
 	public Button() {
 		this("");
@@ -47,18 +49,22 @@ public class Button extends Component {
 	}
 	
 	public void over(){
+		state = State.OVER;
 		setColor(COLOR_OVER);
 	}
 	
 	public void out(){
+		state = State.OUT;
 		setColor(COLOR_OUT);
 	}
 	
 	public void down(){
+		state = State.DOWN;
 		setColor(COLOR_CLICK);
 	}
 	
 	public void up(){
+		state = State.UP;
 		setColor(COLOR_OUT);
 	}
 	

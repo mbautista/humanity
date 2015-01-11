@@ -15,16 +15,16 @@ public class Menu implements GameElement {
 		this.game = game;
 		buttons = new Button[] {
 			new Button(game.i18n("menu.new")) {
-				public void up() { game.setState(State.NEW); super.up(); }
+				public void up() { game.setState(fr.ircf.humanity.State.NEW); super.up(); }
 			},
 			new Button(game.i18n("menu.resume")) {
-				public void up() { game.setState(State.GAME); super.up(); }
+				public void up() { game.setState(fr.ircf.humanity.State.GAME); super.up(); }
 			},
 			new Button(game.i18n("menu.options")) {
-				public void up() { game.setState(State.OPTIONS); super.up(); }
+				public void up() { game.setState(fr.ircf.humanity.State.OPTIONS); super.up(); }
 			},
 			new Button(game.i18n("menu.quit")) {
-				public void up() { game.setState(State.QUIT); super.up(); }
+				public void up() { game.setState(fr.ircf.humanity.State.QUIT); super.up(); }
 			},
 		};
 		int i = 0;

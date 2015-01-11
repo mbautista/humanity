@@ -34,19 +34,22 @@ public class AsterMenu extends Panel implements GameElement {
 	public void initResources(){
 		resources = new HashMap<ResourceType, Text>();
 		for (ResourceType type : ResourceType.values()){
-			Text t = new Text(null, type.getColor());
-			t.setX(Display.getWidth() - getWidth() - X);
-			resources.put(type, t);
+			Text text = new Text(null, type.getColor());
+			text.setX(Display.getWidth() - getWidth() - X);
+			resources.put(type, text);
 		}
 	}
 	
 	public void initActions(){
 		actions = new HashMap<Class<?>, ActionMenuItem>();
-		int i = 2;
+		int i = 0;
 		for (Class<?> actionClass : Action.CLASSES){
 			ActionMenuItem action = new ActionMenuItem();
+			action.setPosition(
+				Display.getWidth() - action.getWidth(),
+				Y + 7 * DY + i * action.getHeight()
+			);
 			actions.put(actionClass, action);
-			action.setPosition(Display.getWidth() - getWidth() - X, Y + i * DY);
 			i++;
 		}
 	}
@@ -61,7 +64,7 @@ public class AsterMenu extends Panel implements GameElement {
 		name.render();
 		type.render();
 		renderResources();
-		// TODO renderActions();
+		renderActions();
 	}
 	
 	public void renderResources(){
@@ -71,8 +74,8 @@ public class AsterMenu extends Panel implements GameElement {
 	}
 	
 	public void renderActions(){
-		for(Entry<Class<?>, ActionMenuItem> action : actions.entrySet()){
-			action.getValue().render();
+		for(Entry<Class<?>, ActionMenuItem> e : actions.entrySet()){
+			e.getValue().render();
 		}
 	}
 	
@@ -82,7 +85,7 @@ public class AsterMenu extends Panel implements GameElement {
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
 			type.setText(game.i18n("aster." + aster.getType().getName()));
-			// TODO updateActions(delta);
+			updateActions(delta);
 		}
 		updateResources();
 	}

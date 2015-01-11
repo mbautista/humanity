@@ -11,7 +11,6 @@ public class End implements GameElement {
 	private static Color COLOR = Color.white;
 	private static float SIZE = 48f; // FIXME display bug above 48f ?!
 	private static String FONT = "assets/fonts/hyperspace/Hyperspace.ttf";
-	private static int Y = 0;
 	private Text end;
 	private Game game;
 

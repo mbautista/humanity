@@ -10,6 +10,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Population;
 import fr.ircf.humanity.SceneObject;
 import fr.ircf.humanity.State;
 import fr.ircf.humanity.ui.Text;
@@ -33,6 +34,7 @@ public abstract class Aster implements SceneObject{
 	protected Text text;
 	protected HashMap<ResourceType, TextBar> bars;
 	protected boolean highlight = false;
+	protected Population population;
 	
 	public Aster(){
 		resources = new HashMap<ResourceType, Resource>();
@@ -137,7 +139,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	protected void up(){
-		getCamera().show(this);
+		getCamera().show(this); // TODO execute selected action instead
 	}
 	
 	public HashMap<ResourceType, Resource> getResources(){
@@ -228,5 +230,13 @@ public abstract class Aster implements SceneObject{
 	
 	public AsterType getType(){
 		return type;
+	}
+	
+	public void setPopulation(Population population) {
+		this.population = population;
+	}
+	
+	public Population getPopulation() {
+		return population;
 	}
 }

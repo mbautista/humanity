@@ -2,16 +2,11 @@ package fr.ircf.humanity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-
 import fr.ircf.humanity.action.Action;
+import fr.ircf.humanity.action.ActionMenuItem;
 import fr.ircf.humanity.aster.Planet;
-import fr.ircf.humanity.job.Job;
-import fr.ircf.humanity.job.JobFactory;
 import fr.ircf.humanity.ui.Button;
-import fr.ircf.humanity.ui.Component;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.Text;
 
@@ -19,22 +14,22 @@ public abstract class Player extends Panel implements GameElement{
 
 	private static int X = 10, DY = 20;
 	private Game game;
-	private double humanity = 0, kardashev = 0;
+	private double humanity = 0, level = 0;
 	private Text[] texts;
 	private Button home;
 	// TODO avatar
 	// TODO color
 	private Planet planet;
 	private ArrayList<Population> populations;
-	private HashMap<Class<?>, Job> jobs;
+	private HashMap<Class<?>, Double> levels;
 	
 	@Override
 	public void init(final Game game) throws Exception {
 		this.game = game;
 		planet = ((Humanity)game).getGalaxy().getRandomHabitablePlanet();
-		jobs = JobFactory.getJobs();
 		initPopulations();
 		initUi();
+		initLevels();
 	}
 
 	private void initUi(){
@@ -57,6 +52,13 @@ public abstract class Player extends Panel implements GameElement{
 		addPopulation(population);
 	}
 	
+	private void initLevels(){
+		levels = new HashMap<Class<?>, Double>();
+		for (Class<?> actionClass : Action.CLASSES){
+			levels.put(actionClass, 0d);
+		}
+	}
+	
 	@Override
 	public boolean visible() {
 		return game.getState() == State.GAME;
@@ -69,7 +71,7 @@ public abstract class Player extends Panel implements GameElement{
 		home.render();
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
 		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
-		texts[2].setText(game.i18n("player.kardashev") + " : " + kardashev);
+		texts[2].setText(game.i18n("player.kardashev") + " : " + level);
 		for (Text text: texts){
 			text.render();
 		}
@@ -80,7 +82,7 @@ public abstract class Player extends Panel implements GameElement{
 		home.update(delta);
 		updatePopulations(delta);
 		updateHumanity();
-		// TODO kardashev
+		// TODO level
 	}
 	
 	private void updatePopulations(double delta){

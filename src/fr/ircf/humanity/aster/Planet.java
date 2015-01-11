@@ -32,7 +32,6 @@ public class Planet extends Aster {
 	private Rings rings = Rings.NONE;
 	private static HashMap<String, Texture> textures;
 	private Texture texture;
-	private Population population;
 	
 	public Planet(Star star){
 		super();
@@ -208,13 +207,5 @@ public class Planet extends Aster {
 	@Override
 	public Game getGame(){
 		return star.getGame();
-	}
-
-	public void setPopulation(Population population) {
-		this.population = population;
-	}
-	
-	public Population getPopulation() {
-		return population;
 	}
 }

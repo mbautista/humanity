@@ -1,17 +1,13 @@
 package fr.ircf.humanity.aster;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
 import org.lwjgl.opengl.Display;
-
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
-import fr.ircf.humanity.job.JobFactory;
-import fr.ircf.humanity.job.JobMenuItem;
-import fr.ircf.humanity.ui.Component;
+import fr.ircf.humanity.action.Action;
+import fr.ircf.humanity.action.ActionMenuItem;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.Text;
 
@@ -22,7 +18,7 @@ public class AsterMenu extends Panel implements GameElement {
 	private HashMap<ResourceType, Text> resources;
 	private Aster aster;
 	private Game game;
-	private HashMap<Class<?>, JobMenuItem> jobs;
+	private HashMap<Class<?>, ActionMenuItem> actions;
 	
 	@Override
 	public void init(Game game) throws Exception {
@@ -32,7 +28,7 @@ public class AsterMenu extends Panel implements GameElement {
 		type = new Text();
 		type.setPosition(Display.getWidth() - getWidth() - X, Y + DY);
 		initResources();
-		initJobs();
+		initActions();
 	}
 	
 	public void initResources(){
@@ -44,11 +40,13 @@ public class AsterMenu extends Panel implements GameElement {
 		}
 	}
 	
-	public void initJobs(){
-		jobs = JobFactory.getJobMenuItems();
+	public void initActions(){
+		actions = new HashMap<Class<?>, ActionMenuItem>();
 		int i = 2;
-		for (Entry<Class<?>, JobMenuItem> e : jobs.entrySet()){
-			e.getValue().setPosition(Display.getWidth() - getWidth() - X, Y + i * DY);
+		for (Class<?> actionClass : Action.CLASSES){
+			ActionMenuItem action = new ActionMenuItem();
+			actions.put(actionClass, action);
+			action.setPosition(Display.getWidth() - getWidth() - X, Y + i * DY);
 			i++;
 		}
 	}
@@ -63,7 +61,7 @@ public class AsterMenu extends Panel implements GameElement {
 		name.render();
 		type.render();
 		renderResources();
-		// TODO renderJobs();
+		// TODO renderActions();
 	}
 	
 	public void renderResources(){
@@ -72,9 +70,9 @@ public class AsterMenu extends Panel implements GameElement {
 		}
 	}
 	
-	public void renderJobs(){
-		for(Entry<Class<?>, JobMenuItem> job : jobs.entrySet()){
-			job.getValue().render();
+	public void renderActions(){
+		for(Entry<Class<?>, ActionMenuItem> action : actions.entrySet()){
+			action.getValue().render();
 		}
 	}
 	
@@ -84,7 +82,7 @@ public class AsterMenu extends Panel implements GameElement {
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
 			type.setText(game.i18n("aster." + aster.getType().getName()));
-			// TODO updateJobs(delta);
+			// TODO updateActions(delta);
 		}
 		updateResources();
 	}
@@ -100,10 +98,10 @@ public class AsterMenu extends Panel implements GameElement {
 		}
 	}
 	
-	public void updateJobs(double delta){
-		for(Entry<Class<?>, JobMenuItem> job : jobs.entrySet()){
-			job.getValue().setJob(((Planet)aster).getPopulation().getJob(job.getKey()));
-			job.getValue().update(delta);
+	public void updateActions(double delta){
+		for(Entry<Class<?>, ActionMenuItem> e : actions.entrySet()){
+			e.getValue().setAction(((Planet)aster).getPopulation().getAction(e.getKey()));
+			e.getValue().update(delta);
 		}
 	}
 	

@@ -1,15 +1,16 @@
 package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.Game;
-import fr.ircf.humanity.ui.Bar;
 import fr.ircf.humanity.ui.Button;
+import fr.ircf.humanity.ui.Panel;
+import fr.ircf.humanity.ui.TextBar;
 
-public class ActionMenuItem {
+public class ActionMenuItem extends Panel {
 	
 	protected Game game;
 	protected Action action;
-	protected Button button; // start action button
-	protected Bar bar; // progress bar if action is running
+	protected Button button; // action button
+	protected TextBar people, level, progress;
 	
 	public void init(Game game, final Action action){
 		this.game = game;

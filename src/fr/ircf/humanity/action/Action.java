@@ -2,19 +2,24 @@ package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.Event;
 import fr.ircf.humanity.Game;
-import fr.ircf.humanity.GameElement;
-import fr.ircf.humanity.Humanity;
-import fr.ircf.humanity.job.Job;
+import fr.ircf.humanity.aster.Aster;
 
 abstract public class Action {
+
+	public static Class<?>[] CLASSES = new Class[] {
+		Discover.class,
+		GrowFood.class,
+		// TODO all actions
+	};
 	
-	public static String name;
-	public static String icon;
+	public static String name, icon;
 	public static enum State { START, STOP };
-	protected double level, duration, time;
+	protected double people, progress;
 	protected State state = State.STOP;
 	protected Job job;
 	protected Game game;
+	protected Aster source, target;
+	protected boolean discovered = false, selectable = false;
 
 	public void init(Game game) {
 		this.game = game;
@@ -39,5 +44,13 @@ abstract public class Action {
 
 	public String getName() {
 		return name;
+	}
+	
+	public boolean isDiscovered() {
+		return discovered;
+	}
+	
+	public boolean isSelectable() {
+		return selectable;
 	}
 }

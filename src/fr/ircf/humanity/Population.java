@@ -3,11 +3,8 @@ package fr.ircf.humanity;
 import java.util.HashMap;
 
 import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.aster.ResourceType;
-import fr.ircf.humanity.job.Job;
-import fr.ircf.humanity.job.JobFactory;
 
 public class Population {
 
@@ -18,20 +15,32 @@ public class Population {
 	private Player player;
 	private Planet planet;
 	private double people, lifespan, fertility;
-	private HashMap<Class<?>, Job> jobs;
+	private HashMap<Class<?>, Action> actions;
 	
 	public Population(Player player, Planet planet){
 		this.player = player;
 		this.planet = planet;
 		this.planet.setPopulation(this);
-		jobs = JobFactory.getJobs();
+		initActions();
 	}
 
+	// TODO should be private and called from constructor ?
 	public void initPeople(double factor){
 		people = Random.betweenWithFactor(MIN_PEOPLE, MAX_PEOPLE, factor); // TODO random centered gaussian
 		lifespan = Random.betweenWithFactor(MIN_LIFESPAN, MAX_LIFESPAN, factor); // TODO random centered gaussian
 		fertility = Random.betweenWithFactor(MIN_FERTILITY, MAX_FERTILITY, factor); // TODO random centered gaussian
 		planet.addResource(ResourceType.PEOPLE, people);
+	}
+	
+	private void initActions(){
+		actions = new HashMap<Class<?>, Action>();
+		for (Class<?> actionClass : Action.CLASSES){
+			try {
+				actions.put(actionClass, (Action)actionClass.newInstance());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void update(double delta){
@@ -67,15 +76,15 @@ public class Population {
 		this.lifespan = lifespan;
 	}
 
-	public HashMap<Class<?>, Job> getJobs() {
-		return jobs;
+	public HashMap<Class<?>, Action> getActions() {
+		return actions;
 	}
 
-	public void setJobs(HashMap<Class<?>, Job> jobs) {
-		this.jobs = jobs;
+	public void setActions(HashMap<Class<?>, Action> actions) {
+		this.actions = actions;
 	}
 
-	public Job getJob(Class<?> key) {
-		return jobs.get(key);
+	public Action getAction(Class<?> key) {
+		return actions.get(key);
 	}
 }

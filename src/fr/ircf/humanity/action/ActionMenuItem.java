@@ -1,15 +1,12 @@
 package fr.ircf.humanity.action;
 
-import fr.ircf.humanity.Game;
 import fr.ircf.humanity.ui.ButtonIcon;
 import fr.ircf.humanity.ui.Text;
 import fr.ircf.humanity.ui.TextBar;
 
 public class ActionMenuItem extends ButtonIcon {
 	
-	protected static float[] COLOR_SELECTED = {1f, 0f, 0f, 0f};
 	public static int WIDTH = 32, HEIGHT = 32;
-	protected Game game;
 	protected Action action;
 	protected Text name;
 	protected TextBar people, level, progress;
@@ -23,7 +20,7 @@ public class ActionMenuItem extends ButtonIcon {
 	
 	public void render(){
 		if (!action.visible()) return;
-		if (action.selected()) super.setColor(COLOR_SELECTED);
+		if (action.selected()) super.setColor(action.getJob().getColor());
 		super.render();
 		if (state == State.OVER){
 			// TODO name, people, level, progress
@@ -40,7 +37,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void up(){
-		action.toggleSelect();
+		action.select();
 	}
 	
 	public void setAction(Action action){

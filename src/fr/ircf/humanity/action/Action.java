@@ -19,7 +19,7 @@ abstract public class Action {
 	protected State state = State.STOP;
 	protected Job job;
 	protected Aster source, target;
-	protected boolean selectable = false, selected = false;
+	protected boolean selected = false, needsPeople = false, needsTarget = false;
 	
 	public void render(){
 		// TODO render action
@@ -34,6 +34,10 @@ abstract public class Action {
 		// TODO ((Humanity)game).getLog().add(new Event(this));
 	}
 	
+	public Job getJob() {
+		return job;
+	}
+	
 	public void setJob(Job job){
 		this.job = job;
 	}
@@ -46,12 +50,20 @@ abstract public class Action {
 		return false;
 	}
 	
-	public void toggleSelect(){
-		selected = selectable && !selected;
+	public void select(){
+		selected = needsTarget && !selected;
 	}
-	
+
 	public boolean selected(){
 		return selected;
+	}
+	
+	public boolean needsPeople(){
+		return needsPeople;
+	}
+	
+	public boolean needsTarget(){
+		return needsTarget;
 	}
 	
 	public String getIcon() {

@@ -2,10 +2,11 @@ package fr.ircf.humanity.action;
 
 public enum Job {
 
-	FARMERS(0, "farmers", new float[] { 0, 1, 0 }),
-	SCIENTISTS(1, "scientists", new float[] { 0, 0, 1 }),
-	ARMY(2, "army", new float[] { 0, 0, 1 }),
-	MERCHANTS(3, "merchants", new float[] { 1, 1, 0 }); 
+	HUMANITY(0, "humanity", new float[] { 1, 0, 0, 0.5f }),
+	FARMERS(1, "farmers", new float[] { 0, 1, 0, 0.5f }),
+	SCIENTISTS(2, "scientists", new float[] { 0, 0, 1, 0.5f }),
+	ARMY(3, "army", new float[] { 0, 0, 1, 0.5f }),
+	MERCHANTS(4, "merchants", new float[] { 1, 1, 0, 0.5f }); 
 	
 	private final int id;
 	private final String name;

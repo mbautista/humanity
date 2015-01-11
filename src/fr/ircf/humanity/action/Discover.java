@@ -3,9 +3,10 @@ package fr.ircf.humanity.action;
 public class Discover extends Action {
 
 	public Discover(){
+		job = Job.HUMANITY;
 		name = "discover";
 		icon = "life.jpg";
-		selectable = true;
+		needsTarget = true;
 	}
 	
 	public void update(double delta){

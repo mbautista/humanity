@@ -7,7 +7,7 @@ import fr.ircf.humanity.ui.TextBar;
 
 public class ActionMenuItem extends ButtonIcon {
 	
-	public static int WIDTH = 64, HEIGHT = 64;
+	public static int WIDTH = 32, HEIGHT = 32;
 	protected Game game;
 	protected Action action;
 	protected Text name;
@@ -27,6 +27,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void update(double delta) {
+		System.out.println("update actionmenuitem");
 		super.update(delta);
 	}
 	

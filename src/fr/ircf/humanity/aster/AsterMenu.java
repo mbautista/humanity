@@ -85,8 +85,8 @@ public class AsterMenu extends Panel implements GameElement {
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
 			type.setText(game.i18n("aster." + aster.getType().getName()));
-			updateActions(delta);
 		}
+		if (aster.getPopulation() != null) updateActions(delta);
 		updateResources();
 	}
 	
@@ -103,7 +103,7 @@ public class AsterMenu extends Panel implements GameElement {
 	
 	public void updateActions(double delta){
 		for(Entry<Class<?>, ActionMenuItem> e : actions.entrySet()){
-			e.getValue().setAction(((Planet)aster).getPopulation().getAction(e.getKey()));
+			e.getValue().setAction(aster.getPopulation().getAction(e.getKey()));
 			e.getValue().update(delta);
 		}
 	}

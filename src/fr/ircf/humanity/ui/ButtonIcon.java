@@ -37,6 +37,7 @@ public class ButtonIcon extends Button {
 				GL11.glTexCoord2f(0, 1);
 				GL11.glVertex2f(x + padding, y + height + padding);
 			GL11.glEnd();
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 1);
 		}
 	}
 
@@ -51,8 +52,6 @@ public class ButtonIcon extends Button {
 				texture = TextureLoader.getTexture("JPG",
 					ResourceLoader.getResourceAsStream("assets/icons/" + icon)
 				);
-				width = texture.getTextureWidth();
-				height = texture.getTextureHeight();
 			}catch(Exception e){
 				e.printStackTrace();
 				System.exit(1);

@@ -18,13 +18,8 @@ abstract public class Action {
 	protected double people, progress;
 	protected State state = State.STOP;
 	protected Job job;
-	protected Game game;
 	protected Aster source, target;
-	protected boolean discovered = false, selectable = false;
-
-	public void init(Game game) {
-		this.game = game;
-	}
+	protected boolean selectable = false, selected = false;
 	
 	public void render(){
 		// TODO render action
@@ -47,12 +42,16 @@ abstract public class Action {
 		return name;
 	}
 	
-	public boolean isDiscovered() {
-		return discovered;
+	public boolean visible() {
+		return false;
 	}
 	
-	public boolean isSelectable() {
-		return selectable;
+	public void toggleSelect(){
+		selected = selectable && !selected;
+	}
+	
+	public boolean selected(){
+		return selected;
 	}
 	
 	public String getIcon() {

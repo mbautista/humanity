@@ -5,11 +5,14 @@ public class Discover extends Action {
 	public Discover(){
 		name = "discover";
 		icon = "life.jpg";
-		discovered = true;
 		selectable = true;
 	}
 	
 	public void update(double delta){
 		// TODO level
+	}
+	
+	public boolean visible(){
+		return true;
 	}
 }

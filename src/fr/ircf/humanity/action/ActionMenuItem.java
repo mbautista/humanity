@@ -7,11 +7,13 @@ import fr.ircf.humanity.ui.TextBar;
 
 public class ActionMenuItem extends ButtonIcon {
 	
+	protected static float[] COLOR_SELECTED = {1f, 0f, 0f, 0f};
 	public static int WIDTH = 32, HEIGHT = 32;
 	protected Game game;
 	protected Action action;
 	protected Text name;
 	protected TextBar people, level, progress;
+	protected boolean selected = false;
 	
 	public ActionMenuItem(){
 		super();
@@ -20,6 +22,8 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 	
 	public void render(){
+		if (!action.visible()) return;
+		if (action.selected()) super.setColor(COLOR_SELECTED);
 		super.render();
 		if (state == State.OVER){
 			// TODO name, people, level, progress
@@ -27,7 +31,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void update(double delta) {
-		System.out.println("update actionmenuitem");
+		if (!action.visible()) return;
 		super.update(delta);
 	}
 	
@@ -36,7 +40,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void up(){
-		// TODO select action
+		action.toggleSelect();
 	}
 	
 	public void setAction(Action action){

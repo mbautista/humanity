@@ -9,6 +9,8 @@ abstract public class Action {
 	public static Class<?>[] CLASSES = new Class[] {
 		Discover.class,
 		GrowFood.class,
+		UseChemicals.class,
+		UseHydroponics.class
 		// TODO all actions
 	};
 	public static enum State { START, STOP };

@@ -63,8 +63,9 @@ public class AsterMenu extends Panel implements GameElement {
 	public void render() {
 		name.render();
 		type.render();
+		if (aster == null) return;
 		renderResources();
-		renderActions();
+		if (aster.getPopulation() != null) renderActions();
 	}
 	
 	public void renderResources(){
@@ -80,12 +81,13 @@ public class AsterMenu extends Panel implements GameElement {
 	}
 	
 	@Override
-	public void update(double delta) {	
+	public void update(double delta) {
 		if (aster != (Aster)game.getCamera().getObject()){
 			aster = (Aster) game.getCamera().getObject();
 			name.setText(aster.getName());
 			type.setText(game.i18n("aster." + aster.getType().getName()));
 		}
+		if (aster == null) return;
 		if (aster.getPopulation() != null) updateActions(delta);
 		updateResources();
 	}

@@ -2,28 +2,27 @@ package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.aster.Aster;
 
-public class Discover extends Action {
+public class Explore extends Action {
 
-	public Discover(Aster source){
+	public Explore(Aster source){
 		super(source);
 		job = Job.HUMANITY;
-		name = "discover";
-		icon = "life.jpg";
+		name = "explore";
+		icon = "observatory.jpg";
 		needsTarget = true;
 	}
 	
 	public void update(double delta){
-		// TODO enable growFood above level 1
-		// TODO enable exploration above level 2
+		// TODO level
 	}
 	
 	public boolean visible(){
-		return true;
+		return false; // TODO depends on discovery level
 	}
 	
 	public void start(Aster target){
 		super.start(target);
-		target.setDiscovered(true);
+		source.getCamera().show(target);
 		// TODO level up
 		super.stop();
 	}

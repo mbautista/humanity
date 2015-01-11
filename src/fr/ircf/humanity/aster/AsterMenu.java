@@ -61,10 +61,12 @@ public class AsterMenu extends Panel implements GameElement {
 	
 	@Override
 	public void render() {
-		name.render();
-		type.render();
 		if (aster == null) return;
-		renderResources();
+		if (aster.isDiscovered()){
+			name.render();
+			type.render();
+			renderResources();
+		}
 		if (aster.getPopulation() != null) renderActions();
 	}
 	

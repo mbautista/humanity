@@ -1,9 +1,12 @@
 package fr.ircf.humanity.action;
 
+import fr.ircf.humanity.aster.Aster;
+
 
 public class UseHydroponics extends Action {
 
-	public UseHydroponics(){
+	public UseHydroponics(Aster source){
+		super(source);
 		job = Job.FARMERS;
 		name = "useHydroponics";
 		icon = "barracks.jpg";

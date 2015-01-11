@@ -6,10 +6,10 @@ import org.lwjgl.opengl.GL11;
 
 public class Panel extends Component {
 
-	private ArrayList<Component> components;
-	public enum DisplayMode { INLINE, BLOCK };
-	private DisplayMode display = DisplayMode.BLOCK;
-	private int cursorX = 0, cursorY = 0;
+	public static enum DisplayMode { INLINE, BLOCK };
+	protected ArrayList<Component> components;
+	protected DisplayMode displayMode = DisplayMode.BLOCK;
+	protected int cursorX = 0, cursorY = 0;
 	
 	public Panel(){
 		components = new ArrayList<Component>();
@@ -28,7 +28,7 @@ public class Panel extends Component {
 	public void add(Component c){
 		components.add(c);
 		c.setPosition(cursorX, cursorY);
-		if (display == DisplayMode.INLINE){
+		if (displayMode == DisplayMode.INLINE){
 			cursorX += c.getWidth();
 			// TODO CRLF
 		}else{
@@ -44,5 +44,9 @@ public class Panel extends Component {
 	
 	public int getCursorY(){
 		return cursorY;
+	}
+	
+	public void setDisplayMode(DisplayMode displayMode) {
+		this.displayMode = displayMode;
 	}
 }

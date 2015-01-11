@@ -22,6 +22,8 @@ public abstract class Player extends Panel implements GameElement{
 	private Planet planet;
 	private ArrayList<Population> populations;
 	private HashMap<Class<?>, Double> levels;
+	private Action action;
+	private boolean canExplore = false;
 	
 	@Override
 	public void init(final Game game) throws Exception {
@@ -67,8 +69,10 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void render() {
 		// TODO avatar	
-		home.setText(planet.getName());
-		home.render();
+		if (planet.isDiscovered()){
+			home.setText(planet.getName());
+			home.render();
+		}
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
 		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
 		texts[2].setText(game.i18n("player.kardashev") + " : " + level);
@@ -126,5 +130,21 @@ public abstract class Player extends Panel implements GameElement{
 	
 	public double getZMin(){
 		return Camera.Z_MIN; // TODO optics level
+	}
+
+	public Action getAction() {
+		return action;
+	}
+
+	public void setAction(Action action) {
+		this.action = action;
+	}
+
+	public boolean canExplore() {
+		return canExplore;
+	}
+
+	public void setCanExplore(boolean canExplore) {
+		this.canExplore = canExplore;
 	}
 }

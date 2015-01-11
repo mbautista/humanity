@@ -1,14 +1,11 @@
 package fr.ircf.humanity.aster;
 
-import org.newdawn.slick.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Random;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.Population;
 import fr.ircf.humanity.SceneObject;
@@ -33,7 +30,7 @@ public abstract class Aster implements SceneObject{
 	protected Rectangle2D viewport, extendedViewport, screenViewport;
 	protected Text text;
 	protected HashMap<ResourceType, TextBar> bars;
-	protected boolean highlight = false;
+	protected boolean highlight = false, discovered = false;
 	protected Population population;
 	
 	public Aster(){
@@ -52,8 +49,8 @@ public abstract class Aster implements SceneObject{
 	public void render(){
 		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
 		renderViewport();
-		if (highlight || getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
-		if (highlight) renderResources();
+		if (discovered && getCamera().getZ()>MIN_Z_FOR_TEXT) renderText();
+		if (discovered && highlight) renderResources();
 	}
 	
 	private void renderText(){
@@ -71,7 +68,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	private void renderViewport(){
-		if (screenViewport!=null && highlight){
+		if (screenViewport!=null && highlight && getGame().getPlayer().getAction()!=null){
 			GL11.glColor3f(COLOR_OVER[0], COLOR_OVER[1], COLOR_OVER[2]);
 			GL11.glBegin(GL11.GL_LINE_STRIP);
 		    	GL11.glVertex2d(screenViewport.getX(), screenViewport.getY());
@@ -85,7 +82,11 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void update(double delta){
-		if (getCamera().hasZMax() || getGame().getState()!= State.GAME) return;
+		if (getGame().getState()!= State.GAME) return;
+		if (getGame().getPlayer().getAction()==null){
+			out();
+			return;
+		}
 		screenViewport = getScreenViewport();
 		if (extendedViewport!=null && screenViewport.getWidth() < MIN_SCREEN_VIEWPORT_X) screenViewport = getScreenExtendedViewport();
 		if (screenViewport!=null && screenViewport.contains(Mouse.getX(), Display.getHeight() - Mouse.getY())){
@@ -139,7 +140,9 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	protected void up(){
-		getCamera().show(this); // TODO execute selected action instead
+		if (getGame().getPlayer().getAction() !=null){
+			getGame().getPlayer().getAction().start(this);
+		}
 	}
 	
 	public HashMap<ResourceType, Resource> getResources(){
@@ -238,5 +241,17 @@ public abstract class Aster implements SceneObject{
 	
 	public Population getPopulation() {
 		return population;
+	}
+	
+	public float[] getColor(){
+		return color;
+	}
+	
+	public void setDiscovered(boolean discovered) {
+		this.discovered = discovered;
+	}
+
+	public boolean isDiscovered() {
+		return discovered;
 	}
 }

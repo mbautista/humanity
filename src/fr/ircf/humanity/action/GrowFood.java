@@ -1,8 +1,11 @@
 package fr.ircf.humanity.action;
 
+import fr.ircf.humanity.aster.Aster;
+
 public class GrowFood extends Action {
 
-	public GrowFood(){
+	public GrowFood(Aster source){
+		super(source);
 		job = Job.FARMERS;
 		name = "growFood";
 		icon = "animals.jpg";

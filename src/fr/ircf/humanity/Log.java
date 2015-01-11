@@ -2,6 +2,7 @@ package fr.ircf.humanity;
 
 import org.lwjgl.opengl.Display;
 
+import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.ui.Component;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.ScrollPane;
@@ -24,14 +25,14 @@ public class Log extends ScrollPane implements GameElement {
 	
 	@Override
 	public boolean visible(){
-		return this.game.getState() == State.GAME;
+		return game.getState() == State.GAME;
 	}
 
 	public void addEvent(String message) {
-		add(new Event(game.i18n("event.year") + " " + getYear() + " : " + message));
+		add(new Event(game, message));
 	}
 	
-	public int getYear(){
-		return game.getPlayer().getPlanet().getYear();
+	public void addEvent(Action action){
+		add(new Event(game, action));
 	}
 }

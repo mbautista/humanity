@@ -2,12 +2,14 @@ package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.Event;
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Population;
 import fr.ircf.humanity.aster.Aster;
 
 abstract public class Action {
 
 	public static Class<?>[] CLASSES = new Class[] {
 		Discover.class,
+		Explore.class,
 		GrowFood.class,
 		UseChemicals.class,
 		UseHydroponics.class
@@ -21,6 +23,10 @@ abstract public class Action {
 	protected Aster source, target;
 	protected boolean selected = false, needsPeople = false, needsTarget = false;
 	
+	public Action(Aster source){
+		this.source = source;
+	}
+	
 	public void render(){
 		// TODO render action
 	}
@@ -31,7 +37,18 @@ abstract public class Action {
 	
 	public void start(){
 		state = State.START;
-		// TODO ((Humanity)game).getLog().add(new Event(this));
+		source.getGame().getLog().addEvent(this);
+	}
+	
+	public void start(Aster target){
+		this.target = target;
+		start();
+	}
+	
+	public void stop(){
+		state = State.STOP;
+		target = null;
+		select();
 	}
 	
 	public Job getJob() {
@@ -52,6 +69,7 @@ abstract public class Action {
 	
 	public void select(){
 		selected = needsTarget && !selected;
+		source.getGame().getPlayer().setAction(selected ? this : null);
 	}
 
 	public boolean selected(){
@@ -68,5 +86,13 @@ abstract public class Action {
 	
 	public String getIcon() {
 		return icon;
+	}
+	
+	public Aster getSource(){
+		return source;
+	}
+	
+	public Aster getTarget(){
+		return target;
 	}
 }

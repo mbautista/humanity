@@ -11,9 +11,8 @@ abstract public class Action {
 		GrowFood.class,
 		// TODO all actions
 	};
-	
-	public static String name, icon;
 	public static enum State { START, STOP };
+	protected String name, icon;
 	protected double people, progress;
 	protected State state = State.STOP;
 	protected Job job;
@@ -52,5 +51,9 @@ abstract public class Action {
 	
 	public boolean isSelectable() {
 		return selectable;
+	}
+	
+	public String getIcon() {
+		return icon;
 	}
 }

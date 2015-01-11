@@ -19,7 +19,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 	
 	public void render(){
-		if (!action.visible()) return;
+		if (!action.discovered()) return;
 		if (action.selected()) super.setColor(action.getJob().getColor());
 		super.render();
 		if (state == State.OVER){
@@ -28,7 +28,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void update(double delta) {
-		if (!action.visible()) return;
+		if (!action.discovered()) return;
 		super.update(delta);
 	}
 	

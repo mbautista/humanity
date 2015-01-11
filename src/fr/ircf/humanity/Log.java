@@ -35,4 +35,8 @@ public class Log extends ScrollPane implements GameElement {
 	public void addEvent(Action action){
 		add(new Event(game, action));
 	}
+	
+	public void addEvent(Class<?> actionClass){
+		add(new Event(game, actionClass));
+	}
 }

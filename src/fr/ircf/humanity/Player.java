@@ -147,4 +147,8 @@ public abstract class Player extends Panel implements GameElement{
 	public void setCanExplore(boolean canExplore) {
 		this.canExplore = canExplore;
 	}
+	
+	public void updateLevel(Class<?> actionClass, double delta){
+		levels.put(actionClass, levels.get(actionClass) + delta);
+	}
 }

@@ -4,27 +4,25 @@ import fr.ircf.humanity.aster.Aster;
 
 public class Discover extends Action {
 
+	public static String NAME = "discover";
+	public static Job JOB = Job.HUMANITY;
+	
 	public Discover(Aster source){
 		super(source);
-		job = Job.HUMANITY;
-		name = "discover";
 		icon = "life.jpg";
 		needsTarget = true;
+		discovered = true;
 	}
 	
 	public void update(double delta){
-		// TODO enable growFood above level 1
-		// TODO enable exploration above level 2
-	}
-	
-	public boolean visible(){
-		return true;
+		// TODO discover growFood above level 1
+		// TODO discover exploration above level 2
 	}
 	
 	public void start(Aster target){
 		super.start(target);
 		target.setDiscovered(true);
-		// TODO level up
+		super.updateLevel(1);
 		super.stop();
 	}
 }

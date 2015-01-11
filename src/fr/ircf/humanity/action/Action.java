@@ -16,12 +16,16 @@ abstract public class Action {
 		// TODO all actions
 	};
 	public static enum State { START, STOP };
-	protected String name, icon;
+	public static String NAME;
+	public static Job JOB;
+	protected String icon;
 	protected double people, progress;
 	protected State state = State.STOP;
-	protected Job job;
 	protected Aster source, target;
-	protected boolean selected = false, needsPeople = false, needsTarget = false;
+	protected boolean selected = false,
+			needsPeople = false, 
+			needsTarget = false, 
+			discovered = false;
 	
 	public Action(Aster source){
 		this.source = source;
@@ -33,6 +37,10 @@ abstract public class Action {
 	
 	public void update(double delta){
 		// TODO update action
+	}
+	
+	protected void updateLevel(double delta){
+		source.getGame().getPlayer().updateLevel(this.getClass(), delta);
 	}
 	
 	public void start(){
@@ -50,21 +58,26 @@ abstract public class Action {
 		target = null;
 		select();
 	}
-	
-	public Job getJob() {
-		return job;
-	}
-	
-	public void setJob(Job job){
-		this.job = job;
-	}
 
 	public String getName() {
-		return name;
+		return NAME;
 	}
 	
-	public boolean visible() {
-		return false;
+	public Job getJob() {
+		return JOB;
+	}
+	
+	public boolean discovered() {
+		return discovered;
+	}
+	
+	public void discover(){
+		discovered = true;
+	}
+	
+	public void discoverAction(Class<?> actionClass){
+		source.getPopulation().getAction(actionClass).discover();
+		source.getGame().getLog().addEvent(actionClass);
 	}
 	
 	public void select(){

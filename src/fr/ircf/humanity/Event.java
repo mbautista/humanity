@@ -34,6 +34,7 @@ public class Event extends Panel {
 		}
 	}
 	
+	// FIXME accessing static fields through abstract class won't work !
 	public Event(Game game, Class<?> actionClass){
 		this(game);
 		try{

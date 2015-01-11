@@ -16,9 +16,8 @@ abstract public class Action {
 		// TODO all actions
 	};
 	public static enum State { START, STOP };
-	public static String NAME;
-	public static Job JOB;
-	protected String icon;
+	protected Job job;
+	protected String name, icon;
 	protected double people, progress;
 	protected State state = State.STOP;
 	protected Aster source, target;
@@ -60,11 +59,11 @@ abstract public class Action {
 	}
 
 	public String getName() {
-		return NAME;
+		return name;
 	}
 	
-	public Job getJob() {
-		return JOB;
+	public Job getJob(){
+		return job;
 	}
 	
 	public boolean discovered() {

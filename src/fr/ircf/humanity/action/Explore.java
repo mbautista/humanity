@@ -4,11 +4,10 @@ import fr.ircf.humanity.aster.Aster;
 
 public class Explore extends Action {
 
-	public static String NAME = "explore";
-	public static Job JOB = Job.HUMANITY;
-	
 	public Explore(Aster source){
 		super(source);
+		name = "explore";
+		job = Job.HUMANITY;
 		icon = "observatory.jpg";
 		needsTarget = true;
 	}

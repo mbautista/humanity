@@ -4,11 +4,10 @@ import fr.ircf.humanity.aster.Aster;
 
 public class Discover extends Action {
 
-	public static String NAME = "discover";
-	public static Job JOB = Job.HUMANITY;
-	
 	public Discover(Aster source){
 		super(source);
+		name = "discover";
+		job = Job.HUMANITY;
 		icon = "life.jpg";
 		needsTarget = true;
 		discovered = true;
@@ -20,8 +19,9 @@ public class Discover extends Action {
 	}
 	
 	public void start(Aster target){
+		if (target.discovered()) return;
 		super.start(target);
-		target.setDiscovered(true);
+		target.discover();
 		super.updateLevel(1);
 		super.stop();
 	}

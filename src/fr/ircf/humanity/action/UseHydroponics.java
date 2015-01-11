@@ -5,11 +5,10 @@ import fr.ircf.humanity.aster.Aster;
 
 public class UseHydroponics extends Action {
 
-	public static String NAME = "useHydroponics";
-	public static Job JOB = Job.FARMERS;
-	
 	public UseHydroponics(Aster source){
 		super(source);
+		name = "useHydroponics";
+		job = Job.FARMERS;
 		icon = "barracks.jpg";
 		needsPeople = true;
 	}

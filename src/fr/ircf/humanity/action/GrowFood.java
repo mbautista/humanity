@@ -4,11 +4,10 @@ import fr.ircf.humanity.aster.Aster;
 
 public class GrowFood extends Action {
 
-	public static String NAME = "growFood";
-	public static Job JOB = Job.FARMERS;
-	
 	public GrowFood(Aster source){
 		super(source);
+		name = "growFood";
+		job = Job.FARMERS;
 		icon = "animals.jpg";
 		needsPeople = true;
 	}

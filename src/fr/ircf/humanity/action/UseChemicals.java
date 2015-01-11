@@ -4,12 +4,11 @@ import fr.ircf.humanity.aster.Aster;
 
 
 public class UseChemicals extends Action {
-
-	public static String NAME = "useChemicals";
-	public static Job JOB = Job.FARMERS;
 	
 	public UseChemicals(Aster source){
 		super(source);
+		name = "useChemicals";
+		job = Job.FARMERS;
 		icon = "customs.jpg";
 		needsPeople = true;
 	}

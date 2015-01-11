@@ -247,11 +247,11 @@ public abstract class Aster implements SceneObject{
 		return color;
 	}
 	
-	public void setDiscovered(boolean discovered) {
-		this.discovered = discovered;
+	public void discover() {
+		this.discovered = true;
 	}
 
-	public boolean isDiscovered() {
+	public boolean discovered() {
 		return discovered;
 	}
 }

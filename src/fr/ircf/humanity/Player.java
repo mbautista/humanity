@@ -69,7 +69,7 @@ public abstract class Player extends Panel implements GameElement{
 	@Override
 	public void render() {
 		// TODO avatar	
-		if (planet.isDiscovered()){
+		if (planet.discovered()){
 			home.setText(planet.getName());
 			home.render();
 		}

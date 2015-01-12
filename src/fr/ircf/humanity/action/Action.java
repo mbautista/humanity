@@ -1,9 +1,14 @@
 package fr.ircf.humanity.action;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import fr.ircf.humanity.Event;
 import fr.ircf.humanity.Game;
+import fr.ircf.humanity.Player;
 import fr.ircf.humanity.Population;
 import fr.ircf.humanity.aster.Aster;
+import fr.ircf.humanity.ui.Text;
 
 abstract public class Action {
 
@@ -25,9 +30,11 @@ abstract public class Action {
 			needsPeople = false, 
 			needsTarget = false, 
 			discovered = false;
+	protected HashMap<Class<?>, Double> requiresLevels;
 	
 	public Action(Aster source){
 		this.source = source;
+		requiresLevels = new HashMap<Class<?>, Double>();
 	}
 	
 	public void render(){
@@ -35,16 +42,18 @@ abstract public class Action {
 	}
 	
 	public void update(double delta){
-		// TODO update action
+		if (source.getGame().getPlayer().hasLevels(requiresLevels)){
+			discover();
+		}
 	}
 	
-	protected void updateLevel(double delta){
-		source.getGame().getPlayer().updateLevel(this.getClass(), delta);
+	protected void incrementLevel(double delta){
+		source.getGame().getPlayer().incrementLevel(this.getClass(), delta);
 	}
 	
 	public void start(){
 		state = State.START;
-		source.getGame().getLog().addEvent(this);
+		source.getGame().getLog().addEvent(createEvent());
 	}
 	
 	public void start(Aster target){
@@ -72,11 +81,8 @@ abstract public class Action {
 	
 	public void discover(){
 		discovered = true;
-	}
-	
-	public void discoverAction(Class<?> actionClass){
-		source.getPopulation().getAction(actionClass).discover();
-		source.getGame().getLog().addEvent(actionClass);
+		source.getGame().getLog().addEvent(createDiscoverEvent());
+		// TODO discover job
 	}
 	
 	public void select(){
@@ -106,5 +112,27 @@ abstract public class Action {
 	
 	public Aster getTarget(){
 		return target;
+	}
+	
+	protected Event createEvent(){
+		Event event = new Event(source.getGame());
+		event.add(new Text(source.getGame().i18n("job." + job.getName()), job.getColor()));
+		if (target == null || source != target ){
+			event.add(new Text(" " + source.getGame().i18n("event.from")));
+			event.add(new Text(" " + source.getName(), source.getColor()));
+		}
+		event.add(new Text(" " + source.getGame().i18n("action." + name)));
+		if (target != null){
+			event.add(new Text(" " + target.getName(), target.getColor()));
+		}
+		return event;
+	}
+	
+	protected Event createDiscoverEvent(){
+		Event event = new Event(source.getGame());
+		event.add(new Text(source.getGame().i18n("job." + job.getName()), job.getColor()));
+		event.add(new Text(" " + source.getGame().i18n("event.discovered.action")));
+		event.add(new Text(source.getGame().i18n("action." + name), job.getColor()));
+		return event;
 	}
 }

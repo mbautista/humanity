@@ -14,15 +14,14 @@ public class Discover extends Action {
 	}
 	
 	public void update(double delta){
-		// TODO discover growFood above level 1
-		// TODO discover exploration above level 2
+		// TODO run action
 	}
 	
 	public void start(Aster target){
 		if (target.discovered()) return;
 		super.start(target);
 		target.discover();
-		super.updateLevel(1);
+		super.incrementLevel(1);
 		super.stop();
 	}
 }

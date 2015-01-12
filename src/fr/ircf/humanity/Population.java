@@ -1,6 +1,7 @@
 package fr.ircf.humanity;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Aster;
@@ -47,20 +48,23 @@ public class Population {
 	}
 	
 	public void update(double delta){
-		// TODO lifespan, fertility, actions
+		// TODO lifespan, fertility
 		updatePeople(delta);
+		updateActions(delta);
 	}
 	
-	/**
-	 * Update people on planet depending on fertility and lifespan
-	 * @param delta
-	 */
 	// TODO move this to Aster.updateResources() (?)
-	public void updatePeople(double delta){
+	private void updatePeople(double delta){
 		double peopleInYear = people * (fertility - 1) / lifespan;
 		people += Planet.YEAR_SCALE * peopleInYear * delta / player.getPlanet().getHoursInYear();
 		aster.getResource(ResourceType.PEOPLE).setValue(people);
 		aster.getResource(ResourceType.PEOPLE).setDelta(peopleInYear);
+	}
+	
+	private void updateActions(double delta){
+		for(Entry<Class<?>, Action> e : actions.entrySet()){
+			e.getValue().update(delta);
+		}
 	}
 	
 	public double getPeople() {

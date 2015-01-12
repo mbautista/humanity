@@ -2,6 +2,8 @@ package fr.ircf.humanity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
+
 import org.lwjgl.opengl.Display;
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.action.ActionMenuItem;
@@ -148,7 +150,18 @@ public abstract class Player extends Panel implements GameElement{
 		this.canExplore = canExplore;
 	}
 	
-	public void updateLevel(Class<?> actionClass, double delta){
+	public void incrementLevel(Class<?> actionClass, double delta){
 		levels.put(actionClass, levels.get(actionClass) + delta);
+	}
+	
+	public double getLevel(Class<?> actionClass){
+		return levels.get(actionClass);
+	}
+	
+	public boolean hasLevels(HashMap<Class<?>, Double> requiredLevels){
+		for (Entry<Class<?>, Double> e : requiredLevels.entrySet()){
+			if (getLevel(e.getKey()) < e.getValue()) return false;
+		}
+		return true;
 	}
 }

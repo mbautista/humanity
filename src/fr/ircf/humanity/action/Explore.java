@@ -13,13 +13,13 @@ public class Explore extends Action {
 	}
 	
 	public void update(double delta){
-		// TODO discover something above certain level ?
+		// TODO run action
 	}
 	
 	public void start(Aster target){
 		super.start(target);
 		source.getCamera().show(target);
-		super.updateLevel(1);
+		super.incrementLevel(1);
 		super.stop();
 	}
 }

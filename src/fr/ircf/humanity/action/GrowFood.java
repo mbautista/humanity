@@ -10,10 +10,10 @@ public class GrowFood extends Action {
 		job = Job.FARMERS;
 		icon = "animals.jpg";
 		needsPeople = true;
+		requiresLevels.put(Discover.class, 1d);
 	}
 	
 	public void update(double delta){
-		// TODO level
-		// TODO people
+		// TODO run action
 	}
 }

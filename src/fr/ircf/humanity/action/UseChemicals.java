@@ -14,7 +14,6 @@ public class UseChemicals extends Action {
 	}
 	
 	public void update(double delta){
-		// TODO level
-		// TODO people
+		// TODO run action
 	}
 }

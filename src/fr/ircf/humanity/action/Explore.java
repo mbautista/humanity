@@ -10,10 +10,7 @@ public class Explore extends Action {
 		job = Job.HUMANITY;
 		icon = "observatory.jpg";
 		needsTarget = true;
-	}
-	
-	public void update(double delta){
-		// TODO run action
+		requiresLevels.put(GrowFood.class, 1d);
 	}
 	
 	public void start(Aster target){

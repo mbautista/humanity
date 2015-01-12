@@ -42,7 +42,7 @@ abstract public class Action {
 	}
 	
 	public void update(double delta){
-		if (source.getGame().getPlayer().hasLevels(requiresLevels)){
+		if (!discovered && source.getGame().getPlayer().hasLevels(requiresLevels)){
 			discover();
 		}
 	}
@@ -132,7 +132,7 @@ abstract public class Action {
 		Event event = new Event(source.getGame());
 		event.add(new Text(source.getGame().i18n("job." + job.getName()), job.getColor()));
 		event.add(new Text(" " + source.getGame().i18n("event.discovered.action")));
-		event.add(new Text(source.getGame().i18n("action." + name), job.getColor()));
+		event.add(new Text(" " + source.getGame().i18n("action." + name), job.getColor()));
 		return event;
 	}
 }

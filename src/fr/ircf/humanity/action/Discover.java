@@ -13,10 +13,6 @@ public class Discover extends Action {
 		discovered = true;
 	}
 	
-	public void update(double delta){
-		// TODO run action
-	}
-	
 	public void start(Aster target){
 		if (target.discovered()) return;
 		super.start(target);

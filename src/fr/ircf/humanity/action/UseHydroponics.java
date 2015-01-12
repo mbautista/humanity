@@ -11,9 +11,11 @@ public class UseHydroponics extends Action {
 		job = Job.FARMERS;
 		icon = "barracks.jpg";
 		needsPeople = true;
+		requiresLevels.put(GrowFood.class, 3d);
 	}
 	
 	public void update(double delta){
+		super.update(delta);
 		// TODO run action
 	}
 }

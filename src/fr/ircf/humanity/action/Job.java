@@ -2,7 +2,7 @@ package fr.ircf.humanity.action;
 
 public enum Job {
 
-	HUMANITY(0, "humanity", new float[] { 1, 1, 1, 0.5f }),
+	HUMANITY(0, "humanity", new float[] { 1, 0, 0, 0.5f }),
 	FARMERS(1, "farmers", new float[] { 0, 1, 0, 0.5f }),
 	SCIENTISTS(2, "scientists", new float[] { 0, 0, 1, 0.5f }),
 	ARMY(3, "army", new float[] { 0, 0, 1, 0.5f }),

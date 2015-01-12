@@ -14,6 +14,7 @@ public class GrowFood extends Action {
 	}
 	
 	public void update(double delta){
+		super.update(delta);
 		// TODO run action
 	}
 }

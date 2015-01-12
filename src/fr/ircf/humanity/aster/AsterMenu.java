@@ -42,15 +42,8 @@ public class AsterMenu extends Panel implements GameElement {
 	
 	public void initActions(){
 		actions = new HashMap<Class<?>, ActionMenuItem>();
-		int i = 0;
 		for (Class<?> actionClass : Action.CLASSES){
-			ActionMenuItem action = new ActionMenuItem();
-			action.setPosition(
-				Display.getWidth() - action.getWidth(),
-				Y + 7 * DY + i * action.getHeight()
-			);
-			actions.put(actionClass, action);
-			i++;
+			actions.put(actionClass, new ActionMenuItem());
 		}
 	}
 	
@@ -78,7 +71,7 @@ public class AsterMenu extends Panel implements GameElement {
 	
 	public void renderActions(){
 		for(Entry<Class<?>, ActionMenuItem> e : actions.entrySet()){
-			e.getValue().render();
+			if (e.getValue().visible()) e.getValue().render();
 		}
 	}
 	
@@ -106,9 +99,16 @@ public class AsterMenu extends Panel implements GameElement {
 	}
 	
 	public void updateActions(double delta){
+		int i = 0;
 		for(Entry<Class<?>, ActionMenuItem> e : actions.entrySet()){
 			e.getValue().setAction(aster.getPopulation().getAction(e.getKey()));
+			if (!e.getValue().visible()) continue;
+			e.getValue().setPosition(
+				Display.getWidth() - e.getValue().getWidth(),
+				Y + 7 * DY + i * e.getValue().getHeight()
+			);
 			e.getValue().update(delta);
+			i++;
 		}
 	}
 	

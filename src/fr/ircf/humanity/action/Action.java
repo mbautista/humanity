@@ -64,7 +64,7 @@ abstract public class Action {
 	public void stop(){
 		state = State.STOP;
 		target = null;
-		select();
+		if (needsTarget) toggle();
 	}
 
 	public String getName() {
@@ -85,9 +85,17 @@ abstract public class Action {
 		// TODO discover job
 	}
 	
-	public void select(){
-		selected = needsTarget && !selected;
-		source.getGame().getPlayer().setAction(selected ? this : null);
+	public void toggle(){
+		if (needsTarget){
+			selected = !selected;
+			source.getGame().getPlayer().setAction(selected ? this : null);
+		}else{
+			if (state == State.STOP){
+				start();
+			}else{
+				stop();
+			}
+		}
 	}
 
 	public boolean selected(){

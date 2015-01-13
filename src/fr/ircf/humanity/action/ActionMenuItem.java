@@ -39,7 +39,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void up(){
-		action.select();
+		action.toggle();
 	}
 	
 	public void setAction(Action action){

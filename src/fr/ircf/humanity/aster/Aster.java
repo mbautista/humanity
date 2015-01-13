@@ -161,6 +161,10 @@ public abstract class Aster implements SceneObject{
 		return resources.get(key).getValue();
 	}
 	
+	public void incrementResourceValue(ResourceType key, double delta){
+		// TODO
+	}
+	
 	public void serialize(){
 	}
 	

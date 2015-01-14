@@ -38,8 +38,9 @@ public class Button extends Component {
 		if (disabled){
 			setColor(COLOR_DISABLED);
 		}else if (viewport.contains(Mouse.getX(), Display.getHeight()-Mouse.getY())){
-			over();
-			if (Mouse.isButtonDown(0)) down();
+			over(delta);
+			if (Mouse.isButtonDown(0)) down(delta);
+			if (Mouse.isButtonDown(1)) rdown(delta);
 			while (Mouse.next()){
 			    if (!Mouse.getEventButtonState() && Mouse.getEventButton() == 0) up();
 			}
@@ -48,7 +49,7 @@ public class Button extends Component {
 		}
 	}
 	
-	public void over(){
+	public void over(double delta){
 		state = State.OVER;
 		setColor(COLOR_OVER);
 	}
@@ -58,8 +59,13 @@ public class Button extends Component {
 		setColor(COLOR_OUT);
 	}
 	
-	public void down(){
+	public void down(double delta){
 		state = State.DOWN;
+		setColor(COLOR_CLICK);
+	}
+	
+	public void rdown(double delta){
+		state = State.RDOWN;
 		setColor(COLOR_CLICK);
 	}
 	

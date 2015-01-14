@@ -5,6 +5,11 @@ public class TextBar extends Bar {
 	private static int SPACING = 10, BAR_Y = 2;
 	private Text text;
 	
+	public TextBar(){
+		super();
+		this.text = new Text();
+	}
+	
 	public TextBar(String text, float[] color) {
 		super(color);
 		this.text = new Text(text, color);
@@ -30,5 +35,14 @@ public class TextBar extends Bar {
 	@Override
 	public int getHeight(){
 		return Math.max(super.getHeight(), text.getHeight());
+	}
+	
+	public void setText(String text){
+		this.text.setText(text);
+	}
+	
+	public void setColor(float[] color){
+		super.setColor(color);
+		text.setColor(color);
 	}
 }

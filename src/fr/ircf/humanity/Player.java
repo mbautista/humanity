@@ -77,7 +77,7 @@ public abstract class Player extends Panel implements GameElement{
 		}
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
 		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
-		texts[2].setText(game.i18n("player.kardashev") + " : " + level);
+		texts[2].setText(game.i18n("player.level") + " : " + level);
 		for (Text text: texts){
 			text.render();
 		}

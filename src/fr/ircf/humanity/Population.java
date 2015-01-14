@@ -94,4 +94,9 @@ public class Population {
 	public Action getAction(Class<?> key) {
 		return actions.get(key);
 	}
+
+	public void incrementActionPeople(Class<? extends Action> actionClass, double delta) {
+		// TODO increment action people of delta
+		// TODO decrement all other actions people so that total is <= 100
+	}
 }

@@ -47,8 +47,16 @@ abstract public class Action {
 		}
 	}
 	
+	public double getLevel(){
+		return source.getGame().getPlayer().getLevel(this.getClass());
+	}
+	
 	protected void incrementLevel(double delta){
 		source.getGame().getPlayer().incrementLevel(this.getClass(), delta);
+	}
+	
+	public boolean started(){
+		return state == State.START;
 	}
 	
 	public void start(){
@@ -90,14 +98,18 @@ abstract public class Action {
 			selected = !selected;
 			source.getGame().getPlayer().setAction(selected ? this : null);
 		}else{
-			if (state == State.STOP){
-				start();
-			}else{
+			if (started()){
 				stop();
+			}else{
+				start();
 			}
 		}
 	}
 
+	public void incrementPeople(double delta){
+		source.getPopulation().incrementActionPeople(this.getClass(), delta);
+	}
+	
 	public boolean selected(){
 		return selected;
 	}
@@ -124,12 +136,12 @@ abstract public class Action {
 	
 	protected Event createEvent(){
 		Event event = new Event(source.getGame());
-		event.add(new Text(source.getGame().i18n("job." + job.getName()), job.getColor()));
+		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
 		if (target == null || source != target ){
-			event.add(new Text(" " + source.getGame().i18n("event.from")));
+			event.add(new Text(" " + i18n("event.from")));
 			event.add(new Text(" " + source.getName(), source.getColor()));
 		}
-		event.add(new Text(" " + source.getGame().i18n("action." + name)));
+		event.add(new Text(" " + i18n("action." + name)));
 		if (target != null){
 			event.add(new Text(" " + target.getName(), target.getColor()));
 		}
@@ -138,9 +150,21 @@ abstract public class Action {
 	
 	protected Event createDiscoverEvent(){
 		Event event = new Event(source.getGame());
-		event.add(new Text(source.getGame().i18n("job." + job.getName()), job.getColor()));
-		event.add(new Text(" " + source.getGame().i18n("event.discovered.action")));
-		event.add(new Text(" " + source.getGame().i18n("action." + name), job.getColor()));
+		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
+		event.add(new Text(" " + i18n("event.discovered.action")));
+		event.add(new Text(" " + i18n("action." + name), job.getColor()));
 		return event;
+	}
+	
+	public String i18n(String message){
+		return source.getGame().i18n(message);
+	}
+
+	public double getPeople() {
+		return people;
+	}
+
+	public double getProgress() {
+		return progress;
 	}
 }

@@ -40,4 +40,8 @@ public class Bar extends Component {
 	public void setMax(double max) {
 		this.max = max;
 	}
+	
+	public void setColor(float[] color){
+		this.color = color;
+	}
 }

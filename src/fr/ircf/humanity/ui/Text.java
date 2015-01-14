@@ -87,4 +87,8 @@ public class Text extends Component {
 	public boolean isEmpty() {
 		return text == null;
 	}
+	
+	public void setColor(float[] color){
+		this.color = new Color(color[0], color[1], color[2]);
+	}
 }

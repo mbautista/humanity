@@ -108,6 +108,11 @@ abstract public class Action {
 
 	public void incrementPeople(double delta){
 		source.getPopulation().incrementActionPeople(this.getClass(), delta);
+		if (started()){
+			if (people <= 0) stop();
+		}else{
+			if (people >= 0) start();
+		}
 	}
 	
 	public boolean selected(){

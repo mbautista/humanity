@@ -8,7 +8,7 @@ import fr.ircf.humanity.ui.TextBar;
 public class ActionMenuItem extends ButtonIcon {
 	
 	public static double DOWN_SPEED = 10;
-	public static int WIDTH = 32, HEIGHT = 32;
+	public static int WIDTH = 32, HEIGHT = 32, TEXT_X = 100, TEXT_DY = 10;
 	protected Action action;
 	protected Text name;
 	protected TextBar people, level, progress;
@@ -19,6 +19,7 @@ public class ActionMenuItem extends ButtonIcon {
 		width = WIDTH;
 		height = HEIGHT;
 		name = new Text();
+		name.setX(x - TEXT_X);
 		people = new TextBar("", ResourceType.PEOPLE.getColor());
 		people.setMax(100);
 		level = new TextBar();
@@ -38,24 +39,28 @@ public class ActionMenuItem extends ButtonIcon {
 			name.render();
 			if (action.needsPeople()) people.render();
 			level.render();
-			if (action.started()) progress.render();
+			//if (action.started()) progress.render();
 		}
 	}
 
 	public void update(double delta) {
-		// TODO update positions
 		super.update(delta);
 		name.setText(action.i18n("action." + action.getName()));
+		name.setPosition(x - TEXT_X, y);
+		level.setText(action.i18n("player.level") + " : " + action.getLevel());
+		level.setValue(action.getLevel());
+		level.setPosition(x - TEXT_X, y + TEXT_DY);
+		int i = 0;
 		if (action.needsPeople()){
 			people.setText(action.i18n("job." + action.getJob().getName()) + " : " + action.getPeople());
 			people.setValue(action.getPeople());
+			people.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
 		}
-		level.setText(action.i18n("player.level") + " : " + action.getLevel());
-		level.setValue(action.getLevel());
-		if (action.started()){
+		/*if (action.started()){
 			progress.setText(action.getProgress() + "%");
 			progress.setValue(action.getProgress());
-		}
+			progress.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
+		}*/
 	}
 	
 	public void down(double delta){
@@ -67,7 +72,7 @@ public class ActionMenuItem extends ButtonIcon {
 	}
 
 	public void up(){
-		action.toggle();
+		if (!action.needsPeople()) action.toggle();
 	}
 	
 	public void setAction(Action action){

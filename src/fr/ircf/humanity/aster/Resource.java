@@ -19,6 +19,10 @@ public class Resource {
 	public void setValue(double value) {
 		this.value = value;
 	}
+	
+	public void incrementValue(double value){
+		this.value += value;
+	}
 
 	public double getDelta() {
 		return delta;

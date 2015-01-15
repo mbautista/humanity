@@ -8,7 +8,7 @@ import fr.ircf.humanity.ui.TextBar;
 public class ActionMenuItem extends ButtonIcon {
 	
 	public static double DOWN_SPEED = 10;
-	public static int WIDTH = 32, HEIGHT = 32, TEXT_X = 100, TEXT_DY = 10;
+	public static int WIDTH = 32, HEIGHT = 32, TEXT_X = 230, TEXT_DY = 10;
 	protected Action action;
 	protected Text name;
 	protected TextBar people, level, progress;
@@ -37,9 +37,9 @@ public class ActionMenuItem extends ButtonIcon {
 		super.render();
 		if (state == State.OVER){
 			name.render();
-			if (action.needsPeople()) people.render();
 			level.render();
-			//if (action.started()) progress.render();
+			if (action.needsPeople()) people.render();
+			if (action.started()) progress.render();
 		}
 	}
 
@@ -50,17 +50,17 @@ public class ActionMenuItem extends ButtonIcon {
 		level.setText(action.i18n("player.level") + " : " + action.getLevel());
 		level.setValue(action.getLevel());
 		level.setPosition(x - TEXT_X, y + TEXT_DY);
-		int i = 0;
+		int i = 1;
 		if (action.needsPeople()){
 			people.setText(action.i18n("job." + action.getJob().getName()) + " : " + action.getPeople());
 			people.setValue(action.getPeople());
 			people.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
 		}
-		/*if (action.started()){
+		if (action.started()){
 			progress.setText(action.getProgress() + "%");
 			progress.setValue(action.getProgress());
 			progress.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
-		}*/
+		}
 	}
 	
 	public void down(double delta){

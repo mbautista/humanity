@@ -126,6 +126,12 @@ public abstract class Aster implements SceneObject{
 		}
 	}
 	
+	public void updateResource(double delta, ResourceType resourceType, double value){
+		if (resources.get(resourceType) == null) addResource(resourceType, 0);
+		resources.get(resourceType).incrementValue(value * delta * Planet.YEAR_SCALE / getGame().getPlayer().getPlanet().getHoursInYear());
+		resources.get(resourceType).setDelta(value);
+	}
+	
 	protected void over(){
 		getCamera().setSlowMotion(this, true);
 		highlight = true;
@@ -159,10 +165,6 @@ public abstract class Aster implements SceneObject{
 	
 	public double getResourceValue(ResourceType key){
 		return resources.get(key).getValue();
-	}
-	
-	public void incrementResourceValue(ResourceType key, double delta){
-		// TODO
 	}
 	
 	public void serialize(){

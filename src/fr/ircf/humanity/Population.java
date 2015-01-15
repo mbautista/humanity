@@ -53,12 +53,21 @@ public class Population {
 		updateActions(delta);
 	}
 	
+	/**
+	 * Update people on aster according to people equation
+	 * @param delta
+	 */
 	// TODO move this to Aster.updateResources() (?)
 	private void updatePeople(double delta){
-		double peopleInYear = people * (fertility - 1) / lifespan;
-		people += Planet.YEAR_SCALE * peopleInYear * delta / player.getPlanet().getHoursInYear();
-		aster.getResource(ResourceType.PEOPLE).setValue(people);
-		aster.getResource(ResourceType.PEOPLE).setDelta(peopleInYear);
+		aster.updateResource(delta, ResourceType.PEOPLE, getPeopleInYear());
+	}
+	
+	/**
+	 * People equation : Computes how many people birth/die in year
+	 * @return
+	 */
+	private double getPeopleInYear(){
+		return people * (fertility - 1) / lifespan;
 	}
 	
 	private void updateActions(double delta){

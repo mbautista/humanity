@@ -22,7 +22,7 @@ public class TextBar extends Bar {
 	}
 	
 	@Override
-	public void setPosition(double x, double y){
+	public void setPosition(int x, int y){
 		text.setPosition(x,  y);
 		super.setPosition(x + SPACING + text.getWidth(), y + BAR_Y);
 	}

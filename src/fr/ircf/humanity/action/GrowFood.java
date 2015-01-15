@@ -20,14 +20,30 @@ public class GrowFood extends Action {
 		super.update(delta);
 		if (state == State.START){
 			if (source.getResourceValue(ResourceType.ENERGY) > 0 && source.getResourceValue(ResourceType.WATER) > 0){
-				// TODO food equation
-				source.incrementResourceValue(ResourceType.FOOD, delta / SCALE);
-				source.incrementResourceValue(ResourceType.WATER, - delta / 2 / SCALE);
-				source.incrementResourceValue(ResourceType.ENERGY, - delta / 2 / SCALE);
-				incrementLevel(delta / SCALE);
+				double foodInYear = getFoodInYear();
+				source.updateResource(delta, ResourceType.FOOD, foodInYear);
+				source.updateResource(delta, ResourceType.WATER, -foodInYear / 2);
+				source.updateResource(delta, ResourceType.ENERGY, -foodInYear / 2);
+				incrementLevel(people * delta / SCALE); // TODO level equation
 			}else{
 				stop();
 			}
 		}
+	}
+	
+	/**
+	 * Food equation : Computes how much food is produced in one year
+	 * @return
+	 */
+	private double getFoodInYear(){
+		return getEfficiency() * people * source.getResourceValue(ResourceType.PEOPLE);
+	}
+	
+	/**
+	 * Efficiency level : number of people a farmer can feed in 1 year (including himself)
+	 * @return
+	 */
+	private double getEfficiency(){
+		return 1 + getLevel(); // TODO hydroponics level + chemicals level
 	}
 }

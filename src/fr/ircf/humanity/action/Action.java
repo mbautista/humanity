@@ -107,7 +107,7 @@ abstract public class Action {
 	}
 
 	public void incrementPeople(double delta){
-		source.getPopulation().incrementActionPeople(this.getClass(), delta);
+		source.getPopulation().incrementActionPeople(this, delta);
 		if (started()){
 			if (people <= 0) stop();
 		}else{
@@ -167,6 +167,10 @@ abstract public class Action {
 
 	public double getPeople() {
 		return people;
+	}
+	
+	public void setPeople(double people) {
+		this.people = people;
 	}
 
 	public double getProgress() {

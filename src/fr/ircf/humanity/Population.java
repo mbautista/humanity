@@ -104,8 +104,13 @@ public class Population {
 		return actions.get(key);
 	}
 
-	public void incrementActionPeople(Class<? extends Action> actionClass, double delta) {
-		// TODO increment action people of delta
-		// TODO decrement all other actions people so that total is <= 100
+	public void incrementActionPeople(Action action, double delta) {
+		// Compute max allowed people for current action
+		double maxAllowedPeople = 100;
+		for (Entry<Class<?>, Action> e : actions.entrySet()){
+			if (action != e.getValue()) maxAllowedPeople -= e.getValue().getPeople();
+		}
+		// Increment action people
+		action.setPeople(Math.max(0, Math.min(maxAllowedPeople, action.getPeople() + delta)));
 	}
 }

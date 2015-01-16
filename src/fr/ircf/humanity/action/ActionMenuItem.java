@@ -39,7 +39,7 @@ public class ActionMenuItem extends ButtonIcon {
 			name.render();
 			level.render();
 			if (action.needsPeople()) people.render();
-			if (action.started()) progress.render();
+			//if (action.started()) progress.render();
 		}
 	}
 
@@ -47,20 +47,20 @@ public class ActionMenuItem extends ButtonIcon {
 		super.update(delta);
 		name.setText(action.i18n("action." + action.getName()));
 		name.setPosition(x - TEXT_X, y);
-		level.setText(action.i18n("player.level") + " : " + action.getLevel());
+		level.setText(action.i18n("player.level") + " : " + Math.round(action.getLevel()*100)/100d);
 		level.setValue(action.getLevel());
 		level.setPosition(x - TEXT_X, y + TEXT_DY);
 		int i = 1;
 		if (action.needsPeople()){
-			people.setText(action.i18n("job." + action.getJob().getName()) + " : " + action.getPeople());
+			people.setText(action.i18n("job." + action.getJob().getName()) + " : " + (int)action.getPeople() + "%");
 			people.setValue(action.getPeople());
 			people.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
 		}
-		if (action.started()){
-			progress.setText(action.getProgress() + "%");
+		/*if (action.started()){
+			progress.setText((int)action.getProgress() + "%");
 			progress.setValue(action.getProgress());
 			progress.setPosition(x - TEXT_X, y + (++i) * TEXT_DY);
-		}
+		}*/
 	}
 	
 	public void down(double delta){

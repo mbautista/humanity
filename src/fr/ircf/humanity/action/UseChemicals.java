@@ -11,7 +11,7 @@ public class UseChemicals extends Action {
 		job = Job.FARMERS;
 		icon = "customs.jpg";
 		needsPeople = true;
-		requiresLevels.put(GrowFood.class, 2d);
+		requiresLevels.put(GrowFood.class, 0.4d);
 	}
 	
 	public void update(double delta){

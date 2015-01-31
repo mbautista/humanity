@@ -5,7 +5,7 @@ import fr.ircf.humanity.aster.ResourceType;
 
 public class GrowFood extends Action {
 
-	public static double SCALE = 10000;
+	public static double LEVEL_SPEED = 0.0001;
 	
 	public GrowFood(Aster source){
 		super(source);
@@ -13,7 +13,12 @@ public class GrowFood extends Action {
 		job = Job.FARMERS;
 		icon = "animals.jpg";
 		needsPeople = true;
-		requiresLevels.put(Discover.class, 1d);
+		requiresLevels.put(Discover.class, 0.01d);
+	}
+	
+	public void start(){
+		super.start();
+		if (getLevel() <= 0) incrementLevel(0.01);
 	}
 	
 	public void update(double delta){
@@ -24,7 +29,7 @@ public class GrowFood extends Action {
 				source.updateResource(delta, ResourceType.FOOD, foodInYear);
 				source.updateResource(delta, ResourceType.WATER, -foodInYear / 2);
 				source.updateResource(delta, ResourceType.ENERGY, -foodInYear / 2);
-				incrementLevel(getEfficiency() * people/100 * delta / SCALE); // TODO level equation
+				incrementLevel(getLevel() * people/100 * delta * LEVEL_SPEED);
 			}else{
 				stop();
 			}
@@ -36,14 +41,6 @@ public class GrowFood extends Action {
 	 * @return
 	 */
 	private double getFoodInYear(){
-		return getEfficiency() * people/100 * source.getResourceValue(ResourceType.PEOPLE);
-	}
-	
-	/**
-	 * Efficiency level : number of people a farmer can feed in 1 year (including himself)
-	 * @return
-	 */
-	private double getEfficiency(){
-		return 0.01 + getLevel(); // can't be zero
+		return getLevel() * people/100 * source.getResourceValue(ResourceType.PEOPLE);
 	}
 }

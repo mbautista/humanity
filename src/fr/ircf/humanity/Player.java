@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.lwjgl.opengl.Display;
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.action.ActionMenuItem;
+import fr.ircf.humanity.action.Explore;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.ui.Button;
 import fr.ircf.humanity.ui.Panel;
@@ -25,7 +26,6 @@ public abstract class Player extends Panel implements GameElement{
 	private ArrayList<Population> populations;
 	private HashMap<Class<?>, Double> levels;
 	private Action action;
-	private boolean canExplore = false;
 	
 	@Override
 	public void init(final Game game) throws Exception {
@@ -77,7 +77,7 @@ public abstract class Player extends Panel implements GameElement{
 		}
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
 		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
-		texts[2].setText(game.i18n("player.level") + " : " + level);
+		texts[2].setText(game.i18n("player.level") + " : " + (Math.round(level*100)/100d));
 		for (Text text: texts){
 			text.render();
 		}
@@ -88,7 +88,6 @@ public abstract class Player extends Panel implements GameElement{
 		home.update(delta);
 		updatePopulations(delta);
 		updateHumanity();
-		// TODO level
 	}
 	
 	private void updatePopulations(double delta){
@@ -129,10 +128,6 @@ public abstract class Player extends Panel implements GameElement{
 	public void addPopulation(Population population){
 		populations.add(population);
 	}
-	
-	public double getZMin(){
-		return Camera.Z_MIN; // TODO optics level
-	}
 
 	public Action getAction() {
 		return action;
@@ -143,15 +138,12 @@ public abstract class Player extends Panel implements GameElement{
 	}
 
 	public boolean canExplore() {
-		return canExplore;
-	}
-
-	public void setCanExplore(boolean canExplore) {
-		this.canExplore = canExplore;
+		return getLevel(Explore.class) > 0;
 	}
 	
 	public void incrementLevel(Class<?> actionClass, double delta){
 		levels.put(actionClass, levels.get(actionClass) + delta);
+		level += delta;
 	}
 	
 	public double getLevel(Class<?> actionClass){

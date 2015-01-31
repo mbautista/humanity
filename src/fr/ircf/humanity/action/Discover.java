@@ -17,7 +17,7 @@ public class Discover extends Action {
 		if (target.discovered()) return;
 		super.start(target);
 		target.discover();
-		super.incrementLevel(1);
+		super.incrementLevel(0.01);
 		super.stop();
 	}
 }

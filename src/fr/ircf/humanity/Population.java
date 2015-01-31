@@ -49,17 +49,17 @@ public class Population {
 	
 	public void update(double delta){
 		// TODO lifespan, fertility
-		updatePeople(delta);
+		updateResources(delta);
 		updateActions(delta);
 	}
 	
 	/**
-	 * Update people on aster according to people equation
+	 * Update resources on aster
 	 * @param delta
 	 */
-	// TODO move this to Aster.updateResources() (?)
-	private void updatePeople(double delta){
+	private void updateResources(double delta){
 		aster.updateResource(delta, ResourceType.PEOPLE, getPeopleInYear());
+		// TODO people should consume food, water and energy
 	}
 	
 	/**

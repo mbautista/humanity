@@ -46,8 +46,8 @@ public class Zoom implements GameElement {
 	public void update(double delta) {
 		if (!game.getPlayer().canExplore()) return;
 		in.update(delta);
-		slider.setValue(Camera.Z_MAX - game.getCamera().getZ());
-		slider.setMax(Camera.Z_MAX - game.getPlayer().getZMin());
+		slider.setValue(game.getCamera().getZMax() - game.getCamera().getZ());
+		slider.setMax(game.getCamera().getZMax() - game.getCamera().getZMin());
 		slider.update(delta);
 		out.setPosition(X, slider.getY() + slider.getHeight());
 		out.update(delta);

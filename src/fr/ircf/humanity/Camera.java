@@ -4,6 +4,8 @@ import java.awt.geom.Rectangle2D;
 
 import org.lwjgl.opengl.Display;
 
+import fr.ircf.humanity.action.Explore;
+
 public class Camera implements GameElement {
 
 	public static double Z_MIN = 0, Z_MAX = 18, DZ = 0.1f;
@@ -84,7 +86,7 @@ public class Camera implements GameElement {
 	}
 	
 	public void zoomOut(){
-		z = Math.max(Z_MIN, z - DZ);
+		z = Math.max(getZMin(), z - DZ);
 	}
 	
 	public double getZMax(){
@@ -93,6 +95,16 @@ public class Camera implements GameElement {
 	
 	public boolean hasZMax(){
 		return z == getZMax();
+	}
+	
+	/**
+	 * zMin depends linearly on player Explore level
+	 * When level = 0 : zMin = getZMax()
+	 * When level = LEVEL_MAX : zMin = Camera.Z_MIN
+	 * @return
+	 */
+	public double getZMin(){
+		return game.getPlayer().getLevel(Explore.class) / Explore.LEVEL_MAX * (Camera.Z_MIN - getZMax()) + getZMax();
 	}
 	
 	/**

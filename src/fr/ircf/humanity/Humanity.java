@@ -3,7 +3,6 @@ package fr.ircf.humanity;
 import java.util.ResourceBundle;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.glu.GLU;
 
 import fr.ircf.humanity.aster.AsterMenu;
 

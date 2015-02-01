@@ -1,7 +1,5 @@
 package fr.ircf.humanity;
 
-import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.action.Job;
 import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.Text;
 

@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.lwjgl.opengl.Display;
 import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.action.ActionMenuItem;
 import fr.ircf.humanity.action.Explore;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.ui.Button;

@@ -1,8 +1,6 @@
 package fr.ircf.humanity.action;
 
-import fr.ircf.humanity.action.Action.State;
 import fr.ircf.humanity.aster.Aster;
-import fr.ircf.humanity.aster.ResourceType;
 
 public class Explore extends Action {
 

@@ -4,14 +4,21 @@ import fr.ircf.humanity.Game;
 
 public class Resource {
 
+	private Game game;
 	private ResourceType type;
 	private double value = 0, delta = 0;
 	
-	public Resource(ResourceType type, double value){
+	public Resource(Game game, ResourceType type, double value){
+		this.game = game;
 		this.type = type;
 		this.value = value;
 	}
 
+	public void update(double delta){
+		this.value += this.delta * delta * Planet.YEAR_SCALE / game.getPlayer().getPlanet().getHoursInYear();
+		this.delta = 0; // FIXME this should only be done after render()
+	}
+	
 	public double getValue() {
 		return value;
 	}
@@ -19,21 +26,20 @@ public class Resource {
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
-	public void incrementValue(double value){
-		this.value += value;
-	}
 
 	public double getDelta() {
 		return delta;
 	}
-
+	
 	public void setDelta(double delta) {
 		this.delta = delta;
 	}
 	
-	// TODO make Game.i18n() static and remove game parameter (?)
-	public String toString(Game game){
+	public void incrementDelta(double delta) {
+		this.delta += delta;
+	}
+	
+	public String toString(){
 		return game.i18n("resource." + type.getName())
 				+ " : " + (Math.round(value*100)/100d)
 				+ " " + (delta<0 ? "" : "+") + (Math.round(delta*100)/100d)

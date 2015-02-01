@@ -5,7 +5,9 @@ import fr.ircf.humanity.aster.ResourceType;
 
 public class GrowFood extends Action {
 
-	public static double LEVEL_SPEED = 0.0001;
+	public static double LEVEL_SPEED = 0.0001,
+		MIN_WATER_PER_FOOD = 0.1, MAX_WATER_PER_FOOD = 0.5,
+		MIN_ENERGY_PER_FOOD = 0.1, MAX_ENERGY_PER_FOOD = 0.5;
 	
 	public GrowFood(Aster source){
 		super(source);
@@ -26,9 +28,9 @@ public class GrowFood extends Action {
 		if (state == State.START){
 			if (source.getResourceValue(ResourceType.ENERGY) > 0 && source.getResourceValue(ResourceType.WATER) > 0){
 				double foodInYear = getFoodInYear();
-				source.updateResource(delta, ResourceType.FOOD, foodInYear);
-				source.updateResource(delta, ResourceType.WATER, -foodInYear / 2);
-				source.updateResource(delta, ResourceType.ENERGY, -foodInYear / 2);
+				source.updateResource(ResourceType.FOOD, foodInYear);
+				source.updateResource(ResourceType.WATER, - foodInYear * getWaterPerFood());
+				source.updateResource(ResourceType.ENERGY, - foodInYear * getEnergyPerFood());
 				incrementLevel(getLevel() * people/100 * delta * LEVEL_SPEED);
 			}else{
 				stop();
@@ -42,5 +44,19 @@ public class GrowFood extends Action {
 	 */
 	private double getFoodInYear(){
 		return getLevel() * people/100 * source.getResourceValue(ResourceType.PEOPLE);
+	}
+	
+	/**
+	 * Water consumption per food unit
+	 */
+	private double getWaterPerFood(){
+		return MIN_WATER_PER_FOOD; // TODO dynamize water consumption per food unit
+	}
+	
+	/**
+	 * Water consumption per food unit
+	 */
+	private double getEnergyPerFood(){
+		return MIN_ENERGY_PER_FOOD; // TODO dynamize energy consumption per food unit
 	}
 }

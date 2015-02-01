@@ -13,7 +13,10 @@ public class Population {
 	public static double
 		MIN_PEOPLE = 0.7, MAX_PEOPLE = 0.9,
 		MIN_LIFESPAN = 16, MAX_LIFESPAN = 32,
-		MIN_FERTILITY = 1, MAX_FERTILITY = 2;
+		MIN_FERTILITY = 1, MAX_FERTILITY = 2,
+		MIN_FOOD_PER_PEOPLE = 0.1, MAX_FOOD_PER_PEOPLE = 1,
+		MIN_WATER_PER_PEOPLE = 0.1, MAX_WATER_PER_PEOPLE = 1,
+		MIN_ENERGY_PER_PEOPLE = 0.01, MAX_ENERGY_PER_PEOPLE = 0.1;
 	private Player player;
 	private Aster aster;
 	private double people, lifespan, fertility;
@@ -58,8 +61,11 @@ public class Population {
 	 * @param delta
 	 */
 	private void updateResources(double delta){
-		aster.updateResource(delta, ResourceType.PEOPLE, getPeopleInYear());
-		// TODO people should consume food, water and energy
+		double peopleInYear = getPeopleInYear();
+		aster.updateResource(ResourceType.PEOPLE, peopleInYear);
+		aster.updateResource(ResourceType.FOOD, - peopleInYear * getFoodPerPeople());
+		aster.updateResource(ResourceType.WATER, - peopleInYear * getWaterPerPeople());
+		aster.updateResource(ResourceType.ENERGY, - peopleInYear * getEnergyPerPeople());
 	}
 	
 	/**
@@ -68,6 +74,30 @@ public class Population {
 	 */
 	private double getPeopleInYear(){
 		return people * (fertility - 1) / lifespan;
+	}
+	
+	/**
+	 * Food consumption per people
+	 * @param delta
+	 */
+	private double getFoodPerPeople(){
+		return MIN_FOOD_PER_PEOPLE; // TODO dynamize food per people
+	}
+	
+	/**
+	 * Water consumption per people
+	 * @param delta
+	 */
+	private double getWaterPerPeople(){
+		return MIN_WATER_PER_PEOPLE; // TODO dynamize water per people
+	}
+	
+	/**
+	 * Energy consumption per people
+	 * @param delta
+	 */
+	private double getEnergyPerPeople(){
+		return MIN_ENERGY_PER_PEOPLE; // TODO dynamize energy per people
 	}
 	
 	private void updateActions(double delta){

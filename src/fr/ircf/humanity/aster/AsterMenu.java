@@ -91,7 +91,7 @@ public class AsterMenu extends Panel implements GameElement {
 		int i = 0;
 		for (Entry<ResourceType, Text> e : resources.entrySet()) {
 			Resource r = aster.getResource(e.getKey());
-			e.getValue().setText(r==null ? null : r.toString(game));
+			e.getValue().setText(r==null ? null : r.toString());
 			if (r==null) continue;
 			e.getValue().setY(Y + DY * (2 + i));
 			i++;

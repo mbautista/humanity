@@ -1,12 +1,8 @@
 package fr.ircf.humanity.action;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import fr.ircf.humanity.Event;
-import fr.ircf.humanity.Game;
-import fr.ircf.humanity.Player;
-import fr.ircf.humanity.Population;
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.ui.Text;
 

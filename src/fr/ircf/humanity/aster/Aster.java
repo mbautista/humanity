@@ -82,8 +82,9 @@ public abstract class Aster implements SceneObject{
 	
 	@Override
 	public void update(double delta){
-		if (getGame().getState()!= State.GAME) return;
-		if (getGame().getPlayer().getAction()==null){
+		if (getGame().getState() != State.GAME) return;
+		updateResources(delta);
+		if (getGame().getPlayer().getAction() == null){
 			out();
 			return;
 		}
@@ -98,7 +99,7 @@ public abstract class Aster implements SceneObject{
 		}else{
 			out();
 		}
-		updateResources();
+		updateBars(delta);
 	}
 	
 	/**
@@ -113,7 +114,7 @@ public abstract class Aster implements SceneObject{
 		);
 	}
 	
-	protected void updateResources(){
+	protected void updateBars(double delta){
 		for (Entry<ResourceType, Resource> resource : resources.entrySet()){
 			if (bars.get(resource.getKey()) == null){
 				bars.put(resource.getKey(), new TextBar(
@@ -126,10 +127,15 @@ public abstract class Aster implements SceneObject{
 		}
 	}
 	
-	public void updateResource(double delta, ResourceType resourceType, double value){
+	protected void updateResources(double delta){
+		for (Entry<ResourceType, Resource> resource : resources.entrySet()){
+			resource.getValue().update(delta);
+		}
+	}
+	
+	public void updateResource(ResourceType resourceType, double delta){
 		if (resources.get(resourceType) == null) addResource(resourceType, 0);
-		resources.get(resourceType).incrementValue(value * delta * Planet.YEAR_SCALE / getGame().getPlayer().getPlanet().getHoursInYear());
-		resources.get(resourceType).setDelta(value);
+		resources.get(resourceType).incrementDelta(delta);
 	}
 	
 	protected void over(){
@@ -160,7 +166,7 @@ public abstract class Aster implements SceneObject{
 	}
 	
 	public void addResource(ResourceType key, double value){
-		resources.put(key, new Resource(key, value));
+		resources.put(key, new Resource(getGame(), key, value));
 	}
 	
 	public double getResourceValue(ResourceType key){

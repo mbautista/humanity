@@ -2,11 +2,7 @@ package fr.ircf.humanity;
 
 import org.lwjgl.opengl.Display;
 
-import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.ui.Component;
-import fr.ircf.humanity.ui.Panel;
 import fr.ircf.humanity.ui.ScrollPane;
-import fr.ircf.humanity.ui.Text;
 
 public class Log extends ScrollPane implements GameElement {
 

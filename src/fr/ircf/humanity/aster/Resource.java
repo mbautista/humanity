@@ -16,7 +16,6 @@ public class Resource {
 
 	public void update(double delta){
 		this.value += this.delta * delta * Planet.YEAR_SCALE / game.getPlayer().getPlanet().getHoursInYear();
-		this.delta = 0; // FIXME this should only be done after render()
 	}
 	
 	public double getValue() {
@@ -41,8 +40,8 @@ public class Resource {
 	
 	public String toString(){
 		return game.i18n("resource." + type.getName())
-				+ " : " + (Math.round(value*100)/100d)
-				+ " " + (delta<0 ? "" : "+") + (Math.round(delta*100)/100d)
+				+ " : " + (Math.floor(value*100)/100d)
+				+ " " + (delta<0 ? "" : "+") + (Math.floor(delta*100)/100d)
 				+ "/" + game.i18n("resource.year");
 	}
 }

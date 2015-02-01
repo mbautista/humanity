@@ -15,6 +15,7 @@ import fr.ircf.humanity.ui.Text;
 public abstract class Player extends Panel implements GameElement{
 
 	private static int X = 10, DY = 20;
+	public static double MAX_LEVEL = 3;
 	private Game game;
 	private double humanity = 0, level = 0;
 	private Text[] texts;
@@ -75,8 +76,8 @@ public abstract class Player extends Panel implements GameElement{
 			home.render();
 		}
 		texts[0].setText(game.i18n("player.year") + " : " + planet.getYear());
-		texts[1].setText(game.i18n("player.humanity") + " : " + humanity);
-		texts[2].setText(game.i18n("player.level") + " : " + (Math.round(level*100)/100d));
+		texts[1].setText(game.i18n("player.humanity") + " : " + (Math.floor(humanity*100)/100d));
+		texts[2].setText(game.i18n("player.level") + " : " + (Math.floor(level*100)/100d));
 		for (Text text: texts){
 			text.render();
 		}
@@ -101,14 +102,11 @@ public abstract class Player extends Panel implements GameElement{
 		for (Population population: populations){
 			humanity += population.getPeople();
 		}
-		humanity = Math.round(humanity * 100) / 100d;
-		// Humanity ends
+		// FIXME Humanity ends
 		if (humanity <= 0) game.setState(State.END);
-		// Humanity passed billions event
-		int oi = (int)Math.floor(old);
-		int hi = (int)Math.floor(humanity);
-		if (hi > oi){
-			game.getLog().addEvent(String.format(game.i18n("event.humanity_passed_billion" + (hi>1?"s":"")), hi));	
+		// Humanity billions event
+		if (Math.floor(humanity) > Math.floor(old)){
+			game.getLog().addEvent(String.format(game.i18n("event.billion" + (humanity<2?"":"s")), Math.floor(humanity)));	
 		}
 	}
 	
@@ -136,13 +134,18 @@ public abstract class Player extends Panel implements GameElement{
 		this.action = action;
 	}
 
-	public boolean canExplore() {
-		return getLevel(Explore.class) > 0;
+	public boolean canZoomOut() {
+		return level > 0.02;
 	}
 	
 	public void incrementLevel(Class<?> actionClass, double delta){
+		double old = level;
 		levels.put(actionClass, levels.get(actionClass) + delta);
 		level += delta;
+		// Humanity kardashev event
+		if (Math.floor(level * 100) > Math.floor(old * 100)){
+			game.getLog().addEvent(String.format(game.i18n("event.kardashev"), Math.floor(level * 100)/100d));	
+		}
 	}
 	
 	public double getLevel(Class<?> actionClass){
@@ -154,5 +157,13 @@ public abstract class Player extends Panel implements GameElement{
 			if (getLevel(e.getKey()) < e.getValue()) return false;
 		}
 		return true;
+	}
+	
+	public double getLevel(){
+		return level;
+	}
+	
+	public Game getGame(){
+		return game;
 	}
 }

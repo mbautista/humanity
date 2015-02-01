@@ -31,7 +31,8 @@ public class Planet extends Aster {
 	private Rings rings = Rings.NONE;
 	private static HashMap<String, Texture> textures;
 	private Texture texture;
-	
+	private boolean newYear = false;
+
 	public Planet(Star star){
 		super();
 		this.star = star;
@@ -110,10 +111,11 @@ public class Planet extends Aster {
 	@Override
 	public void update(double delta){
 		super.update(delta);
-		// TODO energy, water, atmosphere, type
-		hour+= delta;
+		hour += delta;
 		day = hour / hours;
+		double oldYear = year;
 		year = (int)(YEAR_SCALE * day / days);
+		newYear = year != oldYear;
 		updatePosition();
 	}
 	
@@ -206,5 +208,9 @@ public class Planet extends Aster {
 	@Override
 	public Game getGame(){
 		return star.getGame();
+	}
+	
+	public boolean isNewYear() {
+		return newYear;
 	}
 }

@@ -28,9 +28,9 @@ public class GrowFood extends Action {
 		if (state == State.START){
 			if (source.getResourceValue(ResourceType.ENERGY) > 0 && source.getResourceValue(ResourceType.WATER) > 0){
 				double foodInYear = getFoodInYear();
-				source.updateResource(ResourceType.FOOD, foodInYear);
-				source.updateResource(ResourceType.WATER, - foodInYear * getWaterPerFood());
-				source.updateResource(ResourceType.ENERGY, - foodInYear * getEnergyPerFood());
+				source.incrementResourceDelta(ResourceType.FOOD, foodInYear);
+				source.incrementResourceDelta(ResourceType.WATER, - foodInYear * getWaterPerFood());
+				source.incrementResourceDelta(ResourceType.ENERGY, - foodInYear * getEnergyPerFood());
 				incrementLevel(getLevel() * people/100 * delta * LEVEL_SPEED);
 			}else{
 				stop();
@@ -43,7 +43,7 @@ public class GrowFood extends Action {
 	 * @return
 	 */
 	private double getFoodInYear(){
-		return getLevel() * people/100 * source.getResourceValue(ResourceType.PEOPLE);
+		return (1 - getDifficulty()/100 + getLevel()) * people/100 * source.getResourceValue(ResourceType.PEOPLE);
 	}
 	
 	/**

@@ -133,8 +133,12 @@ public abstract class Aster implements SceneObject{
 		}
 	}
 	
-	public void updateResource(ResourceType resourceType, double delta){
+	public void setResourceDelta(ResourceType resourceType, double delta){
 		if (resources.get(resourceType) == null) addResource(resourceType, 0);
+		resources.get(resourceType).setDelta(delta);
+	}
+	
+	public void incrementResourceDelta(ResourceType resourceType, double delta){
 		resources.get(resourceType).incrementDelta(delta);
 	}
 	
@@ -171,6 +175,10 @@ public abstract class Aster implements SceneObject{
 	
 	public double getResourceValue(ResourceType key){
 		return resources.get(key).getValue();
+	}
+	
+	public double getResourceDelta(ResourceType key){
+		return resources.get(key).getDelta();
 	}
 	
 	public void serialize(){

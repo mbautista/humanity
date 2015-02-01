@@ -104,7 +104,7 @@ public class Camera implements GameElement {
 	 * @return
 	 */
 	public double getZMin(){
-		return game.getPlayer().getLevel(Explore.class) / Explore.LEVEL_MAX * (Camera.Z_MIN - getZMax()) + getZMax();
+		return game.getPlayer().getLevel() / Player.MAX_LEVEL * (Camera.Z_MIN - getZMax()) + getZMax();
 	}
 	
 	/**

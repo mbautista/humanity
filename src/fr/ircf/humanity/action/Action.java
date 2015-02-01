@@ -51,6 +51,10 @@ abstract public class Action {
 		source.getGame().getPlayer().incrementLevel(this.getClass(), delta);
 	}
 	
+	public double getDifficulty(){
+		return source.getGame().getOptions().getDifficulty();
+	}
+	
 	public boolean started(){
 		return state == State.START;
 	}

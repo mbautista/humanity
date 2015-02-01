@@ -6,7 +6,7 @@ import fr.ircf.humanity.ui.ScrollPane;
 
 public class Log extends ScrollPane implements GameElement {
 
-	private static int X = 150, WIDTH = 400, HEIGHT = 90, MARGIN_BOTTOM = 10;
+	private static int X = 150, WIDTH = 640, HEIGHT = 90, MARGIN_BOTTOM = 10;
 	private Game game;
 	
 	@Override

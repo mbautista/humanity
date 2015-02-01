@@ -7,20 +7,23 @@ import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.aster.ResourceType;
+import fr.ircf.humanity.ui.Text;
 
 public class Population {
 
 	public static double
 		MIN_PEOPLE = 0.7, MAX_PEOPLE = 0.9,
 		MIN_LIFESPAN = 16, MAX_LIFESPAN = 32,
-		MIN_FERTILITY = 1, MAX_FERTILITY = 2,
-		MIN_FOOD_PER_PEOPLE = 0.1, MAX_FOOD_PER_PEOPLE = 1,
-		MIN_WATER_PER_PEOPLE = 0.1, MAX_WATER_PER_PEOPLE = 1,
-		MIN_ENERGY_PER_PEOPLE = 0.01, MAX_ENERGY_PER_PEOPLE = 0.1;
+		MIN_FERTILITY = 1, MAX_FERTILITY = 2;
 	private Player player;
 	private Aster aster;
-	private double people, lifespan, fertility;
+	private double lifespan, fertility;
 	private HashMap<Class<?>, Action> actions;
+	private ResourceType[] needs = new ResourceType[] {
+	   ResourceType.FOOD,
+	   ResourceType.WATER,
+	   ResourceType.ENERGY
+	};
 	
 	public Population(Player player, Planet planet){
 		this.player = player;
@@ -31,7 +34,7 @@ public class Population {
 
 	// TODO should be private and called from constructor ?
 	public void initPeople(double factor){
-		people = Random.betweenWithFactor(MIN_PEOPLE, MAX_PEOPLE, factor); // TODO random centered gaussian
+		double people = Random.betweenWithFactor(MIN_PEOPLE, MAX_PEOPLE, factor); // TODO random centered gaussian
 		lifespan = Random.betweenWithFactor(MIN_LIFESPAN, MAX_LIFESPAN, factor); // TODO random centered gaussian
 		fertility = Random.betweenWithFactor(MIN_FERTILITY, MAX_FERTILITY, factor); // TODO random centered gaussian
 		aster.addResource(ResourceType.PEOPLE, people);
@@ -57,15 +60,23 @@ public class Population {
 	}
 	
 	/**
-	 * Update resources on aster
+	 * Update resources on aster according to population and its needs/consumption
 	 * @param delta
 	 */
 	private void updateResources(double delta){
 		double peopleInYear = getPeopleInYear();
-		aster.updateResource(ResourceType.PEOPLE, peopleInYear);
-		aster.updateResource(ResourceType.FOOD, - peopleInYear * getFoodPerPeople());
-		aster.updateResource(ResourceType.WATER, - peopleInYear * getWaterPerPeople());
-		aster.updateResource(ResourceType.ENERGY, - peopleInYear * getEnergyPerPeople());
+		aster.setResourceDelta(ResourceType.PEOPLE, peopleInYear);
+		for (ResourceType need: needs ){
+			double consumption = getDifficultyScale(need.getMinConsumption(), need.getMaxConsumption());
+			aster.setResourceDelta(need, - getPeople() * consumption);
+			if (aster.getResourceValue(need) < 0){
+				aster.setResourceDelta(ResourceType.PEOPLE, aster.getResourceDelta(need));
+				aster.getResource(need).setValue(0);
+				if (aster.discovered() && player.getPlanet().isNewYear()){
+					player.getGame().getLog().add(createNeedEvent(need));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -73,31 +84,12 @@ public class Population {
 	 * @return
 	 */
 	private double getPeopleInYear(){
-		return people * (fertility - 1) / lifespan;
+		return getPeople() * (fertility - 1) / lifespan;
 	}
 	
-	/**
-	 * Food consumption per people
-	 * @param delta
-	 */
-	private double getFoodPerPeople(){
-		return MIN_FOOD_PER_PEOPLE; // TODO dynamize food per people
-	}
-	
-	/**
-	 * Water consumption per people
-	 * @param delta
-	 */
-	private double getWaterPerPeople(){
-		return MIN_WATER_PER_PEOPLE; // TODO dynamize water per people
-	}
-	
-	/**
-	 * Energy consumption per people
-	 * @param delta
-	 */
-	private double getEnergyPerPeople(){
-		return MIN_ENERGY_PER_PEOPLE; // TODO dynamize energy per people
+	// TODO this helper might be needed elsewhere
+	private double getDifficultyScale(double min, double max){
+		return min + (max - min) * player.getGame().getOptions().getDifficulty() / 100;
 	}
 	
 	private void updateActions(double delta){
@@ -107,11 +99,7 @@ public class Population {
 	}
 	
 	public double getPeople() {
-		return people;
-	}
-
-	public void setPeople(double people) {
-		this.people = people;
+		return aster.getResourceValue(ResourceType.PEOPLE);
 	}
 
 	public double getLifespan() {
@@ -142,5 +130,18 @@ public class Population {
 		}
 		// Increment action people
 		action.setPeople(Math.max(0, Math.min(maxAllowedPeople, action.getPeople() + delta)));
+	}
+	
+	private Event createNeedEvent(ResourceType need){
+		Event event = new Event(player.getGame());
+		event.add(new Text(i18n("resource.people"), ResourceType.PEOPLE.getColor()));
+		event.add(new Text(" " + i18n("event.from")));
+		event.add(new Text(" " + aster.getName(), aster.getColor()));
+		event.add(new Text(" " + i18n("event.population." + need.getName())));
+		return event;
+	}
+	
+	private String i18n(String message){
+		return player.getGame().i18n(message);
 	}
 }

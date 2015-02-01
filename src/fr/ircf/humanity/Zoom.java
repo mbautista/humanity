@@ -36,7 +36,7 @@ public class Zoom implements GameElement {
 	
 	@Override
 	public void render() {
-		if (!game.getPlayer().canExplore()) return;
+		if (!game.getPlayer().canZoomOut()) return;
 		in.render();
 		out.render();
 		slider.render();
@@ -44,7 +44,7 @@ public class Zoom implements GameElement {
 
 	@Override
 	public void update(double delta) {
-		if (!game.getPlayer().canExplore()) return;
+		if (!game.getPlayer().canZoomOut()) return;
 		in.update(delta);
 		slider.setValue(game.getCamera().getZMax() - game.getCamera().getZ());
 		slider.setMax(game.getCamera().getZMax() - game.getCamera().getZMin());

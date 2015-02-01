@@ -8,7 +8,7 @@ public class Discover extends Action {
 		super(source);
 		name = "discover";
 		job = Job.HUMANITY;
-		icon = "life.jpg";
+		icon = "observatory.jpg";
 		needsTarget = true;
 		discovered = true;
 	}

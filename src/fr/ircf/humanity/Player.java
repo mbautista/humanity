@@ -103,7 +103,7 @@ public abstract class Player extends Panel implements GameElement{
 			humanity += population.getPeople();
 		}
 		// FIXME Humanity ends
-		if (humanity <= 0) game.setState(State.END);
+		if (humanity < 0.01) game.setState(State.END);
 		// Humanity billions event
 		if (Math.floor(humanity) > Math.floor(old)){
 			game.getLog().addEvent(String.format(game.i18n("event.billion" + (humanity<2?"":"s")), Math.floor(humanity)));	

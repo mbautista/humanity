@@ -1,9 +1,9 @@
 package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.aster.ResourceType;
-import fr.ircf.humanity.ui.ButtonIcon;
-import fr.ircf.humanity.ui.Text;
-import fr.ircf.humanity.ui.TextBar;
+import fr.ircf.humanity.component.ButtonIcon;
+import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.component.TextBar;
 
 public class ActionMenuItem extends ButtonIcon {
 	
@@ -77,6 +77,6 @@ public class ActionMenuItem extends ButtonIcon {
 	
 	public void setAction(Action action){
 		this.action = action;
-		super.setIcon(action.getIcon());
+		super.getImage().setPath(action.getIcon());
 	}
 }

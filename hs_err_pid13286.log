@@ -1,0 +1,219 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00000000, pid=13286, tid=1659816768
+#
+# JRE version: OpenJDK Runtime Environment (8.0_91-b14) (build 1.8.0_91-8u91-b14-3ubuntu1~16.04.1-b14)
+# Java VM: OpenJDK Server VM (25.91-b14 mixed mode linux-x86 )
+# Problematic frame:
+# C  0x00000000
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00000000
+
+Registers:
+EAX=0x6db7c450, EBX=0x6db7bff4, ECX=0x00000000, EDX=0x6cdf4950
+ESP=0x62eec1ec, EBP=0x00012000, ESI=0x00000400, EDI=0x6cddf7f0
+EIP=0x00000000, EFLAGS=0x00210246, CR2=0x00000000
+
+Top of Stack: (sp=0x62eec1ec)
+0x62eec1ec:   6db49348 6cddf7f0 00000000 00001000
+0x62eec1fc:   0000ffd8 00000008 00000000 6c841d39
+0x62eec20c:   66f5e000 6cdf7af8 00002000 6cddd510
+0x62eec21c:   6c84227a 6c842247 6c8a3000 6cddd510
+0x62eec22c:   6c84ab61 bb800000 62eec280 00000008
+0x62eec23c:   00000000 6c84ab47 6c84aa36 6c8a3000
+0x62eec24c:   6c84c74a 00000000 00000087 00000087
+0x62eec25c:   b7551a9f 66fbe028 6db2dce4 6c84c669 
+
+Instructions: (pc=0x00000000)
+0xffffffe0:   
+
+Register to memory mapping:
+
+EAX=0x6db7c450: <offset 0x50450> in /home/mathieu/projets/humanity/lib/libopenal.so at 0x6db2c000
+EBX=0x6db7bff4: <offset 0x4fff4> in /home/mathieu/projets/humanity/lib/libopenal.so at 0x6db2c000
+ECX=0x00000000 is an unknown value
+EDX=0x6cdf4950 is an unknown value
+ESP=0x62eec1ec is an unknown value
+EBP=0x00012000 is an unknown value
+ESI=0x00000400 is an unknown value
+EDI=0x6cddf7f0 is an unknown value
+
+
+Stack: [0x62dec000,0x62eed000],  sp=0x62eec1ec,  free space=1024k
+
+---------------  P R O C E S S  ---------------
+
+VM state:at safepoint (shutting down)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0xb6204e48] Threads_lock - owner thread: 0x70c80c00
+
+Heap:
+ PSYoungGen      total 89088K, used 87109K [0x95cc0000, 0xa3540000, 0xa6e00000)
+  eden space 88320K, 97% used [0x95cc0000,0x9b1457f8,0x9b300000)
+  from space 768K, 72% used [0xa3480000,0xa350c000,0xa3540000)
+  to   space 3072K, 0% used [0xa2f40000,0xa2f40000,0xa3240000)
+ ParOldGen       total 36864K, used 16315K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749eed68,0x75e00000)
+ Metaspace       used 7773K, capacity 7974K, committed 8088K, reserved 8496K
+
+Card table byte_map: [0x73865000,0x73a00000] byte_map_base: 0x734c8000
+
+Marking Bits: (ParMarkBitMap*) 0xb71356c0
+ Begin Bits: [0x71660000, 0x72330000)
+ End Bits:   [0x72330000, 0x73000000)
+
+Polling page: 0xb7752000
+
+CodeCache: size=245760Kb used=5523Kb max_used=6235Kb free=240236Kb
+ bounds [0xa7200000, 0xa7828000, 0xb6200000]
+ total_blobs=2040 nmethods=1716 adapters=239
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 871,637 Thread 0x70ca3c00 nmethod 2023 0xa7668b08 code [0xa7668c80, 0xa7668f10]
+Event: 871,649 Thread 0x70ca5800 nmethod 2024 0xa75b8588 code [0xa75b8700, 0xa75b8d70]
+Event: 873,045 Thread 0x70ca3c00 2025       4       fr.ircf.humanity.aster.Planet::create (373 bytes)
+Event: 873,045 Thread 0x70ca5800 2026       4       fr.ircf.humanity.aster.Planet::habitable (47 bytes)
+Event: 873,050 Thread 0x70ca5800 nmethod 2026 0xa7771008 code [0xa7771120, 0xa7771270]
+Event: 873,971 Thread 0x70ca5800 2027       4       fr.ircf.humanity.Random::syllabus (55 bytes)
+Event: 874,138 Thread 0x70ca5800 nmethod 2027 0xa76c6d48 code [0xa76c6f00, 0xa76c7950]
+Event: 875,188 Thread 0x70ca3c00 nmethod 2025 0xa7708888 code [0xa7708ea0, 0xa770dc60]
+Event: 876,931 Thread 0x70ca7000 2028   !   3       java.lang.ClassLoader::findNative (86 bytes)
+Event: 876,934 Thread 0x70ca7000 nmethod 2028 0xa75386c8 code [0xa7538860, 0xa7538f78]
+
+GC Heap History (10 events):
+Event: 711,966 GC heap before
+{Heap before GC invocations=27 (full 1):
+ PSYoungGen      total 114176K, used 110272K [0x95cc0000, 0xa3f00000, 0xa6e00000)
+  eden space 109824K, 100% used [0x95cc0000,0x9c800000,0x9c800000)
+  from space 4352K, 10% used [0xa36c0000,0xa3730000,0xa3b00000)
+  to   space 4096K, 0% used [0xa3b00000,0xa3b00000,0xa3f00000)
+ ParOldGen       total 36864K, used 16303K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ebd68,0x75e00000)
+ Metaspace       used 7685K, capacity 7910K, committed 7960K, reserved 8496K
+Event: 711,972 GC heap after
+Heap after GC invocations=27 (full 1):
+ PSYoungGen      total 105728K, used 448K [0x95cc0000, 0xa3b80000, 0xa6e00000)
+  eden space 105216K, 0% used [0x95cc0000,0x95cc0000,0x9c380000)
+  from space 512K, 87% used [0xa3b00000,0xa3b70000,0xa3b80000)
+  to   space 3840K, 0% used [0xa3400000,0xa3400000,0xa37c0000)
+ ParOldGen       total 36864K, used 16303K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ebd68,0x75e00000)
+ Metaspace       used 7685K, capacity 7910K, committed 7960K, reserved 8496K
+}
+Event: 735,102 GC heap before
+{Heap before GC invocations=28 (full 1):
+ PSYoungGen      total 105728K, used 105664K [0x95cc0000, 0xa3b80000, 0xa6e00000)
+  eden space 105216K, 100% used [0x95cc0000,0x9c380000,0x9c380000)
+  from space 512K, 87% used [0xa3b00000,0xa3b70000,0xa3b80000)
+  to   space 3840K, 0% used [0xa3400000,0xa3400000,0xa37c0000)
+ ParOldGen       total 36864K, used 16303K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ebd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+Event: 735,116 GC heap after
+Heap after GC invocations=28 (full 1):
+ PSYoungGen      total 101120K, used 448K [0x95cc0000, 0xa3b40000, 0xa6e00000)
+  eden space 100608K, 0% used [0x95cc0000,0x95cc0000,0x9bf00000)
+  from space 512K, 87% used [0xa3400000,0xa3470000,0xa3480000)
+  to   space 3840K, 0% used [0xa3780000,0xa3780000,0xa3b40000)
+ ParOldGen       total 36864K, used 16307K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ecd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+}
+Event: 763,616 GC heap before
+{Heap before GC invocations=29 (full 1):
+ PSYoungGen      total 101120K, used 101056K [0x95cc0000, 0xa3b40000, 0xa6e00000)
+  eden space 100608K, 100% used [0x95cc0000,0x9bf00000,0x9bf00000)
+  from space 512K, 87% used [0xa3400000,0xa3470000,0xa3480000)
+  to   space 3840K, 0% used [0xa3780000,0xa3780000,0xa3b40000)
+ ParOldGen       total 36864K, used 16307K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ecd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+Event: 763,624 GC heap after
+Heap after GC invocations=29 (full 1):
+ PSYoungGen      total 96768K, used 480K [0x95cc0000, 0xa3800000, 0xa6e00000)
+  eden space 96256K, 0% used [0x95cc0000,0x95cc0000,0x9bac0000)
+  from space 512K, 93% used [0xa3780000,0xa37f8000,0xa3800000)
+  to   space 3584K, 0% used [0xa3100000,0xa3100000,0xa3480000)
+ ParOldGen       total 36864K, used 16307K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ecd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+}
+Event: 802,467 GC heap before
+{Heap before GC invocations=30 (full 1):
+ PSYoungGen      total 96768K, used 96736K [0x95cc0000, 0xa3800000, 0xa6e00000)
+  eden space 96256K, 100% used [0x95cc0000,0x9bac0000,0x9bac0000)
+  from space 512K, 93% used [0xa3780000,0xa37f8000,0xa3800000)
+  to   space 3584K, 0% used [0xa3100000,0xa3100000,0xa3480000)
+ ParOldGen       total 36864K, used 16307K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749ecd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+Event: 802,476 GC heap after
+Heap after GC invocations=30 (full 1):
+ PSYoungGen      total 95744K, used 560K [0x95cc0000, 0xa37c0000, 0xa6e00000)
+  eden space 92160K, 0% used [0x95cc0000,0x95cc0000,0x9b6c0000)
+  from space 3584K, 15% used [0xa3100000,0xa318c000,0xa3480000)
+  to   space 3328K, 0% used [0xa3480000,0xa3480000,0xa37c0000)
+ ParOldGen       total 36864K, used 16311K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749edd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+}
+Event: 847,291 GC heap before
+{Heap before GC invocations=31 (full 1):
+ PSYoungGen      total 95744K, used 92720K [0x95cc0000, 0xa37c0000, 0xa6e00000)
+  eden space 92160K, 100% used [0x95cc0000,0x9b6c0000,0x9b6c0000)
+  from space 3584K, 15% used [0xa3100000,0xa318c000,0xa3480000)
+  to   space 3328K, 0% used [0xa3480000,0xa3480000,0xa37c0000)
+ ParOldGen       total 36864K, used 16311K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749edd68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+Event: 847,298 GC heap after
+Heap after GC invocations=31 (full 1):
+ PSYoungGen      total 89088K, used 560K [0x95cc0000, 0xa3540000, 0xa6e00000)
+  eden space 88320K, 0% used [0x95cc0000,0x95cc0000,0x9b300000)
+  from space 768K, 72% used [0xa3480000,0xa350c000,0xa3540000)
+  to   space 3072K, 0% used [0xa2f40000,0xa2f40000,0xa3240000)
+ ParOldGen       total 36864K, used 16315K [0x73a00000, 0x75e00000, 0x95cc0000)
+  object space 36864K, 44% used [0x73a00000,0x749eed68,0x75e00000)
+ Metaspace       used 7688K, capacity 7910K, committed 7960K, reserved 8496K
+}
+
+Deoptimization events (10 events):
+Event: 859,536 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa768e7a0 method=fr.ircf.humanity.Player.updateHumanity()V @ 64
+Event: 859,536 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa7447d1c method=fr.ircf.humanity.Log.visible()Z @ 12
+Event: 859,537 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa73480b0 method=fr.ircf.humanity.aster.AsterMenu.visible()Z @ 12
+Event: 859,537 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa72c965c method=fr.ircf.humanity.End.visible()Z @ 12
+Event: 859,569 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa7424760 method=fr.ircf.humanity.Title.visible()Z @ 12
+Event: 859,569 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa7447adc method=fr.ircf.humanity.Zoom.visible()Z @ 12
+Event: 859,569 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa77aec5c method=fr.ircf.humanity.Player.visible()Z @ 12
+Event: 864,579 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa7427728 method=fr.ircf.humanity.Menu.visible()Z @ 12
+Event: 868,349 Thread 0xb6207800 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa72c9c9c method=fr.ircf.humanity.Loader.visible()Z @ 12
+Event: 876,952 Thread 0x6251b400 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa76232cc method=java.lang.ThreadLocal.get()Ljava/lang/Object; @ 11
+
+Internal exceptions (10 events):
+Event: 9,589 Thread 0xb6207800 Exception <a 'java/security/PrivilegedActionException'> (0x95f1c668) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 9,589 Thread 0xb6207800 Exception <a 'java/security/PrivilegedActionException'> (0x95f1d1e8) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 9,590 Thread 0xb6207800 Exception <a 'java/security/PrivilegedActionException'> (0x95f1e3e8) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 9,590 Thread 0xb6207800 Exception <a 'java/security/PrivilegedActionException'> (0x95f1efa8) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 9,590 Thread 0xb6207800 Exception <a 'java/security/PrivilegedActionException'> (0x95f1fb28) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 9,601 Thread 0xb6207800 Exception <a 'org/lwjgl/LWJGLException': Could not load OpenAL library> (0x95f209a8) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jni.cpp, line 735]
+Event: 9,603 Thread 0xb6207800 Exception <a 'org/lwjgl/LWJGLException': Could not load OpenAL library> (0x95f20ff8) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jni.cpp, line 735]
+Event: 9,627 Thread 0xb6207800 Exception <a 'org/lwjgl/LWJGLException': Could not load OpenAL library> (0x95f21590) thrown at [/build/openjdk-8-sJI2P5/openjdk-8-8u91-b14/src/hotspot/src/share/vm/prims/jni.cpp, line 735]
+Event: 788,106 Thread 0xb6207800 Implicit null exception at 0xa74382a1 to 0xa7438541
+Event: 876,952 Thread 0x6251b400 Implicit null exception at 0xa7623218 to 0xa76232b9
+
+Events (10 events):
+Event: 876,951 loading class java/util/WeakHashMap$HashIterator
+Event: 876,952 

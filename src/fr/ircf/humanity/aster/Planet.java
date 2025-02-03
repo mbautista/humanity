@@ -7,9 +7,9 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import fr.ircf.humanity.Camera;
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.Random;
+import fr.ircf.humanity.game.Camera;
 
 public class Planet extends Aster {
 

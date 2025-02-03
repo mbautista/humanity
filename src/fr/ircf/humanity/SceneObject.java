@@ -2,6 +2,8 @@ package fr.ircf.humanity;
 
 import java.awt.geom.Rectangle2D;
 
+import fr.ircf.humanity.game.Camera;
+
 public interface SceneObject {
 
 	public String getName();

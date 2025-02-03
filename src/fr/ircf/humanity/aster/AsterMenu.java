@@ -8,8 +8,8 @@ import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
 import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.action.ActionMenuItem;
-import fr.ircf.humanity.ui.Panel;
-import fr.ircf.humanity.ui.Text;
+import fr.ircf.humanity.component.Panel;
+import fr.ircf.humanity.component.Text;
 
 public class AsterMenu extends Panel implements GameElement {
 

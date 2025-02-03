@@ -8,11 +8,11 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;
 
-import fr.ircf.humanity.Camera;
-import fr.ircf.humanity.Galaxy;
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.Random;
 import fr.ircf.humanity.SceneObject;
+import fr.ircf.humanity.game.Camera;
+import fr.ircf.humanity.game.Galaxy;
 
 public class Star extends Aster {
 

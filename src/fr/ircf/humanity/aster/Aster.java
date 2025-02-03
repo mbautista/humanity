@@ -10,8 +10,8 @@ import fr.ircf.humanity.Game;
 import fr.ircf.humanity.Population;
 import fr.ircf.humanity.SceneObject;
 import fr.ircf.humanity.State;
-import fr.ircf.humanity.ui.Text;
-import fr.ircf.humanity.ui.TextBar;
+import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.component.TextBar;
 
 public abstract class Aster implements SceneObject{
 

@@ -2,6 +2,12 @@ package fr.ircf.humanity;
 
 import org.lwjgl.LWJGLException;
 
+import fr.ircf.humanity.game.Audio;
+import fr.ircf.humanity.game.Camera;
+import fr.ircf.humanity.game.Log;
+import fr.ircf.humanity.game.Options;
+import fr.ircf.humanity.game.Player;
+
 public interface Game {
 
 	public void init();

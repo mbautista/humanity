@@ -2,9 +2,9 @@ package fr.ircf.humanity.action;
 
 import java.util.HashMap;
 
-import fr.ircf.humanity.Event;
 import fr.ircf.humanity.aster.Aster;
-import fr.ircf.humanity.ui.Text;
+import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.game.Event;
 
 abstract public class Action {
 
@@ -72,7 +72,7 @@ abstract public class Action {
 	public void stop(){
 		state = State.STOP;
 		target = null;
-		if (needsTarget) toggle();
+		if (needsTarget) toggle(); // TODO remove for discover action
 	}
 
 	public String getName() {
@@ -141,6 +141,7 @@ abstract public class Action {
 	
 	protected Event createEvent(){
 		Event event = new Event(source.getGame());
+		// TODO tokenize
 		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
 		if (target == null || source != target ){
 			event.add(new Text(" " + i18n("event.from")));
@@ -155,6 +156,7 @@ abstract public class Action {
 	
 	protected Event createDiscoverEvent(){
 		Event event = new Event(source.getGame());
+		// TODO tokenize
 		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
 		event.add(new Text(" " + i18n("event.discovered.action")));
 		event.add(new Text(" " + i18n("action." + name), job.getColor()));

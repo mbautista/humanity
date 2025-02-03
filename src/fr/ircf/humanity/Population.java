@@ -7,7 +7,9 @@ import fr.ircf.humanity.action.Action;
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.aster.ResourceType;
-import fr.ircf.humanity.ui.Text;
+import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.game.Event;
+import fr.ircf.humanity.game.Player;
 
 public class Population {
 
@@ -134,6 +136,7 @@ public class Population {
 	
 	private Event createNeedEvent(ResourceType need){
 		Event event = new Event(player.getGame());
+		// TODO tokenize
 		event.add(new Text(i18n("resource.people"), ResourceType.PEOPLE.getColor()));
 		event.add(new Text(" " + i18n("event.from")));
 		event.add(new Text(" " + aster.getName(), aster.getColor()));

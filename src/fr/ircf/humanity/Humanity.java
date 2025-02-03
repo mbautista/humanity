@@ -5,11 +5,24 @@ import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 
 import fr.ircf.humanity.aster.AsterMenu;
+import fr.ircf.humanity.game.Audio;
+import fr.ircf.humanity.game.Camera;
+import fr.ircf.humanity.game.End;
+import fr.ircf.humanity.game.Galaxy;
+import fr.ircf.humanity.game.Human;
+import fr.ircf.humanity.game.Loader;
+import fr.ircf.humanity.game.Log;
+import fr.ircf.humanity.game.Menu;
+import fr.ircf.humanity.game.Options;
+import fr.ircf.humanity.game.Player;
+import fr.ircf.humanity.game.Title;
+import fr.ircf.humanity.game.Zoom;
 
 public class Humanity implements Game{
 
 	static final String TITLE = "Humanity";
-	static final double VERSION = 0.1, SPEED_SCALE = 500;
+	public static final double VERSION = 0.1;
+	static final double SPEED_SCALE = 500;
 	private GameElement[] gameElements;	
 	private State state = State.MENU, previousState = State.MENU;
 	private long lastFrame;

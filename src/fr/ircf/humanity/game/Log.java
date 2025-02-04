@@ -6,8 +6,10 @@ import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
 import fr.ircf.humanity.component.ScrollPane;
+import fr.ircf.humanity.event.Event;
+import fr.ircf.humanity.event.EventListener;
 
-public class Log extends ScrollPane implements GameElement {
+public class Log extends ScrollPane implements GameElement, EventListener {
 
 	private static int X = 150, WIDTH = 640, HEIGHT = 90, MARGIN_BOTTOM = 10;
 	private Game game;
@@ -33,5 +35,11 @@ public class Log extends ScrollPane implements GameElement {
 	
 	public void addEvent(Event e){
 		add(e);
+	}
+
+	@Override
+	public void update(Event event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

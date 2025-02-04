@@ -1,9 +1,11 @@
-package fr.ircf.humanity.game;
+package fr.ircf.humanity.quest;
 
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
+import fr.ircf.humanity.event.Event;
+import fr.ircf.humanity.event.EventListener;
 
-public class Dialogue implements GameElement {
+public class QuestManager implements GameElement, EventListener {
 
 	@Override
 	public void init(Game game) throws Exception {
@@ -20,13 +22,18 @@ public class Dialogue implements GameElement {
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void update(double delta) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void update(Event event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

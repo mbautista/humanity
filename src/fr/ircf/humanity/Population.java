@@ -8,7 +8,7 @@ import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.aster.ResourceType;
 import fr.ircf.humanity.component.Text;
-import fr.ircf.humanity.game.Event;
+import fr.ircf.humanity.event.Event;
 import fr.ircf.humanity.game.Player;
 
 public class Population {

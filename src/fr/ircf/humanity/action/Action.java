@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.component.Text;
-import fr.ircf.humanity.game.Event;
+import fr.ircf.humanity.event.Event;
 
 abstract public class Action {
 

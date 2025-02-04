@@ -1,4 +1,4 @@
-package fr.ircf.humanity.game;
+package fr.ircf.humanity.event;
 
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.component.Panel;

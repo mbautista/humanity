@@ -5,6 +5,8 @@ import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 
 import fr.ircf.humanity.aster.AsterMenu;
+import fr.ircf.humanity.dialogue.DialogueManager;
+import fr.ircf.humanity.event.EventManager;
 import fr.ircf.humanity.game.Audio;
 import fr.ircf.humanity.game.Camera;
 import fr.ircf.humanity.game.End;
@@ -17,6 +19,7 @@ import fr.ircf.humanity.game.Options;
 import fr.ircf.humanity.game.Player;
 import fr.ircf.humanity.game.Title;
 import fr.ircf.humanity.game.Zoom;
+import fr.ircf.humanity.quest.QuestManager;
 
 public class Humanity implements Game{
 
@@ -34,6 +37,9 @@ public class Humanity implements Game{
 	private Player player;
 	private Audio audio;
 	private Log log;
+	private EventManager eventManager;
+	private QuestManager questManager;
+	private DialogueManager dialogueManager;
 
 	public Humanity(){
 		options = new Options();
@@ -55,6 +61,7 @@ public class Humanity implements Game{
 			initDisplay();
 			initGl();
 			initGameElements();
+			initEventManager();
 		}catch( Exception e ){
 			e.printStackTrace();
 			System.exit(0);
@@ -89,6 +96,8 @@ public class Humanity implements Game{
 		player = new Human();
 		audio = new Audio();
 		log = new Log();
+		questManager = new QuestManager();
+		dialogueManager = new DialogueManager();
 		// TODO use HashMap<String, GameElement> instead of [] so we can get any game element by its name
 		gameElements = new GameElement[] {
 			audio,
@@ -101,6 +110,8 @@ public class Humanity implements Game{
 			//new Map(),
 			player,
 			log,
+			questManager,
+			dialogueManager,
 			new AsterMenu(),
 			loader,
 			new End()
@@ -112,6 +123,13 @@ public class Humanity implements Game{
 		camera.showWithZMax(player.getPlanet());
 		// welcome message
 		log.addEvent(i18n("event.welcome"));
+	}
+	
+	public void initEventManager() {
+		eventManager = new EventManager();
+		eventManager.addListener(dialogueManager);
+		eventManager.addListener(questManager);
+		eventManager.addListener(log);
 	}
 	
     @Override
@@ -144,7 +162,7 @@ public class Humanity implements Game{
 	    	case LOAD :
 	    		loader.setValue(galaxy.getStarSize());
 	    		break;
-	    	case GAME :
+	    	default:
 	    		break;
     	}
 		for(GameElement gameElement : gameElements){

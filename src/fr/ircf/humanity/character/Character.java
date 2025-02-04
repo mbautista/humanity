@@ -5,7 +5,7 @@ import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.action.Job;
 import fr.ircf.humanity.component.Image;
 import fr.ircf.humanity.component.Text;
-import fr.ircf.humanity.game.Dialogue;
+import fr.ircf.humanity.dialogue.Dialogue;
 import fr.ircf.humanity.quest.Quest;
 
 public abstract class Character implements GameElement {

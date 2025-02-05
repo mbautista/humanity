@@ -7,18 +7,19 @@ import org.lwjgl.opengl.*;
 import fr.ircf.humanity.aster.AsterMenu;
 import fr.ircf.humanity.dialogue.DialogueManager;
 import fr.ircf.humanity.event.EventManager;
+import fr.ircf.humanity.event.MessageEvent;
 import fr.ircf.humanity.game.Audio;
 import fr.ircf.humanity.game.Camera;
 import fr.ircf.humanity.game.End;
 import fr.ircf.humanity.game.Galaxy;
 import fr.ircf.humanity.game.Human;
 import fr.ircf.humanity.game.Loader;
+import fr.ircf.humanity.game.Log;
 import fr.ircf.humanity.game.Menu;
 import fr.ircf.humanity.game.Options;
 import fr.ircf.humanity.game.Player;
 import fr.ircf.humanity.game.Title;
 import fr.ircf.humanity.game.Zoom;
-import fr.ircf.humanity.log.Log;
 import fr.ircf.humanity.quest.QuestManager;
 
 public class Humanity implements Game{
@@ -122,7 +123,7 @@ public class Humanity implements Game{
 		// set and show player planet
 		camera.showWithZMax(player.getPlanet());
 		// welcome message
-		log.addEvent(i18n("event.welcome"));
+		eventManager.notify(new MessageEvent(0, "welcome", i18n("event.welcome")));
 	}
 	
 	public void initEventManager() {

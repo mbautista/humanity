@@ -1,4 +1,4 @@
-package fr.ircf.humanity.game;
+package fr.ircf.humanity.log;
 
 import org.lwjgl.opengl.Display;
 
@@ -29,11 +29,11 @@ public class Log extends ScrollPane implements GameElement, EventListener {
 		return game.getState() == State.GAME;
 	}
 
-	public void addEvent(String message) {
-		add(new Event(game, message));
+	public void addLogEntry(String message) {
+		add(new LogEntry(game, message));
 	}
 	
-	public void addEvent(Event e){
+	public void addLogEntry(LogEntry e){
 		add(e);
 	}
 

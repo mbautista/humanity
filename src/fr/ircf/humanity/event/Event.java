@@ -1,26 +1,24 @@
 package fr.ircf.humanity.event;
 
-import fr.ircf.humanity.Game;
-import fr.ircf.humanity.component.Panel;
-import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.log.LogEntry;
 
-public class Event extends Panel {
+public class Event {
 	
-	private Game game;
-	
-	public Event(Game game){
-		super();
-		super.setDisplayMode(DisplayMode.INLINE);
-		this.game = game;
-		addYear();
+	/**
+	 * TODO Enum event types :
+	 * MESSAGE = Event(String message)
+	 * POPULATION_NEED = Event(Population population, ResourceType need)
+	 * ACTION_START = Event(Action action)
+	 * ACTION_DISCOVER = Event(Action action)
+	 * PLAYER_HUMANITY = Event(Player player, double humanity)
+	 * PLAYER_LEVEL = Event(Player player, double level)
+	 */
+
+	public Event(){
 	}
-	
-	public Event(Game game, String message){
-		this(game);
-		add(new Text(message));
-	}
-	
-	private void addYear(){
-		add(new Text(game.i18n("event.year") + " " + game.getPlayer().getPlanet().getYear() + " : "));
+
+	public LogEntry toLogEntry() {
+		// TODO
+		return null;
 	}
 }

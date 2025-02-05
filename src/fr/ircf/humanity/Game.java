@@ -4,9 +4,9 @@ import org.lwjgl.LWJGLException;
 
 import fr.ircf.humanity.game.Audio;
 import fr.ircf.humanity.game.Camera;
-import fr.ircf.humanity.game.Log;
 import fr.ircf.humanity.game.Options;
 import fr.ircf.humanity.game.Player;
+import fr.ircf.humanity.log.Log;
 
 public interface Game {
 

@@ -14,9 +14,26 @@ public class ActionEvent extends Event{
 		this.action = action;
 	}
 
+	// TODO move method to EventListener ?
 	public Panel getLogPanel(Game game) {
 		Panel panel = super.getLogPanel(game);
-		// TODO panel.add(new Text(message));
+		panel.add(new Text(game.i18n("job." + action.getJob().getName()), action.getJob().getColor()));
+		switch(type) {
+			case "discover":
+				panel.add(new Text(" " + game.i18n("event.discovered.action")));
+				panel.add(new Text(" " + game.i18n("action." + action.getName()), action.getJob().getColor()));
+				break;
+			case "start":
+				if (action.getTarget() == null || action.getSource() != action.getTarget() ){
+					panel.add(new Text(" " + game.i18n("event.from")));
+					panel.add(new Text(" " + action.getSource().getName(), action.getSource().getColor()));
+				}
+				panel.add(new Text(" " + game.i18n("action." + action.getName())));
+				if (action.getTarget() != null){
+					panel.add(new Text(" " + action.getTarget().getName(), action.getTarget().getColor()));
+				}
+				break;
+		}
 		return panel;
 	}
 }

@@ -1,11 +1,11 @@
 package fr.ircf.humanity.action;
 
 import fr.ircf.humanity.aster.ResourceType;
-import fr.ircf.humanity.component.ButtonIcon;
+import fr.ircf.humanity.component.ImageButton;
 import fr.ircf.humanity.component.Text;
 import fr.ircf.humanity.component.TextBar;
 
-public class ActionMenuItem extends ButtonIcon {
+public class ActionMenuItem extends ImageButton {
 	
 	public static double DOWN_SPEED = 10;
 	public static int WIDTH = 32, HEIGHT = 32, TEXT_X = 230, TEXT_DY = 10;
@@ -77,6 +77,6 @@ public class ActionMenuItem extends ButtonIcon {
 	
 	public void setAction(Action action){
 		this.action = action;
-		super.getImage().setPath(action.getIcon());
+		super.setImage("actions/" + action.getIcon());
 	}
 }

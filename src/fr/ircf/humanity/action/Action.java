@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import fr.ircf.humanity.aster.Aster;
 import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.event.ActionEvent;
 import fr.ircf.humanity.event.Event;
+import fr.ircf.humanity.event.PopulationEvent;
 
 abstract public class Action {
 
@@ -61,7 +63,7 @@ abstract public class Action {
 	
 	public void start(){
 		state = State.START;
-		source.getGame().getLog().addEvent(createEvent());
+		source.getGame().getEventManager().notify(new ActionEvent(source.getGame().getPlayer().getPlanet().getYear(), "start", this));
 	}
 	
 	public void start(Aster target){
@@ -89,7 +91,7 @@ abstract public class Action {
 	
 	public void discover(){
 		discovered = true;
-		source.getGame().getLog().addEvent(createDiscoverEvent());
+		source.getGame().getEventManager().notify(new ActionEvent(source.getGame().getPlayer().getPlanet().getYear(), "discover", this));
 		// TODO discover job
 	}
 	
@@ -139,7 +141,7 @@ abstract public class Action {
 		return target;
 	}
 	
-	protected Event createEvent(){
+	/*protected Event createEvent(){
 		Event event = new Event(source.getGame());
 		// TODO tokenize
 		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
@@ -161,12 +163,12 @@ abstract public class Action {
 		event.add(new Text(" " + i18n("event.discovered.action")));
 		event.add(new Text(" " + i18n("action." + name), job.getColor()));
 		return event;
+	}*/
+
+	public String i18n(String string) {
+		return source.getGame().i18n(string);
 	}
 	
-	public String i18n(String message){
-		return source.getGame().i18n(message);
-	}
-
 	public double getPeople() {
 		return people;
 	}

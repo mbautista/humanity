@@ -1,15 +1,15 @@
 package fr.ircf.humanity.component;
 
-public class ButtonIcon extends Button {
+public class ImageButton extends Button {
 
 	protected Image image;
 	
-	public ButtonIcon(String path){
+	public ImageButton(String path){
 		super();
-		image = new Image(path);
+		setImage(path);
 	}
 	
-	public ButtonIcon() {
+	public ImageButton() {
 		super();
 	}
 
@@ -22,5 +22,9 @@ public class ButtonIcon extends Button {
 
 	public Image getImage() {
 		return image;
+	}
+
+	public void setImage(String path) {
+		this.image = new Image(path);
 	}
 }

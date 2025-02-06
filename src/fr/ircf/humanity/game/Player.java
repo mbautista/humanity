@@ -17,6 +17,7 @@ import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.component.Button;
 import fr.ircf.humanity.component.Panel;
 import fr.ircf.humanity.component.Text;
+import fr.ircf.humanity.event.PlayerEvent;
 
 public abstract class Player extends Panel implements GameElement{
 
@@ -112,8 +113,7 @@ public abstract class Player extends Panel implements GameElement{
 		if (humanity < 0.01) game.setState(State.END);
 		// Humanity billions event
 		if (Math.floor(humanity) > Math.floor(old)){
-			// TODO tokenize
-			game.getLog().addEvent(String.format(game.i18n("event.billion" + (humanity<2?"":"s")), Math.floor(humanity)));	
+			game.getEventManager().notify(new PlayerEvent(planet.getYear(), "humanity", this));
 		}
 	}
 	
@@ -149,13 +149,16 @@ public abstract class Player extends Panel implements GameElement{
 		double old = level;
 		levels.put(actionClass, levels.get(actionClass) + delta);
 		level += delta;
-		// Humanity kardashev event
+		// Level event
 		if (Math.floor(level * 100) > Math.floor(old * 100)){
-			// TODO tokenize
-			game.getLog().addEvent(String.format(game.i18n("event.kardashev"), Math.floor(level * 100)/100d));	
+			game.getEventManager().notify(new PlayerEvent(planet.getYear(), "level", this));
 		}
 	}
 	
+	public double getHumanity() {
+		return humanity;
+	}
+
 	public double getLevel(Class<?> actionClass){
 		return levels.get(actionClass);
 	}

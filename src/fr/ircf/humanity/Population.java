@@ -9,6 +9,7 @@ import fr.ircf.humanity.aster.Planet;
 import fr.ircf.humanity.aster.ResourceType;
 import fr.ircf.humanity.component.Text;
 import fr.ircf.humanity.event.Event;
+import fr.ircf.humanity.event.PopulationEvent;
 import fr.ircf.humanity.game.Player;
 
 public class Population {
@@ -75,7 +76,7 @@ public class Population {
 				aster.setResourceDelta(ResourceType.PEOPLE, aster.getResourceDelta(need));
 				aster.getResource(need).setValue(0);
 				if (aster.discovered() && player.getPlanet().isNewYear()){
-					player.getGame().getLog().add(createNeedEvent(need));
+					player.getGame().getEventManager().notify(new PopulationEvent(player.getPlanet().getYear(), "need", this, need));
 				}
 			}
 		}
@@ -133,18 +134,8 @@ public class Population {
 		// Increment action people
 		action.setPeople(Math.max(0, Math.min(maxAllowedPeople, action.getPeople() + delta)));
 	}
-	
-	private Event createNeedEvent(ResourceType need){
-		Event event = new Event(player.getGame());
-		// TODO tokenize
-		event.add(new Text(i18n("resource.people"), ResourceType.PEOPLE.getColor()));
-		event.add(new Text(" " + i18n("event.from")));
-		event.add(new Text(" " + aster.getName(), aster.getColor()));
-		event.add(new Text(" " + i18n("event.population." + need.getName())));
-		return event;
-	}
-	
-	private String i18n(String message){
-		return player.getGame().i18n(message);
+
+	public Aster getAster() {
+		return aster;
 	}
 }

@@ -122,8 +122,6 @@ public class Humanity implements Game{
 		}
 		// set and show player planet
 		camera.showWithZMax(player.getPlanet());
-		// welcome message
-		eventManager.notify(new MessageEvent(0, "welcome", i18n("event.welcome")));
 	}
 	
 	public void initEventManager() {
@@ -131,6 +129,7 @@ public class Humanity implements Game{
 		eventManager.addListener(dialogueManager);
 		eventManager.addListener(questManager);
 		eventManager.addListener(log);
+		eventManager.notify(new MessageEvent(0, "welcome", i18n("event.welcome")));
 	}
 	
     @Override
@@ -239,5 +238,9 @@ public class Humanity implements Game{
 	
 	public Log getLog(){
 		return log;
+	}
+
+	public EventManager getEventManager(){
+		return eventManager;
 	}
 }

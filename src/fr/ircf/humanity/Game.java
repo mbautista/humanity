@@ -2,6 +2,7 @@ package fr.ircf.humanity;
 
 import org.lwjgl.LWJGLException;
 
+import fr.ircf.humanity.event.EventManager;
 import fr.ircf.humanity.game.Audio;
 import fr.ircf.humanity.game.Camera;
 import fr.ircf.humanity.game.Log;
@@ -25,4 +26,5 @@ public interface Game {
 	public Player getPlayer();
 	public State getPreviousState();
 	public Log getLog();
+	public EventManager getEventManager();
 }

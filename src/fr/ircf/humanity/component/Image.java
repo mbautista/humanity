@@ -44,7 +44,7 @@ public class Image extends Component {
 			this.path = path;
 			try{
 				texture = TextureLoader.getTexture("JPG",
-					ResourceLoader.getResourceAsStream("assets/" + path)
+					ResourceLoader.getResourceAsStream("assets/images/" + path)
 				);
 			}catch(Exception e){
 				e.printStackTrace();

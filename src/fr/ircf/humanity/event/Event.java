@@ -7,8 +7,8 @@ import fr.ircf.humanity.component.Panel.DisplayMode;
 
 abstract public class Event {
 	
-	private int year;
-	private String type;
+	protected int year;
+	protected String type;
 	
 	public Event(int year, String type){
 		this.year = year;

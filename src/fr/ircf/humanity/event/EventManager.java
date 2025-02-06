@@ -1,5 +1,6 @@
 package fr.ircf.humanity.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.ircf.humanity.Game;
@@ -11,6 +12,7 @@ public class EventManager {
 	private List<EventListener> listeners;
 
 	public EventManager(){
+		listeners = new ArrayList<>();
 	}
 
 	public void addListener(EventListener listener) {

@@ -34,10 +34,6 @@ public class Image extends Component {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 1);
 		}
 	}
-
-	public void update(double delta) {
-		super.update(delta);
-	}
 	
 	public void setPath(String path) {
 		if (this.path != path){

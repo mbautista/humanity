@@ -13,7 +13,7 @@ public class GrowFood extends Action {
 		super(source);
 		name = "growFood";
 		job = Job.FARMERS;
-		icon = "animals.jpg";
+		icon = "actions/animals.jpg";
 		needsPeople = true;
 		requiresLevels.put(Discover.class, 0.01d);
 	}

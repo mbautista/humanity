@@ -8,7 +8,7 @@ public class Counselor extends Character {
 	@Override
 	public void init(Game game) throws Exception {
 		name = "counselor";
-		path = "images/characters/counselor1.jpg";
+		path = "characters/counselor1.jpg";
 		job = Job.HUMANITY;
 		super.init(game);
 	}

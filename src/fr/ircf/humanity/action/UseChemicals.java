@@ -9,7 +9,7 @@ public class UseChemicals extends Action {
 		super(source);
 		name = "useChemicals";
 		job = Job.FARMERS;
-		icon = "customs.jpg";
+		icon = "actions/customs.jpg";
 		needsPeople = true;
 		requiresLevels.put(GrowFood.class, 0.4d);
 	}

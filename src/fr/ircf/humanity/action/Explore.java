@@ -10,7 +10,7 @@ public class Explore extends Action {
 		super(source);
 		name = "explore";
 		job = Job.HUMANITY;
-		icon = "life.jpg";
+		icon = "actions/life.jpg";
 		needsTarget = true;
 		// TODO needsPeople = true;
 		requiresLevels.put(GrowFood.class, 0.02d);

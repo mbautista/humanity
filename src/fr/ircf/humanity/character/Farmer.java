@@ -8,7 +8,7 @@ public class Farmer extends Character {
 	@Override
 	public void init(Game game) throws Exception {
 		name = "farmer";
-		path = "images/characters/farmer1.jpg";
+		path = "characters/farmer1.jpg";
 		job = Job.FARMERS;
 		super.init(game);
 	}

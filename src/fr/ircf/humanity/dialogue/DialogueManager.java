@@ -1,5 +1,8 @@
 package fr.ircf.humanity.dialogue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.event.Event;
@@ -7,16 +10,18 @@ import fr.ircf.humanity.event.EventListener;
 
 public class DialogueManager implements GameElement, EventListener {
 
+	private List<Dialogue> dialogues;
+	private List<Dialogue> currentDialogues;
+	
 	@Override
 	public void init(Game game) throws Exception {
-		// TODO Auto-generated method stub
-
+		dialogues = new ArrayList<>();
+		currentDialogues = new ArrayList<>();
 	}
 
 	@Override
 	public boolean visible() {
-		// TODO Auto-generated method stub
-		return false;
+		return !currentDialogues.isEmpty();
 	}
 
 	@Override
@@ -33,8 +38,6 @@ public class DialogueManager implements GameElement, EventListener {
 
 	@Override
 	public void update(Event event) {
-		// TODO Auto-generated method stub
-		
+		// TODO Update currentDialogues by matching Event in dialogues
 	}
-
 }

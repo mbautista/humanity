@@ -9,7 +9,7 @@ public class UseHydroponics extends Action {
 		super(source);
 		name = "useHydroponics";
 		job = Job.FARMERS;
-		icon = "barracks.jpg";
+		icon = "actions/barracks.jpg";
 		needsPeople = true;
 		requiresLevels.put(GrowFood.class, 0.6d);
 	}

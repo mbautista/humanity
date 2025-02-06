@@ -1,5 +1,8 @@
 package fr.ircf.humanity.character;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.action.Job;
@@ -13,7 +16,8 @@ public abstract class Character implements GameElement {
 	protected Game game;
 	protected String name, path;
 	protected Job job;
-	protected Dialogue dialogue;
+	protected List<Dialogue> dialogues;
+	protected List<Dialogue> currentDialogues;
 	protected Image image;
 	protected Text text;
 	
@@ -22,18 +26,20 @@ public abstract class Character implements GameElement {
 		this.game = game;
 		text = new Text(name);
 		image = new Image(path);
+		currentDialogues = new ArrayList<>();
+		dialogues = new ArrayList<>();
 	}
 
 	@Override
 	public boolean visible() {
-		return dialogue != null;
+		return !currentDialogues.isEmpty();
 	}
 
 	@Override
 	public void render() {
 		image.render();
 		text.render();
-		dialogue.render();
+		currentDialogues.getFirst().render();
 	}
 
 	@Override
@@ -43,9 +49,5 @@ public abstract class Character implements GameElement {
 
 	public void giveQuest(Quest quest) {
 		// TODO
-	}
-
-	public void setDialogue(Dialogue dialogue) {
-		this.dialogue = dialogue;
 	}
 }

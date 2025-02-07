@@ -1,32 +1,30 @@
 package fr.ircf.humanity.dialogue;
 
-import fr.ircf.humanity.Game;
-import fr.ircf.humanity.GameElement;
+import fr.ircf.humanity.character.Counselor;
+import fr.ircf.humanity.character.Farmer;
 
-public class Dialogue implements GameElement {
+public enum Dialogue {
 
-	@Override
-	public void init(Game game) throws Exception {
-		// TODO Auto-generated method stub
+	// TODO lambda event
+	// TODO List<String> answers
+	D1(1, Counselor.class, new int[] { 1,2,3 }),
+	D2(2, Farmer.class, new int[] { 4,5,6 });
 
+	private final int id;
+	private final Class characterClass;
+	private final int[] messageIds;
+	
+	Dialogue(int id, Class characterClass, int[] messageIds) {
+		this.id = id;
+		this.characterClass = characterClass;
+		this.messageIds = messageIds;
 	}
 
-	@Override
-	public boolean visible() {
-		// TODO Auto-generated method stub
-		return false;
+	public Class getCharacterClass() {
+		return characterClass;
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
+	public int[] getMessageIds() {
+		return messageIds;
 	}
-
-	@Override
-	public void update(double delta) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

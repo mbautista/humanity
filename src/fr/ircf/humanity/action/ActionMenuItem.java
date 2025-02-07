@@ -77,6 +77,6 @@ public class ActionMenuItem extends ImageButton {
 	
 	public void setAction(Action action){
 		this.action = action;
-		super.setImage("actions/" + action.getIcon());
+		super.setImage(action.getIcon());
 	}
 }

@@ -140,30 +140,6 @@ abstract public class Action {
 	public Aster getTarget(){
 		return target;
 	}
-	
-	/*protected Event createEvent(){
-		Event event = new Event(source.getGame());
-		// TODO tokenize
-		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
-		if (target == null || source != target ){
-			event.add(new Text(" " + i18n("event.from")));
-			event.add(new Text(" " + source.getName(), source.getColor()));
-		}
-		event.add(new Text(" " + i18n("action." + name)));
-		if (target != null){
-			event.add(new Text(" " + target.getName(), target.getColor()));
-		}
-		return event;
-	}
-	
-	protected Event createDiscoverEvent(){
-		Event event = new Event(source.getGame());
-		// TODO tokenize
-		event.add(new Text(i18n("job." + job.getName()), job.getColor()));
-		event.add(new Text(" " + i18n("event.discovered.action")));
-		event.add(new Text(" " + i18n("action." + name), job.getColor()));
-		return event;
-	}*/
 
 	public String i18n(String string) {
 		return source.getGame().i18n(string);

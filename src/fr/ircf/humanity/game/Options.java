@@ -14,7 +14,7 @@ public class Options extends Menu {
 	private static Locale[] LOCALES = new Locale[] { Locale.US, Locale.FRANCE };
 	private int displayMode = 0, locale = 0, soundVolume = 10, musicVolume = 10,
 			galaxySize = 1000, starSize = 6, 
-			life = 10, previousSpeed = 40, speed = 40, difficulty = 40;
+			life = 10, previousSpeed = 30, speed = 30, difficulty = 30;
 	private boolean fullScreen = false;
 	
 	public Options(){

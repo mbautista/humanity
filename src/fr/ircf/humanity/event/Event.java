@@ -21,4 +21,8 @@ abstract public class Event {
 		panel.add(new Text(game.i18n("event.year") + " " + year + " : "));
 		return panel;
 	}
+
+	public String getType() {
+		return type;
+	}
 }

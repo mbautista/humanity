@@ -6,25 +6,26 @@ import fr.ircf.humanity.character.Farmer;
 public enum Dialogue {
 
 	// TODO lambda event
-	// TODO List<String> answers
-	D1(1, Counselor.class, new int[] { 1,2,3 }),
-	D2(2, Farmer.class, new int[] { 4,5,6 });
+	D1000(1000, Counselor.class, new int[] { }),
+	D1001(1001, Counselor.class, new int[] { }),
+	D1002(1002, Counselor.class, new int[] { 1,2 }),
+	D2000(2000, Farmer.class, new int[] { });
 
 	private final int id;
-	private final Class characterClass;
-	private final int[] messageIds;
+	private final Class<?> characterClass;
+	private final int[] answerIds;
 	
-	Dialogue(int id, Class characterClass, int[] messageIds) {
+	Dialogue(int id, Class<?> characterClass, int[] answerIds) {
 		this.id = id;
 		this.characterClass = characterClass;
-		this.messageIds = messageIds;
+		this.answerIds = answerIds;
 	}
 
-	public Class getCharacterClass() {
+	public Class<?> getCharacterClass() {
 		return characterClass;
 	}
 
-	public int[] getMessageIds() {
-		return messageIds;
+	public int[] getAnswerIds() {
+		return answerIds;
 	}
 }

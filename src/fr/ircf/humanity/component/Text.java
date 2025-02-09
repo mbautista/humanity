@@ -52,7 +52,7 @@ public class Text extends Component {
 		if (isEmpty()) return;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        font.drawString(x, y, text, color);
+        font.drawString(x, y, text, color); // TODO handle multiline
         GL11.glDisable(GL11.GL_BLEND);
 	}
 	

@@ -16,8 +16,8 @@ public class ActionMenuItem extends ImageButton {
 	
 	public ActionMenuItem(){
 		super();
-		width = WIDTH;
-		height = HEIGHT;
+		setWidth(WIDTH);
+		setHeight(HEIGHT);
 		name = new Text();
 		name.setX(x - TEXT_X);
 		people = new TextBar("", ResourceType.PEOPLE.getColor());
@@ -77,6 +77,6 @@ public class ActionMenuItem extends ImageButton {
 	
 	public void setAction(Action action){
 		this.action = action;
-		super.setImage(action.getIcon());
+		setImage(action.getIcon());
 	}
 }

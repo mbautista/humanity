@@ -10,10 +10,11 @@ public class Image extends Component {
 
 	protected String path;
 	protected Texture texture;
-	protected int padding = 2;
+
+	public Image(){
+	}
 	
 	public Image(String path){
-		super();
 		setPath(path);
 	}
 	
@@ -23,13 +24,13 @@ public class Image extends Component {
 			texture.bind(); // or GL11.glBind(texture.getTextureID());
 			GL11.glBegin(GL11.GL_QUADS);
 				GL11.glTexCoord2f(0, 0);
-				GL11.glVertex2f(x + padding, y + padding);
+				GL11.glVertex2f(x, y);
 				GL11.glTexCoord2f(1, 0);
-				GL11.glVertex2f(x + width + padding, y + padding);
+				GL11.glVertex2f(x + width, y);
 				GL11.glTexCoord2f(1, 1);
-				GL11.glVertex2f(x + width + padding, y + height + padding);
+				GL11.glVertex2f(x + width, y + height);
 				GL11.glTexCoord2f(0, 1);
-				GL11.glVertex2f(x + padding, y + height + padding);
+				GL11.glVertex2f(x, y + height);
 			GL11.glEnd();
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 1);
 		}
@@ -47,14 +48,5 @@ public class Image extends Component {
 				System.exit(1);
 			}
 		}
-	}
-	
-	public int getWidth(){
-		return width + 2 * padding;
-	}
-	
-	
-	public int getHeight(){
-		return height + 2 * padding;
 	}
 }

@@ -1,28 +1,29 @@
 package fr.ircf.humanity.dialogue;
 
-import fr.ircf.humanity.character.Counselor;
-import fr.ircf.humanity.character.Farmer;
-
 public enum Dialogue {
 
 	// TODO lambda event
-	D1000(1000, Counselor.class, new int[] { }),
-	D1001(1001, Counselor.class, new int[] { }),
-	D1002(1002, Counselor.class, new int[] { 1,2 }),
-	D2000(2000, Farmer.class, new int[] { });
+	D1000(1000, Character.COUNSELOR, new int[] { }),
+	D1001(1001, Character.COUNSELOR, new int[] { }),
+	D1002(1002, Character.COUNSELOR, new int[] { 1,2 }),
+	D2000(2000, Character.FARMER, new int[] { });
 
 	private final int id;
-	private final Class<?> characterClass;
+	private final Character character;
 	private final int[] answerIds;
 	
-	Dialogue(int id, Class<?> characterClass, int[] answerIds) {
+	Dialogue(int id, Character character, int[] answerIds) {
 		this.id = id;
-		this.characterClass = characterClass;
+		this.character = character;
 		this.answerIds = answerIds;
 	}
 
-	public Class<?> getCharacterClass() {
-		return characterClass;
+	public int getId() {
+		return id;
+	}
+	
+	public Character getCharacter() {
+		return character;
 	}
 
 	public int[] getAnswerIds() {

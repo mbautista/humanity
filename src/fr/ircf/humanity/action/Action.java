@@ -75,6 +75,7 @@ abstract public class Action {
 		state = State.STOP;
 		target = null;
 		if (needsTarget) toggle(); // TODO remove for discover action
+		source.getGame().getEventManager().notify(new ActionEvent(source.getGame().getPlayer().getPlanet().getYear(), "stop", this));
 	}
 
 	public String getName() {

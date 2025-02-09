@@ -9,6 +9,10 @@ public class ActionEvent extends Event{
 	
 	private Action action;
 
+	public Action getAction() {
+		return action;
+	}
+
 	public ActionEvent(int year, String type, Action action){
 		super(year, type);
 		this.action = action;

@@ -16,6 +16,7 @@ public class Text extends Component {
 	private static String FONT = "assets/fonts/visitor/visitor1.ttf";
 	private static boolean ALIASING = true;
 	private String text;
+	private String[] lines;
 	private Color color;
 	private float size;
 	private TrueTypeFont font;
@@ -42,7 +43,7 @@ public class Text extends Component {
 	}
 	
 	public Text(String text, Color color, float size, String file) {
-		this.text = text;
+		setText(text);
 		this.color = color;
 		this.size = size;
 		initFont(file, size);
@@ -52,7 +53,11 @@ public class Text extends Component {
 		if (isEmpty()) return;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        font.drawString(x, y, text, color); // TODO handle multiline
+        int index = 0;
+        for (String line: lines) {
+        	font.drawString(x, y + index * font.getLineHeight(), line, color);
+        	index++;
+        }
         GL11.glDisable(GL11.GL_BLEND);
 	}
 	
@@ -82,6 +87,7 @@ public class Text extends Component {
 	
 	public void setText(String text){
 		this.text = text;
+		lines = text == null ? new String[] {} : text.split("\\r?\\n");
 	}
 
 	public boolean isEmpty() {

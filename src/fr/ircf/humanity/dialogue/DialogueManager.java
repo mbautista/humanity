@@ -25,6 +25,7 @@ public class DialogueManager implements GameElement, EventListener {
 	private Image image;
 	private Text name, message;
 	private List<Button> answers;
+	private String partialMessage, completeMessage;
 	
 	@Override
 	public void init(Game game) throws Exception {
@@ -34,8 +35,8 @@ public class DialogueManager implements GameElement, EventListener {
 		image = new Image();
 		int imageSize = getHeight();
 		image.setPosition(Display.getWidth() - imageSize - X, Display.getHeight() - imageSize - Y - DY);
-		image.setWidth(imageSize);
-		image.setHeight(imageSize);
+		image.setWidth(imageSize*3/2);
+		image.setHeight(imageSize*3/2);
 
 		name = new Text();
 		name.setPosition(Display.getWidth() - imageSize - X, Display.getHeight() - Y - DY);
@@ -66,24 +67,31 @@ public class DialogueManager implements GameElement, EventListener {
 
 	@Override
 	public void update(double delta) {
-		// TODO animate image and message
+		// TODO Animate image
+		// Animate message
+		if (partialMessage.length() < completeMessage.length()) {
+			message.setText(partialMessage);
+			partialMessage = completeMessage.substring(0, partialMessage.length()+1);
+		}
 	}
 
 	@Override
 	public void update(Event event) {
-		System.out.println("update event");
-		// TODO Update dialogues by matching Event in dialogues
-		if (event.getType() == "welcome") {
-			dialogues.add(Dialogue.D1000);
+		// Trigger dialogues by event
+		for (Dialogue d : Dialogue.values()) {
+		      if (d.getTrigger().apply(event)) {
+		    	  dialogues.add(d);
+		      }
 		}
-		if (dialogue == null && !dialogues.isEmpty()) {
+		// Set current dialogue
+		if ((dialogue == null || answers.isEmpty()) && !dialogues.isEmpty()) {
 			dialogue = dialogues.remove(0);
 			image.setPath(dialogue.getCharacter().getPath());
 			name.setText(dialogue.getCharacter().getName());
-			message.setText(game.i18n("dialogue." + dialogue.getId()));
+			partialMessage = "";
+			completeMessage = game.i18n("dialogue." + dialogue.getId());
 			// TODO set answers from dialogue answerIds
 			// TODO on click answer send DialogEvent
-			System.out.println("update dialogue");
 		}
 	}
 
@@ -92,6 +100,6 @@ public class DialogueManager implements GameElement, EventListener {
 	}
 
 	public int getHeight() {
-		return Display.getHeight()/4;
+		return 150;
 	}
 }

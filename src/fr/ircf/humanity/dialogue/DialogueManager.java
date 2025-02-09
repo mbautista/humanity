@@ -30,12 +30,21 @@ public class DialogueManager implements GameElement, EventListener {
 	public void init(Game game) throws Exception {
 		this.game = game;
 		dialogues = new ArrayList<>();
-		name = new Text();
-		name.setPosition(Display.getWidth() - getWidth() - X, Display.getHeight() - getHeight() - Y - DY);
+
 		image = new Image();
-		image.setPosition(Display.getWidth() - getWidth() - X, Display.getHeight() - getHeight() - Y);
+		int imageSize = getHeight();
+		image.setPosition(Display.getWidth() - imageSize - X, Display.getHeight() - imageSize - Y - DY);
+		image.setWidth(imageSize);
+		image.setHeight(imageSize);
+
+		name = new Text();
+		name.setPosition(Display.getWidth() - imageSize - X, Display.getHeight() - Y - DY);
+
 		message = new Text();
 		message.setPosition(Display.getWidth() - getWidth() - X, Display.getHeight() - getHeight() - Y - DY);
+		message.setWidth(getWidth() - imageSize);
+		message.setHeight(getHeight());
+		
 		answers = new ArrayList<>();
 	}
 	

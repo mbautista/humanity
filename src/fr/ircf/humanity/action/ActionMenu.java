@@ -1,4 +1,4 @@
-package fr.ircf.humanity.aster;
+package fr.ircf.humanity.action;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -6,12 +6,13 @@ import org.lwjgl.opengl.Display;
 import fr.ircf.humanity.Game;
 import fr.ircf.humanity.GameElement;
 import fr.ircf.humanity.State;
-import fr.ircf.humanity.action.Action;
-import fr.ircf.humanity.action.ActionMenuItem;
+import fr.ircf.humanity.aster.Aster;
+import fr.ircf.humanity.aster.Resource;
+import fr.ircf.humanity.aster.ResourceType;
 import fr.ircf.humanity.component.Panel;
 import fr.ircf.humanity.component.Text;
 
-public class AsterMenu extends Panel implements GameElement {
+public class ActionMenu extends Panel implements GameElement {
 
 	private static int X = 10, Y = 10, DY = 20, WIDTH = 150;
 	private Text name, type;

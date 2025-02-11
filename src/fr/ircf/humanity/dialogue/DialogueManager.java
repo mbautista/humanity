@@ -1,7 +1,9 @@
 package fr.ircf.humanity.dialogue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
@@ -19,7 +21,7 @@ import fr.ircf.humanity.component.Text;
 public class DialogueManager implements GameElement, EventListener {
 
 	private Game game;
-	private List<Dialogue> dialogues;
+	private List<Dialogue> dialogues, remainingDialogues;
 	private Dialogue dialogue;
 	private static int X = 10, Y = 10, DY = 20;
 	private Image image;
@@ -31,6 +33,7 @@ public class DialogueManager implements GameElement, EventListener {
 	public void init(Game game) throws Exception {
 		this.game = game;
 		dialogues = new ArrayList<>();
+		remainingDialogues = new ArrayList<>(Arrays.asList(Dialogue.values()));
 
 		image = new Image();
 		int imageSize = getHeight();
@@ -78,8 +81,12 @@ public class DialogueManager implements GameElement, EventListener {
 	@Override
 	public void update(Event event) {
 		// Trigger dialogues by event
-		for (Dialogue d : Dialogue.values()) {
+		for (Iterator<Dialogue> iterator = remainingDialogues.iterator(); iterator.hasNext(); ) {
+			Dialogue d = iterator.next();
 		      if (d.getTrigger().apply(event)) {
+		    	  if (!d.isRepeatable()) {
+		    		  iterator.remove();
+		    	  }
 		    	  dialogues.add(d);
 		      }
 		}

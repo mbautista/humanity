@@ -11,6 +11,7 @@ public class UseHydroponics extends Action {
 		job = Job.FARMERS;
 		icon = "actions/barracks.jpg";
 		needsPeople = true;
+		requiresLevels.put(Study.class, 0.4d);
 		requiresLevels.put(GrowFood.class, 0.6d);
 	}
 	

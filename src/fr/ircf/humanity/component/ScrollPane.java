@@ -32,6 +32,7 @@ public class ScrollPane extends Panel {
 	}
 	
 	public void add(Component c){
+		if (c == null) return;
 		container.add(c);
 		if (autoscroll) scrollTo(0, Math.min(0, height - container.getHeight()));
 	}

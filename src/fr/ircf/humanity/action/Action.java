@@ -75,7 +75,6 @@ abstract public class Action {
 		state = State.STOP;
 		target = null;
 		if (needsTarget) toggle(); // TODO remove for discover action
-		source.getGame().getEventManager().notify(new ActionEvent(source.getGame().getPlayer().getPlanet().getYear(), "stop", this));
 	}
 
 	public String getName() {
@@ -116,6 +115,7 @@ abstract public class Action {
 		}else{
 			if (people >= 0) start();
 		}
+		source.getGame().getEventManager().notify(new ActionEvent(source.getGame().getPlayer().getPlanet().getYear(), "incrementPeople", this));
 	}
 	
 	public boolean selected(){

@@ -20,6 +20,7 @@ public class ActionEvent extends Event{
 
 	// TODO move method to EventListener ?
 	public Panel getLogPanel(Game game) {
+		if (type == "incrementPeople") return null;
 		Panel panel = super.getLogPanel(game);
 		panel.add(new Text(game.i18n("job." + action.getJob().getName()), action.getJob().getColor()));
 		switch(type) {

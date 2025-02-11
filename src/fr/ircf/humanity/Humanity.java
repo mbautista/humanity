@@ -4,7 +4,8 @@ import java.util.ResourceBundle;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 
-import fr.ircf.humanity.aster.AsterMenu;
+import fr.ircf.humanity.action.ActionMenu;
+import fr.ircf.humanity.action.ActionTree;
 import fr.ircf.humanity.dialogue.DialogueManager;
 import fr.ircf.humanity.event.EventManager;
 import fr.ircf.humanity.event.MessageEvent;
@@ -113,7 +114,8 @@ public class Humanity implements Game{
 			log,
 			questManager,
 			dialogueManager,
-			new AsterMenu(),
+			new ActionMenu(),
+			new ActionTree(),
 			loader,
 			new End()
 		};

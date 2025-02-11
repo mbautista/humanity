@@ -5,7 +5,9 @@ import fr.ircf.humanity.action.Job;
 public enum Character {
 
 	COUNSELOR("counselor", "characters/counselor1.jpeg", Job.HUMANITY),
-	FARMER("farmer", "characters/farmer1.jpeg", Job.FARMERS);
+	FARMER("farmer", "characters/farmer1.jpeg", Job.FARMERS),
+	SCIENTIST("scientist", "characters/scientist1.jpeg", Job.SCIENTISTS),
+	SOLDIER("soldier", "characters/soldier1.jpeg", Job.ARMY);
 
 	private String name, path;
 	private Job job;

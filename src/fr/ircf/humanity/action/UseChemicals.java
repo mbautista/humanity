@@ -11,6 +11,7 @@ public class UseChemicals extends Action {
 		job = Job.FARMERS;
 		icon = "actions/customs.jpg";
 		needsPeople = true;
+		requiresLevels.put(Study.class, 0.2d);
 		requiresLevels.put(GrowFood.class, 0.4d);
 	}
 	

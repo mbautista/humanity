@@ -172,6 +172,7 @@ public class Humanity implements Game{
 				gameElement.update(delta);
 			}
 		}
+		System.out.println(delta); // DEBUG FPS
     }
     
     /**

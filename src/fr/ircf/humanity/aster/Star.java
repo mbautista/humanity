@@ -22,6 +22,11 @@ public class Star extends Aster {
 	public static int FIRST_STAR_PLANETS = 5; // Ensure we have at least one habitable planet for the player
 	private Galaxy galaxy;
 	private ArrayList<Planet> planets, scenePlanets;
+	private Sphere sphere;
+	private FloatBuffer fbPosition;
+	private FloatBuffer fbColor;
+	private FloatBuffer fbAmbiant;
+	private FloatBuffer fbSpecular;
 	
 	public Star(Galaxy galaxy){
 		super();
@@ -29,6 +34,7 @@ public class Star extends Aster {
 		type = AsterType.STAR;
 		planets = new  ArrayList<Planet>();
 		scenePlanets = new ArrayList<Planet>();
+		sphere = new Sphere();
 	}
 	
 	/**
@@ -113,35 +119,19 @@ public class Star extends Aster {
 		GL11.glTranslated(getScreenX(), getScreenY(), getScreenZ());
 		if (isEnlighten()) renderLight();		
 		GL11.glColor3f(color[0], color[1], color[2]);
-		Sphere s = new Sphere();
-		s.draw(Math.max(1, (float)getScreenSize()), getPolygons(), getPolygons());
+		sphere.draw(Math.max(1, (float)getScreenSize()), getPolygons(), getPolygons());
 		GL11.glPopMatrix();
 	}
 	
 	private void renderLight(){
-		FloatBuffer position = BufferUtils.createFloatBuffer(4);
-		position.put(new float[] { 0f, 0f, 0f, 1f, });
-		position.flip();
-		
-		// TODO simplify color handling (use FloatBuffer everywhere ?)
-		FloatBuffer color = BufferUtils.createFloatBuffer(4);
-		color.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
-		color.flip();
-		FloatBuffer ambiant = BufferUtils.createFloatBuffer(4);
-		ambiant.put(new float[] { this.color[0], this.color[1], this.color[2], 0.1f, });
-		ambiant.flip();
-		FloatBuffer specular = BufferUtils.createFloatBuffer(4);
-		specular.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
-		specular.flip();
-		
 		// TODO tweak ambiant/specular to add "glow" effect
 		GL11.glEnable(GL11.GL_LIGHT0);
-		//GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, color);
-	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, color);
-	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, ambiant);
-	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, specular);
-		//GL11.glLight(GL11.GL_LIGHT0, GL11.GL_EMISSION, color);
-		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
+		//GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, fbColor);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, fbColor);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, fbAmbiant);
+	    GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, fbSpecular);
+		//GL11.glLight(GL11.GL_LIGHT0, GL11.GL_EMISSION, fbColor);
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, fbPosition);
 	}
 	
 	public boolean isEnlighten(){
@@ -189,6 +179,19 @@ public class Star extends Aster {
 			color[2] = 1;
 			type = t < 80 ? AsterType.MEDIUM_STAR : AsterType.BLUE_STAR;
 		}
+		// TODO simplify color handling (use FloatBuffer everywhere ?)
+		fbPosition = BufferUtils.createFloatBuffer(4);
+		fbPosition.put(new float[] { 0f, 0f, 0f, 1f, });
+		fbPosition.flip();
+		fbColor = BufferUtils.createFloatBuffer(4);
+		fbColor.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
+		fbColor.flip();
+		fbAmbiant = BufferUtils.createFloatBuffer(4);
+		fbAmbiant.put(new float[] { this.color[0], this.color[1], this.color[2], 0.2f, });
+		fbAmbiant.flip();
+		fbSpecular = BufferUtils.createFloatBuffer(4);
+		fbSpecular.put(new float[] { this.color[0], this.color[1], this.color[2], 1f, });
+		fbSpecular.flip();
 	}
 
 	/**

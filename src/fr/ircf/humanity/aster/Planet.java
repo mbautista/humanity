@@ -32,11 +32,13 @@ public class Planet extends Aster {
 	private static HashMap<String, Texture> textures;
 	private Texture texture;
 	private boolean newYear = false;
+	private Sphere sphere;
 
 	public Planet(Star star){
 		super();
 		this.star = star;
 		type = AsterType.PLANET;
+		sphere = new Sphere();
 	}
 	
 	/**
@@ -98,7 +100,6 @@ public class Planet extends Aster {
 		GL11.glTranslated(getScreenX(), getScreenY(),  getScreenZ());
 		GL11.glPushMatrix();
 		GL11.glRotated(hour, 0, 0, 1);
-		Sphere sphere = new Sphere();
 		sphere.setTextureFlag(true);
 		texture.bind();
 		sphere.draw((float)Math.max(1, getScreenSize()), getPolygons(), getPolygons());

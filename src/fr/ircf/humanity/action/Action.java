@@ -15,7 +15,9 @@ abstract public class Action {
 		Explore.class,
 		GrowFood.class,
 		UseChemicals.class,
-		UseHydroponics.class
+		UseHydroponics.class,
+		Study.class,
+		Train.class
 		// TODO all actions
 	};
 	public static enum State { START, STOP };
@@ -74,7 +76,7 @@ abstract public class Action {
 	public void stop(){
 		state = State.STOP;
 		target = null;
-		if (needsTarget) toggle(); // TODO remove for discover action
+		if (needsTarget) toggle();
 	}
 
 	public String getName() {

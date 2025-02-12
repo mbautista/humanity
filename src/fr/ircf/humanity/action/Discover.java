@@ -1,5 +1,6 @@
 package fr.ircf.humanity.action;
 
+import fr.ircf.humanity.action.Action.State;
 import fr.ircf.humanity.aster.Aster;
 
 public class Discover extends Action {
@@ -17,7 +18,7 @@ public class Discover extends Action {
 		if (target.discovered()) return;
 		super.start(target);
 		target.discover();
-		super.incrementLevel(0.01);
-		super.stop();
+		incrementLevel(0.01);
+		stop();
 	}
 }

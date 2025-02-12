@@ -74,7 +74,7 @@ public class DialogueManager implements GameElement, EventListener {
 		// Animate message
 		if (partialMessage.length() < completeMessage.length()) {
 			message.setText(partialMessage);
-			partialMessage = completeMessage.substring(0, partialMessage.length()+1);
+			partialMessage = completeMessage.substring(0, Math.min(partialMessage.length()+2, completeMessage.length()));
 		}
 	}
 

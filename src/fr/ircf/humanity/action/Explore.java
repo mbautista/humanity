@@ -13,7 +13,8 @@ public class Explore extends Action {
 		icon = "actions/life.jpg";
 		needsTarget = true;
 		// TODO needsPeople = true;
-		requiresLevels.put(GrowFood.class, 0.02d);
+		requiresLevels.put(Study.class, 0.02d);
+		requiresLevels.put(Train.class, 0.02d);
 	}
 	
 	public void start(Aster target){

@@ -1,32 +1,43 @@
 package fr.ircf.humanity.quest;
 
-import fr.ircf.humanity.Game;
-import fr.ircf.humanity.GameElement;
+import java.util.function.Function;
 
-public class Quest implements GameElement {
+import fr.ircf.humanity.event.Event;
 
-	@Override
-	public void init(Game game) throws Exception {
-		// TODO Auto-generated method stub
+public enum Quest {
 
+	// Quest(int id, boolean repeatable, Function<Event, Boolean> trigger, Function<Event, Boolean> success, Function<Event, Boolean> failure)
+	Q1000(1000, false, (Event e) -> false, (Event e) -> false, (Event e) -> false);
+
+	private final int id;
+	private boolean repeatable;
+	private Function<Event, Boolean> trigger, success, failure;
+	
+	Quest(int id, boolean repeatble, Function<Event, Boolean> trigger, Function<Event, Boolean> success, Function<Event, Boolean> failure) {
+		this.id = id;
+		this.repeatable = repeatble;
+		this.trigger = trigger;
+		this.success = trigger;
+		this.failure = trigger;
 	}
 
-	@Override
-	public boolean visible() {
-		// TODO Auto-generated method stub
-		return false;
+	public Function<Event, Boolean> getTrigger() {
+		return trigger;
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
+	public Function<Event, Boolean> getSuccess() {
+		return success;
 	}
-
-	@Override
-	public void update(double delta) {
-		// TODO Auto-generated method stub
-
+	
+	public Function<Event, Boolean> getFailure() {
+		return failure;
 	}
-
+	
+	public int getId() {
+		return id;
+	}
+	
+	public boolean isRepeatable() {
+		return repeatable;
+	}
 }
